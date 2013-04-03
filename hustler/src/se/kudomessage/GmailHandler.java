@@ -1,6 +1,5 @@
 package se.kudomessage;
 
-import java.io.IOException;
 import java.security.Provider;
 import java.security.Security;
 import java.util.Properties;
@@ -22,8 +21,14 @@ public class GmailHandler {
 	private Folder standardFolder;
 	private Folder pendingFolder;
 	private Folder errorFolder;
+	
+	private String token;
+	private String username;
 
-	public GmailHandler() throws MessagingException {
+	public GmailHandler(String token, String username) throws MessagingException {
+		this.token = token;
+		this.username = username;
+		
 		Security.addProvider(new OAuth2Provider());
 		IMAPSSLStore store = connectByOAuth();
 		
@@ -46,12 +51,12 @@ public class GmailHandler {
 		Properties properties = new Properties();
 		properties.put("mail.imaps.sasl.enable", "true");
 		properties.put("mail.imaps.sasl.mechanisms", "XOAUTH2");
-		properties.put(OAuth2SaslClientFactory.OAUTH_TOKEN_PROP, Constants.OAUTHTOKEN);
+		properties.put(OAuth2SaslClientFactory.OAUTH_TOKEN_PROP, token);
 		
 	    Session session = Session.getInstance(properties);
 	    
 	    IMAPSSLStore store = new IMAPSSLStore(session, null);
-	    store.connect(Constants.HOST, 993, Constants.USERNAME, "");
+	    store.connect(Constants.HOST, 993, username, "");
 	    
 	    return store;
 	}
@@ -78,7 +83,7 @@ public class GmailHandler {
 			errorFolder.create(Folder.HOLDS_MESSAGES);
 	}
 
-	public void moveMessage(final int id, Labels from, Labels to) throws MessagingException, IOException {
+	public void moveMessage(final int id, Labels from, Labels to) throws MessagingException {
 		Folder folderFrom;
 		Folder folderTo;
 
@@ -128,7 +133,7 @@ public class GmailHandler {
 		message[0].setFlag(Flag.DELETED, true);
 	}
 
-	public int saveMessageToPending(String body, String receiver, String sender) throws IOException {
+	public int saveMessageToPending(String body, String receiver, String sender) {
 		try {
 			if (!pendingFolder.isOpen())
 				pendingFolder.open(Folder.READ_WRITE);
