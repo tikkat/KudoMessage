@@ -1,7 +1,6 @@
 *.class
 
 hustler/bin
-*.jks
 
 # OS generated files #
 ######################
