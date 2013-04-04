@@ -34,6 +34,7 @@ public class SocketHandler {
 
 		public ClientHandler(Socket socket) {
 			this.socket = socket;
+			System.out.println("### New connection from: " + socket.getRemoteSocketAddress().toString());
 		}
 
 		public void run() {
@@ -45,17 +46,21 @@ public class SocketHandler {
 
 				while (true) {
 					inputLine = in.readLine();
+					if (inputLine == null)
+						continue;
+					
+					System.out.println("### In from socket: " + inputLine);
 					
 					switch (inputLine) {
-						case "INITIALIZE":			cu = new ClientUser(in.readLine(), out);
+						case "INITIALIZE":					cu = new ClientUser(in.readLine(), out, in);
 						break;
-						case "REGISTER_SERVER":		cu.registerServer(in.readLine(), out);
+						case "REGISTER_ANDROID_DEVICE":		cu.registerAndroidDevice(in.readLine());
 						break;
-						case "SEND_MESSAGE":		cu.sendMessage(in.readLine(), out);
+						case "SEND_MESSAGE":				cu.sendMessage(in.readLine());
 						break;
-						case "SENT_MESSAGE":		cu.sentMessage(in.readLine(), out);
+						case "SENT_MESSAGE":				cu.sentMessage(in.readLine());
 						break;
-						case "RECEIVED_MESSAGE":	cu.receivedMessage(in.readLine(), out);
+						case "RECEIVED_MESSAGE":			cu.receivedMessage(in.readLine());
 						break;
 					}
 					
