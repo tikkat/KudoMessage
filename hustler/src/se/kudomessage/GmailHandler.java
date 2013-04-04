@@ -34,6 +34,8 @@ public class GmailHandler {
 		
 		Folder defaultFolder = store.getDefaultFolder();
 		createAllFolders(defaultFolder);
+		
+		System.out.println("Skapade en Gmail-hanterare");
 	}
 	
 	public static final class OAuth2Provider extends Provider {
@@ -56,6 +58,8 @@ public class GmailHandler {
 	    Session session = Session.getInstance(properties);
 	    
 	    IMAPSSLStore store = new IMAPSSLStore(session, null);
+	    
+	    System.out.println("Trying to connect to Gmail with username " + username + " and token " + token + ".");
 	    store.connect(Constants.HOST, 993, username, "");
 	    
 	    return store;
