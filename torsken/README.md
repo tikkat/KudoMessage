@@ -1,7 +1,7 @@
 #KudoMessage - Torsken
 
 ##What is Torsken?
-Torsken is one way for the end user to use KudoMessage, it's a web application.
+Torsken is one way for the end user to use KudoMessage, it's a web application. Torsken will be a desktop application portable to all the major operating systems. The application itself will just be a webkit that holds a website. The website will be built with Java EE. More information will come..
 
 ##What does it do?
 With Torsken the end user can write a message, choose a receiver, and send it away using their server application, 
