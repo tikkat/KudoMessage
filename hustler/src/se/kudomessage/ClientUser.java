@@ -1,5 +1,6 @@
 package se.kudomessage;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
@@ -16,9 +17,14 @@ public class ClientUser {
 	private String username;
 	private String userID;
 	
+	private PrintWriter out;
+	private BufferedReader in;
+	
 	private GmailHandler gmailHandler;
 
-	public ClientUser(String token, PrintWriter out) {
+	public ClientUser(String token, PrintWriter out, BufferedReader in) {
+		System.out.println("Creating a new ClientUser with token: " + token);
+		
 		if (!isTokenValid(token)) {
 			out.write("TOKEN_INVALID");
 			out.flush();
@@ -31,6 +37,7 @@ public class ClientUser {
 		
 		try {
 			gmailHandler = new GmailHandler(token, username);
+			PushHandler.addClientUser(userID, this);
 			
 			out.write("OK");
 			out.flush();
@@ -40,6 +47,11 @@ public class ClientUser {
 			
 			e.printStackTrace();
 		}
+		
+		this.out = out;
+		this.in = in;
+		
+		System.out.println("Made a new ClientUser");
 	}
 
 	private boolean isTokenValid(String token) {
@@ -53,6 +65,16 @@ public class ClientUser {
 		JSONObject info = new JSONObject(result);
 		username = info.getString("email");
 		userID = info.getString("id");
+		
+		System.out.println("Got user info: " + username + ", " + userID);
+	}
+	
+	public PrintWriter getPrintWriter() {
+		return out;
+	}
+	
+	public BufferedReader getBufferedReader() {
+		return in;
 	}
 
 	private String getContentOfUrl(String url) {
@@ -75,16 +97,19 @@ public class ClientUser {
 		return "";
 	}
 
-	public void registerServer(String readLine, PrintWriter out) {
-		JSONObject input = new JSONObject(readLine);
+	public void registerAndroidDevice(String GCM) {
+		PushHandler.registerAndroidDevice(userID, GCM);
 	}
 
-	public void sendMessage(String readLine, PrintWriter out) {
+	public void sendMessage(String readLine) {
+		System.out.println("Running sendMessage with indata: " + readLine);
+		
 		JSONObject input = new JSONObject(readLine);
 		String message = input.getString("message");
 		String receiver = input.getString("receiver");
 		
 		int messageID = gmailHandler.saveMessageToPending(message, receiver, username);
+		PushHandler.notifyAndroidDeviceNewMessage(userID);
 		
 		if (messageID > 0) {
 			out.write("OK");
@@ -95,7 +120,7 @@ public class ClientUser {
 		}
 	}
 
-	public void sentMessage(String readLine, PrintWriter out) {
+	public void sentMessage(String readLine) {
 		try {
 			gmailHandler.moveMessage(Integer.parseInt(readLine), GmailHandler.Labels.PENDING, GmailHandler.Labels.STANDARD);
 			out.write("OK");
@@ -106,19 +131,11 @@ public class ClientUser {
 		}
 	}
 
-	public void receivedMessage(String readLine, PrintWriter out) {
-		JSONObject input = new JSONObject(readLine);
-		String message = input.getString("message");
-		String sender = input.getString("sender");
+	public void receivedMessage(String messageID) {
+		// GET MESSAGE FROM GMAIL WITH ID MESSAGE_ID
+		String message = "";
+		String sender = "";
 		
-		int messageID = gmailHandler.saveMessageToPending(message, username, sender);
-		
-		if (messageID > 0) {
-			out.write("OK");
-			out.flush();
-		} else {
-			out.write("ERROR");
-			out.flush();
-		}
+		PushHandler.tellClientNewMessage(userID, message, sender);
 	}
 }
