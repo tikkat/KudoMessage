@@ -24,17 +24,17 @@ import java.io.IOException;
 @SessionScoped
 public class Utils {
     
-    private static final String CALLBACK_URL = "http://localhost:8080/KudoMessage_-_Torsken/";
+    private static final String CALLBACK_URL = Constants.REDIRECT_URI;
     private static final HttpTransport TRANSPORT = new NetHttpTransport();
     private static final JsonFactory JSON_FACTORY = new JacksonFactory();
 
     // FILL THESE IN WITH YOUR VALUES
-    private static final String CLIENT_ID = "509205524891-milcd02622075pccioirpfo0ba8qfeg4.apps.googleusercontent.com";
-    private static final String CLIENT_SECRET = "n6H0Krn3BgCn8_KmDilsyPAR";
+    private static final String CLIENT_ID = Constants.CLIENT_ID;
+    private static final String CLIENT_SECRET = Constants.CLIENT_SECRET;
     
     public String getTokenFromCode(String code) throws IOException {
         if (code.isEmpty())
-            return "Ingen code.";
+            return "Didn´t receive a access code.";
             
         GoogleAuthorizationCodeGrant authRequest = new GoogleAuthorizationCodeGrant(TRANSPORT,
                         JSON_FACTORY, CLIENT_ID, CLIENT_SECRET, code, CALLBACK_URL);
@@ -46,7 +46,5 @@ public class Utils {
         TRANSPORT.createRequestFactory(access);
         
         return authResponse.accessToken;
-        
-        //System.out.println("Access token: " + authResponse.accessToken);
     }
 }
