@@ -109,9 +109,10 @@ public class ClientUser {
 		String receiver = input.getString("receiver");
 		
 		int messageID = gmailHandler.saveMessageToPending(message, receiver, username);
-		PushHandler.notifyAndroidDeviceNewMessage(userID);
 		
 		if (messageID > 0) {
+			PushHandler.notifyAndroidDeviceNewMessage(userID, messageID);
+			
 			out.write("OK");
 			out.flush();
 		} else {

@@ -1,9 +1,14 @@
 package se.kudomessage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.google.android.gcm.server.Message;
+import com.google.android.gcm.server.Result;
+import com.google.android.gcm.server.Sender;
 
 public class PushHandler {
 	private static Map<String, List<ClientUser>> clientUsers = new HashMap<String, List<ClientUser>>();
@@ -21,8 +26,15 @@ public class PushHandler {
 		// REGISTER THE DEVICE
 	}
 	
-	public static void notifyAndroidDeviceNewMessage(String userID) {
-		// GET GCM-ID AND NOTIFY ANDROID DEVICE
+	public static void notifyAndroidDeviceNewMessage(String userID, int messageID) {
+		Sender sender = new Sender("API-KEY");
+		Message message = new Message.Builder().addData("action", "SEND_SMS").addData("messageID", String.valueOf(messageID)).build();
+		
+		try {
+			Result result = sender.send(message, "GCM-KEY", 5);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static void tellClientNewMessage(String userID, String message, String sender) {
