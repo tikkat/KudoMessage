@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!-- =========== FULL CONFIGURATION FILE ================================== -->
+
+<faces-config version="2.1"
+    xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd">
+
+    <!-- This is how the navigation rules will look like
+    <navigation-rule>
+    <from-view-id>/index.xhtml</from-view-id>
+    <navigation-case>
+        <from-outcome>google</from-outcome>
+        <to-view-id>/http://www.google.se</to-view-id>
+        <redirect />
+    </navigation-case>
+    </navigation-rule>
+    -->
+
+</faces-config>
