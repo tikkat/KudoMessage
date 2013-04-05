@@ -32,9 +32,7 @@ public class Utils {
     private static final String CLIENT_ID = Constants.CLIENT_ID;
     private static final String CLIENT_SECRET = Constants.CLIENT_SECRET;
     
-    public String getTokenFromCode(String code) throws IOException {
-        if (code.isEmpty())
-            return "Didn´t receive a access code.";
+    public static String getTokenFromCode(String code) throws IOException {
             
         GoogleAuthorizationCodeGrant authRequest = new GoogleAuthorizationCodeGrant(TRANSPORT,
                         JSON_FACTORY, CLIENT_ID, CLIENT_SECRET, code, CALLBACK_URL);
