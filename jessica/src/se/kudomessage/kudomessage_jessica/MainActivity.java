@@ -10,6 +10,8 @@ import java.net.UnknownHostException;
 import com.google.android.gcm.GCMRegistrar;
 
 import android.os.Bundle;
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.Activity;
 import android.view.Menu;
 
@@ -18,6 +20,8 @@ public class MainActivity extends Activity {
 	Socket socket = null;
     PrintWriter out = null;
     BufferedReader in = null;
+    AccountManager accountManager;
+    Account account;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +30,8 @@ public class MainActivity extends Activity {
 		
 		GCMRegistrar.checkDevice(this);
 		GCMRegistrar.checkManifest(this);
+		
+		this.initOAuth();
 		
 		String regId = GCMRegistrar.getRegistrationId(this);
 		
@@ -49,6 +55,17 @@ public class MainActivity extends Activity {
 		
 		out.println("REGISTER_ANDROID_DEVICE");
 		out.println(regId);
+	}
+
+	/**
+	 * Initializes the OAuthentication communication with Google.
+	 * Asks which account to use and then requests the oAuth tooken
+	 * for that user.
+	 */
+	private void initOAuth() {
+		accountManager = AccountManager.get(this);
+		Account[] accounts = accountManager.getAccountsByType("com.google");
+		
 	}
 
 	@Override
