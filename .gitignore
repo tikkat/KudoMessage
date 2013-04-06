@@ -1,6 +1,7 @@
 *.class
 
 hustler/bin
+jessica/bin
 
 # OS generated files #
 ######################
