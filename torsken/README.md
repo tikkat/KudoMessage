@@ -1,7 +1,7 @@
 #KudoMessage - Torsken
 
 ##What is Torsken?
-Torsken is one way for the end user to use KudoMessage, it's a web application. Torsken will be a desktop application portable to all the major operating systems. The application itself will just be a webkit that holds a website. The website will be built with Java EE. More information will come..
+Torsken is one way for the end user to use KudoMessage, it's a web application.
 
 ##What does it do?
 With Torsken the end user can write a message, choose a receiver, and send it away using their server application, 
@@ -16,6 +16,9 @@ to Torsken right away, and to the end user, in real time.
 For Torsken to know who you are without you giving it your Gmail account details it lets Google handle this part using a technology called OAuth.
 
 The way KudoMessage is built is with access tokens using OAuth 2.0.
+
+####Java EE
+The website will be built with Java EE.
 
 ####Hustler
 When ever Torsken speaks with Hustler it does so with the use of sockets.
