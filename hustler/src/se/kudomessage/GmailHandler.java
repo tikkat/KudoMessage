@@ -1,5 +1,6 @@
 package se.kudomessage;
 
+import java.io.IOException;
 import java.security.Provider;
 import java.security.Security;
 import java.util.Properties;
@@ -12,6 +13,9 @@ import javax.mail.Session;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.search.SearchTerm;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.sun.mail.imap.IMAPSSLStore;
 
@@ -85,6 +89,40 @@ public class GmailHandler {
 		errorFolder = tmpFolder.getFolder("Error");
 		if (!errorFolder.exists())
 			errorFolder.create(Folder.HOLDS_MESSAGES);
+	}
+	
+	public JSONObject getMessages(JSONObject input) {
+		try {
+			JSONObject allMessages = new JSONObject();
+			Message[] messages = standardFolder.getMessages(input.getInt("from"), input.getInt("to"));
+			
+			for (Message m : messages) {
+				JSONObject message = new JSONObject();
+				message.put("sender", m.getFrom().toString());
+				message.put("receiver", m.getRecipients(Message.RecipientType.TO)[0].toString());
+				message.put("body", m.getContent().toString());
+				
+				allMessages.put(getIdOfMessage(m), message);
+			}
+			
+			return allMessages;
+			
+		} catch (MessagingException | JSONException | IOException e) {
+			e.printStackTrace();
+		}
+		
+		return new JSONObject();
+	}
+	
+	public String getIdOfMessage(Message m) {
+		MimeMessage message = (MimeMessage) m;
+		try {
+			return message.getMessageID();
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
+		
+		return "Inget ID";
 	}
 
 	public void moveMessage(final int id, Labels from, Labels to) throws MessagingException {
