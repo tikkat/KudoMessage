@@ -38,41 +38,11 @@ public class SocketHandler {
 		}
 
 		public void run() {
-			String inputLine;
-			
 			try {
-				out = new PrintWriter(socket.getOutputStream(), true);
 				in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+				out = new PrintWriter(socket.getOutputStream(), true);
 
-				while (true) {
-					inputLine = in.readLine();
-					if (inputLine == null)
-						continue;
-					
-					System.out.println("### In from socket: " + inputLine);
-					
-					switch (inputLine) {
-						case "INITIALIZE":					cu = new ClientUser(in.readLine(), out, in);
-						break;
-						case "REGISTER_ANDROID_DEVICE":		cu.registerAndroidDevice(in.readLine());
-						break;
-						case "SEND_MESSAGE":				cu.sendMessage(in.readLine());
-						break;
-						case "SENT_MESSAGE":				cu.sentMessage(in.readLine());
-						break;
-						case "RECEIVED_MESSAGE":			cu.receivedMessage(in.readLine());
-						break;
-					}
-					
-					if (inputLine.equals("CLOSE")) {
-						out.write("OK");
-						break;
-					}
-				}
-				
-				out.close();
-				in.close();
-				socket.close();
+				cu = new ClientUser(in, out, socket);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
