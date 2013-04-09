@@ -7,10 +7,15 @@ package se.kudomessage;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * This class will be the controller class for the JSF page home.xhtml
@@ -20,37 +25,35 @@ import javax.faces.bean.SessionScoped;
  */
 @ManagedBean
 @SessionScoped
-@RequestScoped
 public class HomeController {
     
-    //This line of code will save the GET parameter "?code" to the variable accessCode in HomeController.
-    //The Home page will be loaded every time you login with OAuth, google will send the accessCode
-    //in the URL
-    @ManagedProperty("#{param.code}")
     private String accessCode;
-    
-    //The accessToken will be received by sending the accessCode to the Utils class.
     private String accessToken, message, number;
     
+    /**
+     * This constructor will fetch the 2 session parameters. After that create a Socket Connection
+     * with Hustler.
+     */
+    public HomeController () {
+        FacesContext context = FacesContext.getCurrentInstance();  
+        HttpServletRequest request = (HttpServletRequest)context.getExternalContext().getRequest();  
+        HttpSession httpSession = request.getSession(false);  
+        accessCode = (String) httpSession.getAttribute("ACCESS_CODE");
+        accessToken = (String) httpSession.getAttribute("ACCESS_TOKEN");
+    }
     
+    @PostConstruct
+    public void init () {
+        SocketHandler.openSocketCommunication();
+        SocketHandler.sendInitializeViaSocket(accessToken);
+    }
     
-    public boolean generateAccessToken () {
-        
-        //DONT FORGET!
-        //Check if token is allready generated and then check if its valid
-        //if it has expired request a refresh token
-        //access token will expire in 3600sec (1hr)
-        //RETHINK, do we need a boolean here?
-        try {
-            if (!accessCode.isEmpty()) {
-                accessToken = Utils.getTokenFromCode(accessCode);
-                return true;
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        return false;
+    /**
+     * This method corresponds to the Send Message button.
+     */
+    public void sendMessageButton () {
+        Message messObject = new Message(message, number);
+        ConversationHandler.sendMessage(messObject);
     }
     
     
