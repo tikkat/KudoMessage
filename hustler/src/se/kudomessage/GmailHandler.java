@@ -19,6 +19,14 @@ import org.json.JSONObject;
 
 import com.sun.mail.imap.IMAPSSLStore;
 
+/**
+ * This class is for handling all communications with Google Gmail.
+ * It makes use of the OAuth 2.0 technology to get authorized to edit 
+ * and change a users emails, given an access token.
+ * 
+ * It delivers functionality for uploading a email to a specific label, 
+ * move emails around and download emails.
+ */
 public class GmailHandler {
 	private Session session;
 	
@@ -29,6 +37,13 @@ public class GmailHandler {
 	private String token;
 	private String username;
 
+	/**
+	 * Connects to Gmail with the given details and creates the necessary labels.
+	 * 
+	 * @param token a valid access token
+	 * @param username the users Gmail username (email address)
+	 * @throws MessagingException
+	 */
 	public GmailHandler(String token, String username) throws MessagingException {
 		this.token = token;
 		this.username = username;
@@ -39,9 +54,12 @@ public class GmailHandler {
 		Folder defaultFolder = store.getDefaultFolder();
 		createAllFolders(defaultFolder);
 		
-		System.out.println("Skapade en Gmail-hanterare");
+		System.out.println("Created a new GmailHandler.");
 	}
 	
+	/**
+	 * A necessary class that provides the XOAUTH2 SASL Mechanism.
+	 */
 	public static final class OAuth2Provider extends Provider {
 		private static final long serialVersionUID = 1L;
 
@@ -53,6 +71,12 @@ public class GmailHandler {
 		}
 	}
 	
+	/**
+	 * Connects to Google Gmail via OAuth.
+	 * 
+	 * @return A, if successful, store connected to the account.
+	 * @throws MessagingException
+	 */
 	private IMAPSSLStore connectByOAuth() throws MessagingException {
 		Properties properties = new Properties();
 		properties.put("mail.imaps.sasl.enable", "true");
@@ -69,6 +93,12 @@ public class GmailHandler {
 	    return store;
 	}
 	
+	/**
+	 * Creates all necessary labels (folders).
+	 * 
+	 * @param defaultFolder the base folder of the account.
+	 * @throws MessagingException
+	 */
 	private void createAllFolders(Folder defaultFolder) throws MessagingException {
 		Folder tmpFolder = defaultFolder.getFolder("KudoMessage");
 		if (!tmpFolder.exists())
@@ -91,6 +121,12 @@ public class GmailHandler {
 			errorFolder.create(Folder.HOLDS_MESSAGES);
 	}
 	
+	/**
+	 * Downloads emails from the Gmail account, given a specific range.
+	 * 
+	 * @param input a JSON object with the range of which the client wants emails.
+	 * @return A, if successful, JSON object containing all the emails.
+	 */
 	public JSONObject getMessages(JSONObject input) {
 		try {
 			JSONObject allMessages = new JSONObject();
@@ -102,7 +138,7 @@ public class GmailHandler {
 				message.put("receiver", m.getRecipients(Message.RecipientType.TO)[0].toString());
 				message.put("body", m.getContent().toString());
 				
-				allMessages.put(getIdOfMessage(m), message);
+				allMessages.put(getMessageId(m) + "", message);
 			}
 			
 			return allMessages;
@@ -114,17 +150,31 @@ public class GmailHandler {
 		return new JSONObject();
 	}
 	
-	public String getIdOfMessage(Message m) {
+	/**
+	 * Gets a messages unique id.
+	 * 
+	 * @param m the message to get the id of.
+	 * @return the message id if successful, otherwise the text "No ID found.".
+	 */
+	public int getMessageId(Message m) {
 		MimeMessage message = (MimeMessage) m;
 		try {
-			return message.getMessageID();
+			return Integer.parseInt(message.getMessageID());
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		}
 		
-		return "Inget ID";
+		return -1;
 	}
 
+	/**
+	 * Moves a given email between two given labels.
+	 * 
+	 * @param id the message id
+	 * @param from the label from which to move the message
+	 * @param to the label which to move the message
+	 * @throws MessagingException
+	 */
 	public void moveMessage(final int id, Labels from, Labels to) throws MessagingException {
 		Folder folderFrom;
 		Folder folderTo;
@@ -175,6 +225,14 @@ public class GmailHandler {
 		message[0].setFlag(Flag.DELETED, true);
 	}
 
+	/**
+	 * Takes a message and upload it to the label "Pending" on the users Gmail account.
+	 * 
+	 * @param body the message body, the content of the message
+	 * @param receiver the receiver of the message
+	 * @param sender the sender of the message
+	 * @return the message id of the uploads message
+	 */
 	public int saveMessageToPending(String body, String receiver, String sender) {
 		try {
 			if (!pendingFolder.isOpen())
@@ -194,13 +252,16 @@ public class GmailHandler {
 			
 			Message latestMessage = pendingFolder.getMessage(pendingFolder.getMessageCount());
 			
-			return latestMessage.hashCode();
+			return getMessageId(latestMessage);
 		} catch (MessagingException e) {
 			e.printStackTrace();
 			return -1;
 		}
 	}
 
+	/**
+	 * A simple enum with all the recognized labels. 
+	 */
 	public enum Labels {
 		STANDARD, PENDING, ERROR
 	}

@@ -13,6 +13,10 @@ import javax.mail.MessagingException;
 
 import org.json.*;
 
+/**
+ * A class for handling a client connected via a socket.
+ * The client sends a JSON object which triggers functions in this class.
+ */
 public class ClientUser {
 	private String token;
 	private String username;
@@ -24,7 +28,16 @@ public class ClientUser {
 	
 	private GmailHandler gmailHandler;
 
+	/**
+	 * Sets some local variables and start the function run().
+	 * 
+	 * @param in a BufferedReader connected to the socket 
+	 * @param out a PrintWriter connected to the socket 
+	 * @param socket the socket to which a client is connected
+	 */
 	public ClientUser(BufferedReader in, PrintWriter out, Socket socket) {
+		System.out.println("Creating a new ClientUser.");
+		
 		this.in = in;
 		this.out = out;
 		this.socket = socket;
@@ -36,21 +49,31 @@ public class ClientUser {
 		}
 	}
 	
+	/**
+	 * The functions which listens to the socket stream and runs the functions triggered by the clients message.
+	 * 
+	 * @throws IOException
+	 */
 	private void run() throws IOException {
 		JSONObject input;
 		
 		while (true) {
 			String inputString = in.readLine();
 			
+			if (inputString == null || inputString.isEmpty())
+				continue;
+			
+			System.out.println("### In from socket: " + inputString);
+			
 			if (inputString.equals("CLOSE")) {
+				System.out.println("Closed the connection with " + socket.getRemoteSocketAddress().toString());
+				
 				in.close();
 				out.close();
 				socket.close();
 				
 				break;
 			}
-			
-			System.out.println("### In from socket: " + inputString);
 			
 			input = new JSONObject(inputString);
 			
@@ -71,18 +94,28 @@ public class ClientUser {
 		}
 	}
 	
+	/**
+	 * Downloads emails from the Gmail account, given a specific range and output them to the socket.
+	 * 
+	 * @param input a JSON object with the range of which the client wants emails.
+	 */
 	private void getMessages(JSONObject input) {
 		out.write(gmailHandler.getMessages(input).toString());
 	}
 	
+	/**
+	 * Gets the user info and creates a new instance of GmailHandler.
+	 * 
+	 * @param input a JSON object containing a valid access token
+	 */
 	private void init(JSONObject input) {
-		this.token = input.getString("token");
-		
-		System.out.println("Creating a new ClientUser with token: " + token);
+		System.out.println("Running init() with access token " + token);
 		
 		if (!isTokenValid(token)) {
 			return;
 		}
+		
+		this.token = input.getString("token");
 		
 		getUserInfo();
 		
@@ -92,14 +125,21 @@ public class ClientUser {
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		}
-		
-		System.out.println("Made a new ClientUser");
 	}
 
+	/**
+	 * Checks if the given access token is valid.
+	 * 
+	 * @param token the access token to check
+	 * @return true if the access token is valid, false otherwise.
+	 */
 	private boolean isTokenValid(String token) {
 		return true;
 	}
 
+	/**
+	 * Gets the user's username (email address) and user id from Google.
+	 */
 	public void getUserInfo() {
 		String url = "https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=" + token;
 		String result = getContentOfUrl(url);
@@ -111,6 +151,12 @@ public class ClientUser {
 		System.out.println("Got user info: " + username + ", " + userID);
 	}
 
+	/**
+	 * Simply downloads the content of given url.
+	 * 
+	 * @param url the url from which to download the content
+	 * @return the content of the url
+	 */
 	private String getContentOfUrl(String url) {
 		try {
 			InputStream is = new URL(url).openStream();
@@ -131,10 +177,21 @@ public class ClientUser {
 		return "";
 	}
 
+	/**
+	 * Registers an Android device to be associated with this user.
+	 * The users id is to be associated with a Google Cloud Messaging id.
+	 * 
+	 * @param input a JSON object containing the Google Cloud Messaging id
+	 */
 	public void registerAndroidDevice(JSONObject input) {
 		PushHandler.registerAndroidDevice(userID, input.getString("gcm"));
 	}
 
+	/**
+	 * Uploads a message to Gmail and notifies the server application (gateway) about it.
+	 * 
+	 * @param input a JSON object containing the message data
+	 */
 	public void sendMessage(JSONObject input) {
 		System.out.println("Running sendMessage with indata: " + input.toString());
 		
@@ -152,6 +209,12 @@ public class ClientUser {
 		}
 	}
 
+	/**
+	 * When the server application (gateway) sends a message it tells Husler about it via this function.
+	 * This function then moves the message from the label "pending" to the label "standard".
+	 * 
+	 * @param input a JSON object containing the message id of the sent message
+	 */
 	public void sentMessage(JSONObject input) {
 		try {
 			gmailHandler.moveMessage(input.getInt("messageID"), GmailHandler.Labels.PENDING, GmailHandler.Labels.STANDARD);
@@ -159,6 +222,12 @@ public class ClientUser {
 		}
 	}
 
+	/**
+	 * When the server application (gateway) receives a message it tells Husler about it via this function.
+	 * This function then gets the message form Gmail and get it to all the clients associated with the user.
+	 * 
+	 * @param input a JSON object containing the message id of the sent message
+	 */
 	public void receivedMessage(JSONObject input) {
 		// GET MESSAGE FROM GMAIL WITH ID input.getInt("messageID")
 		String message = "";
