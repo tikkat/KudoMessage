@@ -168,8 +168,6 @@ public class ClientUser {
 			is.close();
 
 			return result;
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
