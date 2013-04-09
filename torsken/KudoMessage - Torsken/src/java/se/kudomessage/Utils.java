@@ -34,6 +34,9 @@ public class Utils {
     
     public static String getTokenFromCode(String code) throws IOException {
             
+        if (code == null)
+            return "Är null";
+        
         GoogleAuthorizationCodeGrant authRequest = new GoogleAuthorizationCodeGrant(TRANSPORT,
                         JSON_FACTORY, CLIENT_ID, CLIENT_SECRET, code, CALLBACK_URL);
         authRequest.useBasicAuthorization = false;

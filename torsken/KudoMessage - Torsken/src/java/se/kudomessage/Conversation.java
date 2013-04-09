@@ -6,15 +6,23 @@ package se.kudomessage;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 
 /**
  *
  * @author Philip
  */
+@ManagedBean
+@SessionScoped
 public class Conversation {
     
     private String phoneNumber;
     private List<Message> messageList;
+    
+    public Conversation () {
+        
+    }
     
     public Conversation (String phoneNumber, Message msg) {
         this.phoneNumber = phoneNumber;

@@ -1,7 +1,9 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
@@ -9,14 +11,17 @@
         <h1>Välkommen till din sida!</h1><br/><br/><br/>
         
         <h3>Skicka ett SMS</h3><br/>
+        
         <h:form>
             
             Medelande: <h:inputText value="#{homeController.message}" /><br/>
             Mottagare: <h:inputText value="#{homeController.number}" /><br/>
-            <h:commandButton value="Skicka!" />
+            
+            <!-- This button will send a message! -->
+            <h:commandButton action="#{homeController.sendMessageButton()}" value="Skicka!"/><br/><br/>
             
         </h:form>
-        
+         
     </h:body>
 </html>
 
