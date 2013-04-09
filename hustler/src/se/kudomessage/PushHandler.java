@@ -26,12 +26,21 @@ public class PushHandler {
 		// REGISTER THE DEVICE
 	}
 	
+	public static String getGCMKey(String userID) {
+		return null;
+	}
+	
 	public static void notifyAndroidDeviceNewMessage(String userID, int messageID) {
-		Sender sender = new Sender("API-KEY");
-		Message message = new Message.Builder().addData("action", "SEND_SMS").addData("messageID", String.valueOf(messageID)).build();
+		if(true)
+			return;
+		
+		String GCMKey = getGCMKey(userID);
+		
+		Sender sender = new Sender(Constants.APIKEY);
+		Message message = new Message.Builder().addData("action", "sendSMS").addData("messageID", String.valueOf(messageID)).build();
 		
 		try {
-			Result result = sender.send(message, "GCM-KEY", 5);
+			Result result = sender.send(message, GCMKey, 5);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
