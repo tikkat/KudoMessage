@@ -50,6 +50,8 @@ public class ClientUser {
 				break;
 			}
 			
+			System.out.println("### In from socket: " + inputString);
+			
 			input = new JSONObject(inputString);
 			
 			switch(input.getString("action")) {
@@ -79,9 +81,6 @@ public class ClientUser {
 		System.out.println("Creating a new ClientUser with token: " + token);
 		
 		if (!isTokenValid(token)) {
-			out.write("TOKEN_INVALID");
-			out.flush();
-			
 			return;
 		}
 		
@@ -90,13 +89,7 @@ public class ClientUser {
 		try {
 			gmailHandler = new GmailHandler(token, username);
 			PushHandler.addClientUser(userID, this);
-			
-			out.write("OK");
-			out.flush();
 		} catch (MessagingException e) {
-			out.write("ERROR_GMAIL");
-			out.flush();
-			
 			e.printStackTrace();
 		}
 		
@@ -153,22 +146,16 @@ public class ClientUser {
 		if (messageID > 0) {
 			PushHandler.notifyAndroidDeviceNewMessage(userID, messageID);
 			
-			out.write("OK");
-			out.flush();
+			System.out.println("Laddade upp meddelandet " + messageID);
 		} else {
-			out.write("ERROR");
-			out.flush();
+			System.out.println("Kunde inte ladda upp meddelandet.");
 		}
 	}
 
 	public void sentMessage(JSONObject input) {
 		try {
 			gmailHandler.moveMessage(input.getInt("messageID"), GmailHandler.Labels.PENDING, GmailHandler.Labels.STANDARD);
-			out.write("OK");
-			out.flush();
 		} catch (MessagingException e) {
-			out.write("ERROR");
-			out.flush();
 		}
 	}
 
