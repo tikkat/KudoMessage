@@ -109,7 +109,7 @@ public class ClientUser {
 	 * @param input a JSON object containing a valid access token
 	 */
 	private void init(JSONObject input) {
-		System.out.println("Running init() with access token " + token);
+		System.out.println("Running init() with access token " + input.getString("token"));
 		
 		if (!isTokenValid(token)) {
 			return;
@@ -198,32 +198,32 @@ public class ClientUser {
 		String message = input.getString("message");
 		String receiver = input.getString("receiver");
 		
-		int messageID = gmailHandler.saveMessageToPending(message, receiver, username);
+		String messageID = gmailHandler.saveMessageToPending(message, receiver, username);
 		
-		if (messageID > 0) {
+		if (!messageID.isEmpty()) {
 			PushHandler.notifyAndroidDeviceNewMessage(userID, messageID);
 			
-			System.out.println("Laddade upp meddelandet " + messageID);
+			System.out.println("Uploaded a new message with id " + messageID);
 		} else {
-			System.out.println("Kunde inte ladda upp meddelandet.");
+			System.out.println("Couldn't upload the message.");
 		}
 	}
 
 	/**
-	 * When the server application (gateway) sends a message it tells Husler about it via this function.
+	 * When the server application (gateway) sends a message it tells Hustler about it via this function.
 	 * This function then moves the message from the label "pending" to the label "standard".
 	 * 
 	 * @param input a JSON object containing the message id of the sent message
 	 */
 	public void sentMessage(JSONObject input) {
 		try {
-			gmailHandler.moveMessage(input.getInt("messageID"), GmailHandler.Labels.PENDING, GmailHandler.Labels.STANDARD);
+			gmailHandler.moveMessage(input.getString("messageID"), GmailHandler.Labels.PENDING, GmailHandler.Labels.STANDARD);
 		} catch (MessagingException e) {
 		}
 	}
 
 	/**
-	 * When the server application (gateway) receives a message it tells Husler about it via this function.
+	 * When the server application (gateway) receives a message it tells Hustler about it via this function.
 	 * This function then gets the message form Gmail and get it to all the clients associated with the user.
 	 * 
 	 * @param input a JSON object containing the message id of the sent message

@@ -29,11 +29,11 @@ import com.sun.mail.imap.IMAPSSLStore;
  */
 public class GmailHandler {
 	private Session session;
-	
+
 	private Folder standardFolder;
 	private Folder pendingFolder;
 	private Folder errorFolder;
-	
+
 	private String token;
 	private String username;
 
@@ -47,16 +47,16 @@ public class GmailHandler {
 	public GmailHandler(String token, String username) throws MessagingException {
 		this.token = token;
 		this.username = username;
-		
+
 		Security.addProvider(new OAuth2Provider());
 		IMAPSSLStore store = connectByOAuth();
-		
+
 		Folder defaultFolder = store.getDefaultFolder();
 		createAllFolders(defaultFolder);
-		
+
 		System.out.println("Created a new GmailHandler.");
 	}
-	
+
 	/**
 	 * A necessary class that provides the XOAUTH2 SASL Mechanism.
 	 */
@@ -70,7 +70,7 @@ public class GmailHandler {
 					"se.kudomessage.OAuth2SaslClientFactory");
 		}
 	}
-	
+
 	/**
 	 * Connects to Google Gmail via OAuth.
 	 * 
@@ -82,17 +82,17 @@ public class GmailHandler {
 		properties.put("mail.imaps.sasl.enable", "true");
 		properties.put("mail.imaps.sasl.mechanisms", "XOAUTH2");
 		properties.put(OAuth2SaslClientFactory.OAUTH_TOKEN_PROP, token);
-		
-	    Session session = Session.getInstance(properties);
-	    
-	    IMAPSSLStore store = new IMAPSSLStore(session, null);
-	    
-	    System.out.println("Trying to connect to Gmail with username " + username + " and token " + token + ".");
-	    store.connect(Constants.HOST, 993, username, "");
-	    
-	    return store;
+
+		Session session = Session.getInstance(properties);
+
+		IMAPSSLStore store = new IMAPSSLStore(session, null);
+
+		System.out.println("Trying to connect to Gmail with username " + username + " and token " + token + ".");
+		store.connect(Constants.HOST, 993, username, "");
+
+		return store;
 	}
-	
+
 	/**
 	 * Creates all necessary labels (folders).
 	 * 
@@ -103,15 +103,15 @@ public class GmailHandler {
 		Folder tmpFolder = defaultFolder.getFolder("KudoMessage");
 		if (!tmpFolder.exists())
 			tmpFolder.create(Folder.HOLDS_MESSAGES);
-		
+
 		tmpFolder = tmpFolder.getFolder("SMS");
 		if (!tmpFolder.exists())
 			tmpFolder.create(Folder.HOLDS_MESSAGES);
-		
+
 		standardFolder = tmpFolder.getFolder("Standard");
 		if (!standardFolder.exists())
 			standardFolder.create(Folder.HOLDS_MESSAGES);
-		
+
 		pendingFolder = tmpFolder.getFolder("Pending");
 		if (!pendingFolder.exists())
 			pendingFolder.create(Folder.HOLDS_MESSAGES);
@@ -120,7 +120,7 @@ public class GmailHandler {
 		if (!errorFolder.exists())
 			errorFolder.create(Folder.HOLDS_MESSAGES);
 	}
-	
+
 	/**
 	 * Downloads emails from the Gmail account, given a specific range.
 	 * 
@@ -131,40 +131,43 @@ public class GmailHandler {
 		try {
 			JSONObject allMessages = new JSONObject();
 			Message[] messages = standardFolder.getMessages(input.getInt("from"), input.getInt("to"));
-			
+
 			for (Message m : messages) {
 				JSONObject message = new JSONObject();
 				message.put("sender", m.getFrom().toString());
 				message.put("receiver", m.getRecipients(Message.RecipientType.TO)[0].toString());
 				message.put("body", m.getContent().toString());
-				
+
 				allMessages.put(getMessageId(m) + "", message);
 			}
-			
+
 			return allMessages;
-			
+
 		} catch (MessagingException | JSONException | IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		return new JSONObject();
 	}
-	
+
 	/**
 	 * Gets a messages unique id.
 	 * 
 	 * @param m the message to get the id of.
 	 * @return the message id if successful, otherwise the text "No ID found.".
 	 */
-	public int getMessageId(Message m) {
+	public String getMessageId(Message m) {
+		if (m.isExpunged())
+			return "";
+		
 		MimeMessage message = (MimeMessage) m;
 		try {
-			return Integer.parseInt(message.getMessageID());
+			return message.getMessageID();
 		} catch (MessagingException e) {
 			e.printStackTrace();
+			
+			return "";
 		}
-		
-		return -1;
 	}
 
 	/**
@@ -175,52 +178,55 @@ public class GmailHandler {
 	 * @param to the label which to move the message
 	 * @throws MessagingException
 	 */
-	public void moveMessage(final int id, Labels from, Labels to) throws MessagingException {
+	public void moveMessage(final String id, Labels from, Labels to) throws MessagingException {
 		Folder folderFrom;
 		Folder folderTo;
 
 		switch (from) {
-			case STANDARD:	folderFrom = standardFolder;
-			break;
-	
-			case PENDING:	folderFrom = pendingFolder;
-			break;
-	
-			case ERROR:		folderFrom = errorFolder;
-			break;
-	
-			default:		return;
+		case STANDARD:	folderFrom = standardFolder;
+		break;
+
+		case PENDING:	folderFrom = pendingFolder;
+		break;
+
+		case ERROR:		folderFrom = errorFolder;
+		break;
+
+		default:		return;
 		}
 
 		switch (to) {
-			case STANDARD:	folderTo = standardFolder;
-			break;
-	
-			case PENDING:	folderTo = pendingFolder;
-			break;
-	
-			case ERROR:		folderTo = errorFolder;
-			break;
-	
-			default:		return;
+		case STANDARD:	folderTo = standardFolder;
+		break;
+
+		case PENDING:	folderTo = pendingFolder;
+		break;
+
+		case ERROR:		folderTo = errorFolder;
+		break;
+
+		default:		return;
 		}
-		
+
 		SearchTerm term = new SearchTerm() {
-		    private static final long serialVersionUID = 1L;
+			private static final long serialVersionUID = 1L;
 
 			public boolean match(Message message) {
-		        if (message.hashCode() == id) {
-		                return true;
-		        }
-		        return false;
-		    }
+				if (message.isExpunged())
+					return false;
+
+				if (getMessageId(message).equals(id)) {
+					return true;
+				}
+				return false;
+			}
 		};
-		
+
 		Message[] message = folderFrom.search(term);
-		
+
 		if (!folderTo.isOpen())
 			folderTo.open(Folder.READ_WRITE);
-		
+
 		folderTo.appendMessages(message);
 		message[0].setFlag(Flag.DELETED, true);
 	}
@@ -233,29 +239,29 @@ public class GmailHandler {
 	 * @param sender the sender of the message
 	 * @return the message id of the uploads message
 	 */
-	public int saveMessageToPending(String body, String receiver, String sender) {
+	public String saveMessageToPending(String body, String receiver, String sender) {
 		try {
 			if (!pendingFolder.isOpen())
 				pendingFolder.open(Folder.READ_WRITE);
 
 			MimeMessage message = new MimeMessage(session);
-	
+
 			message.setFrom(new InternetAddress(sender));
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(receiver));
 			message.setSubject("SMS med XXX");
 			message.setText(body);
-	
+
 			message.setFlag(Flag.DRAFT, true);
-	
+
 			MimeMessage draftMessages[] = {message};
 			pendingFolder.appendMessages(draftMessages);
-			
+
 			Message latestMessage = pendingFolder.getMessage(pendingFolder.getMessageCount());
-			
+
 			return getMessageId(latestMessage);
 		} catch (MessagingException e) {
 			e.printStackTrace();
-			return -1;
+			return "";
 		}
 	}
 

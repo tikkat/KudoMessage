@@ -30,14 +30,14 @@ public class PushHandler {
 		return null;
 	}
 	
-	public static void notifyAndroidDeviceNewMessage(String userID, int messageID) {
+	public static void notifyAndroidDeviceNewMessage(String userID, String messageID) {
 		if(true)
 			return;
 		
 		String GCMKey = getGCMKey(userID);
 		
 		Sender sender = new Sender(Constants.APIKEY);
-		Message message = new Message.Builder().addData("action", "sendSMS").addData("messageID", String.valueOf(messageID)).build();
+		Message message = new Message.Builder().addData("action", "sendSMS").addData("messageID", messageID).build();
 		
 		try {
 			Result result = sender.send(message, GCMKey, 5);
