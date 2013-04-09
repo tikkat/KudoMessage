@@ -31,8 +31,6 @@ public class SocketHandler {
 		private PrintWriter out;
 		private BufferedReader in;
 		
-		private ClientUser cu;
-
 		public ClientHandler(Socket socket) {
 			this.socket = socket;
 			System.out.println("### New connection from: " + socket.getRemoteSocketAddress().toString());
@@ -44,7 +42,7 @@ public class SocketHandler {
 				OutputStreamWriter outstream = new OutputStreamWriter(socket.getOutputStream(), "UTF-8");
 				out = new PrintWriter(outstream, true);
 
-				cu = new ClientUser(in, out, socket);
+				new ClientUser(in, out, socket);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
