@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.telephony.SmsMessage;
+import android.util.Log;
 
 public class SMSReceiver extends BroadcastReceiver {
 
@@ -16,7 +17,9 @@ public class SMSReceiver extends BroadcastReceiver {
 		String message = sms.getMessageBody();
 		String sender = sms.getOriginatingAddress();
 		
-		// Get the message to Hustler
+		Log.v("SMSTagTracker", "Got an SMS: " + message + ", from: " + sender);
+		
+		// Upload the message to Gmail and tell Hustler
 	}
 
 }
