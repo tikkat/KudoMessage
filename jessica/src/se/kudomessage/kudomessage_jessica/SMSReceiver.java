@@ -12,8 +12,11 @@ public class SMSReceiver extends BroadcastReceiver {
 		Object[] pdus = (Object[]) intent.getExtras().get("pdus");
 		SmsMessage sms = SmsMessage.createFromPdu((byte[]) pdus[0]);
 		
-		final String message = sms.getMessageBody();
-		final String sender = sms.getOriginatingAddress();
+		// Might not be the whole message body!
+		String message = sms.getMessageBody();
+		String sender = sms.getOriginatingAddress();
+		
+		// Get the message to Hustler
 	}
 
 }
