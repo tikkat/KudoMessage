@@ -43,7 +43,10 @@ public class MainActivity extends Activity {
 			//GCMRegistrar.register(this, Constants.SENDER_ID);
 		}
 
-		Log.i("SMSTagTracker", "Got an GCM-key: " + GCMKey);
+		if (!GCMKey.equals(""))
+			Log.v("SMSTagTracker", "Got an GCM-key: " + GCMKey);
+		else
+			Log.v("SMSTagTracker", "Didn't get an GCM-key");
 
 		new Thread(new Runnable() {
 			public void run() {
@@ -53,13 +56,13 @@ public class MainActivity extends Activity {
 					out = new PrintWriter(socket.getOutputStream(), true);
 		            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		            
-		            Log.i("SMSTagTracker", "Connected to socket " + Constants.IP_ADDRESS + ":" + Constants.PORT);
+		            Log.v("SMSTagTracker", "Connected to socket " + Constants.IP_ADDRESS + ":" + Constants.PORT);
 		        } catch (UnknownHostException e) {
-		        	Log.i("SMSTagTracker", "Couldn't find the host.");
+		        	Log.v("SMSTagTracker", "Couldn't find the host.");
 		        } catch (ConnectException e) {
-		        	Log.i("SMSTagTracker", "Failed to connect to socket " + Constants.IP_ADDRESS + ":" + Constants.PORT);
+		        	Log.v("SMSTagTracker", "Failed to connect to socket " + Constants.IP_ADDRESS + ":" + Constants.PORT);
 				} catch (Exception e) {
-					Log.e("SMSTagTracker", "Exception", e);
+					Log.v("SMSTagTracker", "Exception", e);
 				}
 			}
 		}).start();
@@ -78,9 +81,9 @@ public class MainActivity extends Activity {
 		public void run(AccountManagerFuture<Bundle> result) {
 			try {
 				token = result.getResult().getString(AccountManager.KEY_AUTHTOKEN);
-				Log.i("SMSTagTracker", "Got an access token: " + token);
+				Log.v("SMSTagTracker", "Got an access token: " + token);
 			} catch (OperationCanceledException e) {
-				Log.i("SMSTagTracker", "Was denied the access, didn't get an access token.");
+				Log.v("SMSTagTracker", "Was denied the access, didn't get an access token.");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
