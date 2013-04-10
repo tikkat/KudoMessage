@@ -31,6 +31,8 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		new SMSSent(this);
 
 		GCMRegistrar.checkDevice(this);
 		GCMRegistrar.checkManifest(this);
