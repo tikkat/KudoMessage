@@ -1,7 +1,6 @@
 package se.kudomessage.kudomessage_jessica;
 
 import com.google.android.gcm.GCMRegistrar;
-
 import android.os.Bundle;
 import android.accounts.AccountManager;
 import android.accounts.AccountManagerCallback;
@@ -11,7 +10,7 @@ import android.app.Activity;
 import android.util.Log;
 
 public class MainActivity extends Activity {
-	SMSHandler smsHandler = null;
+	private static SMSHandler smsHandler = null;
 
 	private String token;
 	private String GCMKey;
@@ -22,7 +21,7 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
+		
 		GCMRegistrar.checkDevice(this);
 		GCMRegistrar.checkManifest(this);
 		
@@ -64,5 +63,9 @@ public class MainActivity extends Activity {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public static SMSHandler getSMSHandler() {
+		return smsHandler;
 	}
 }

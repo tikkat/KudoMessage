@@ -22,6 +22,10 @@ public class GCMIntentService extends GCMBaseIntentService{
 	@Override
 	protected void onMessage(Context arg0, Intent intent) {
 		String message = intent.getStringExtra("message");
+		
+		// Get the message from Gmail and send it
+		
+		MainActivity.getSMSHandler().sendSMS("", "");
 	}
 
 	@Override
