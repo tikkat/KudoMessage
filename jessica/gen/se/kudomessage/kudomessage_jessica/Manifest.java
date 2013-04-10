@@ -9,6 +9,8 @@ package se.kudomessage.kudomessage_jessica;
 
 public final class Manifest {
     public static final class permission {
+        /**  GCM permissions 
+         */
         public static final String C2D_MESSAGE="se.kudomessage.kudomessage_jessica.permission.C2D_MESSAGE";
     }
 }
