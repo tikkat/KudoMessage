@@ -1,11 +1,25 @@
 package se.kudomessage.jessica;
 
+import android.content.ContentValues;
+import android.net.Uri;
+import android.telephony.SmsManager;
+
 public class SMSModel implements ISMSModel {
 
 	@Override
 	public void sendSMS(KudoMessage m) {
-		// TODO Auto-generated method stub
-
+		SmsManager smsManager = SmsManager.getDefault();
+		smsManager.sendTextMessage(m.receiver, null, m.content, null, null);
+		
+		saveSMSToSent(m);
+	}
+	
+	private void saveSMSToSent(KudoMessage m) {
+		ContentValues values = new ContentValues();
+		values.put("address", m.receiver);
+		values.put("body", m.content);
+		
+		Globals.getActivity().getContentResolver().insert(Uri.parse("content://sms/sent"), values);
 	}
 
 }
