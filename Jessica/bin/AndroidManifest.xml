@@ -3,6 +3,26 @@
     package="se.kudomessage.jessica"
     android:versionCode="1"
     android:versionName="1.0" >
+    
+    <!-- GCM permissions -->
+    <permission
+        android:name="se.kudomessage.jessica.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <!-- GCM permissions -->
+    
+    <!-- OAuth permissions -->
+	<uses-permission android:name="android.permission.GET_ACCOUNTS" />
+	<uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+	<uses-permission android:name="android.permission.USE_CREDENTIALS" />	
+	<!-- OAuth permissions -->
+    
+    <!-- SMS permissions -->
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.WRITE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <!-- SMS permissions -->
 
     <uses-sdk
         android:minSdkVersion="14"
