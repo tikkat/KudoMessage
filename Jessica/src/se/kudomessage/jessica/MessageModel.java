@@ -1,20 +1,18 @@
 package se.kudomessage.jessica;
 
-public class MessageModel implements IMessageModel{
+public class MessageModel {
 
-	@Override
 	public void sendMessage(KudoMessage m) {
-		// TODO Auto-generated method stub
-		
+		m = Globals.getGmailModel().getMessage(m);
+		SMSModel.sendSMS(m);
+		PushModel.pushMessage(m);
 	}
 
-	@Override
-	public void reveivedMessage(KudoMessage m) {
-		// TODO Auto-generated method stub
-		
+	public void receivedMessage(KudoMessage m) {
+		m = Globals.getGmailModel().addReceivedMessage(m);
+		PushModel.pushMessage(m);
 	}
 
-	@Override
 	public void addMessage(KudoMessage m) {
 		// TODO Auto-generated method stub
 		
