@@ -1,29 +1,35 @@
 package se.kudomessage.jessica;
 
+import java.util.List;
+
 public class GmailModel implements IGmailModel {
 
 	@Override
-	public void addReceivedMessage(KudoMessage m) {
+	public KudoMessage addReceivedMessage(KudoMessage m) {
 		// TODO Auto-generated method stub
 		
+		return null;
 	}
 
 	@Override
-	public void addSentMessage(KudoMessage m) {
+	public KudoMessage addSentMessage(KudoMessage m) {
 		// TODO Auto-generated method stub
 		
+		return null;
 	}
 
 	@Override
-	public void getMessage(KudoMessage m) {
+	public KudoMessage getMessage(KudoMessage m) {
 		// TODO Auto-generated method stub
 		
+		return null;
 	}
 
 	@Override
-	public void findMessage(String query) {
+	public List<KudoMessage> findMessage(String query) {
 		// TODO Auto-generated method stub
 		
+		return null;
 	}
 
 	@Override
