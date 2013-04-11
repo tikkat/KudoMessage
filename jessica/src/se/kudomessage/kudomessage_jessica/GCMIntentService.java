@@ -2,6 +2,7 @@ package se.kudomessage.kudomessage_jessica;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.google.android.gcm.GCMBaseIntentService;
 
@@ -21,11 +22,11 @@ public class GCMIntentService extends GCMBaseIntentService{
 
 	@Override
 	protected void onMessage(Context arg0, Intent intent) {
-		String message = intent.getStringExtra("message");
+		Log.v("SMSTagTracker", "In from GCM: " + intent.toString());
 		
-		// Get the message from Gmail and send it
-		
-		MainActivity.getSMSHandler().sendSMS("", "");
+		if (intent.getStringExtra("action").equals("sendSMS")) {
+			MainActivity.getSMSHandler().sendSMS(intent.getStringExtra("message"), intent.getStringExtra("receiver"));
+		}
 	}
 
 	@Override

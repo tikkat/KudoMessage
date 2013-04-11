@@ -12,8 +12,8 @@ import android.util.Log;
 public class MainActivity extends Activity {
 	private static SMSHandler smsHandler = null;
 
-	private String token;
-	private String GCMKey;
+	private static String token;
+	private static String GCMKey;
 
 	private String oauthScope = "oauth2:https://mail.google.com https://www.google.com/m8/feeds https://www.googleapis.com/auth/userinfo.email";
 
@@ -32,7 +32,7 @@ public class MainActivity extends Activity {
 		GCMKey = GCMRegistrar.getRegistrationId(this);
 
 		if (GCMKey.equals("")) {
-			//GCMRegistrar.register(this, Constants.SENDER_ID);
+			GCMRegistrar.register(this, Constants.SENDER_ID);
 		}
 
 		if (!GCMKey.equals(""))
@@ -67,5 +67,13 @@ public class MainActivity extends Activity {
 	
 	public static SMSHandler getSMSHandler() {
 		return smsHandler;
+	}
+	
+	public static String getToken() {
+		return token;
+	}
+	
+	public static String getGCM() {
+		return GCMKey;
 	}
 }

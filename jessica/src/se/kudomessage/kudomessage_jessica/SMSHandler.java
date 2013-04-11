@@ -52,6 +52,8 @@ public class SMSHandler {
 	}
 	
 	public void sendSMS(String message, String receiver) {
+		Log.v("SMSTagTracker", "Should now send an SMS");
+		
 		// Send the SMS
 		SmsManager smsManager = SmsManager.getDefault();
 		smsManager.sendTextMessage(receiver, null, message, sendSMSCallback, null);

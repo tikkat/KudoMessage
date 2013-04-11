@@ -146,7 +146,9 @@ public class ClientUser {
 
 		JSONObject info = new JSONObject(result);
 		username = info.getString("email");
-		userID = info.getString("id");
+		
+		// TODO: Set userID as an hash of the email
+		userID = info.getString("email");
 		
 		System.out.println("Got user info: " + username + ", " + userID);
 	}
@@ -183,6 +185,7 @@ public class ClientUser {
 	 */
 	public void registerAndroidDevice(JSONObject input) {
 		PushHandler.registerAndroidDevice(userID, input.getString("gcm"));
+		System.out.println("Registered gcm " + input.getString("gcm") + " with user " + userID);
 	}
 
 	/**
@@ -199,7 +202,7 @@ public class ClientUser {
 		String messageID = gmailHandler.saveMessageToPending(message, receiver, username);
 		
 		if (!messageID.isEmpty()) {
-			PushHandler.notifyAndroidDeviceNewMessage(userID, messageID);
+			PushHandler.notifyAndroidDeviceNewMessage(userID, message, receiver);
 			
 			System.out.println("Uploaded a new message with id " + messageID);
 		} else {

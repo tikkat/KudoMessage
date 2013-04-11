@@ -4,5 +4,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="src/resources/mail.jar"/>
 	<classpathentry kind="lib" path="src/resources/gcm-server.jar"/>
+	<classpathentry kind="lib" path="src/resources/json-simple-1.1.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
