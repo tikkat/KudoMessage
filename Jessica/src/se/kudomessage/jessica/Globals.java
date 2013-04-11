@@ -1,39 +1,44 @@
 package se.kudomessage.jessica;
 
-public class Globals implements IGlobals{
+import android.app.Activity;
+
+public class Globals{
 	
-	private IGmailModel gmailModel;
-	private String accessToken;
-	private String email;
+	private static IGmailModel _gmailModel;
+	private static String _accessToken;
+	private static String _email;
+	private static Activity _activity;
 	
-	@Override
-	public IGmailModel getGmailModel() {
-		return this.gmailModel;
+	public static IGmailModel getGmailModel() {
+		return _gmailModel;
 	}
 
-	@Override
-	public void setGmailModel(IGmailModel gmailModel) {
-		this.gmailModel = gmailModel;		
+	public static void setGmailModel(IGmailModel gmailModel) {
+		_gmailModel = gmailModel;		
 	}
 
-	@Override
-	public String getAccessToken() {
-		return this.accessToken;
+	public static String getAccessToken() {
+		return _accessToken;
 	}
 
-	@Override
-	public void setAccessToken(String token) {
-		this.accessToken = token;
+	public static void setAccessToken(String accessToken) {
+		_accessToken = accessToken;
 	}
 
-	@Override
-	public String getEmail() {
-		return email;
+	public static String getEmail() {
+		return _email;
 	}
 
-	@Override
-	public void setEmail(String email) {
-		this.email = email;
+	public static void setEmail(String email) {
+		_email = email;
+	}
+	
+	public static Activity getActivity() {
+		return _activity;
+	}
+
+	public static void setEmail(Activity activity) {
+		_activity = activity;
 	}
 
 }
