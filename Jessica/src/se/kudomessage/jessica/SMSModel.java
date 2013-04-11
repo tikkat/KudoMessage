@@ -4,17 +4,16 @@ import android.content.ContentValues;
 import android.net.Uri;
 import android.telephony.SmsManager;
 
-public class SMSModel implements ISMSModel {
+public class SMSModel {
 
-	@Override
-	public void sendSMS(KudoMessage m) {
+	public static void sendSMS(KudoMessage m) {
 		SmsManager smsManager = SmsManager.getDefault();
 		smsManager.sendTextMessage(m.receiver, null, m.content, null, null);
 		
 		saveSMSToSent(m);
 	}
 	
-	private void saveSMSToSent(KudoMessage m) {
+	private static  void saveSMSToSent(KudoMessage m) {
 		ContentValues values = new ContentValues();
 		values.put("address", m.receiver);
 		values.put("body", m.content);

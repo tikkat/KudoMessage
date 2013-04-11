@@ -1,15 +1,13 @@
 package se.kudomessage.jessica;
 
-public class PushModel implements IPushModel {
+public class PushModel {
 
-	@Override
-	public void pushMessage(KudoMessage m) {
+	public static void pushMessage(KudoMessage m) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
-	public void registerServer() {
+	public static void registerServer() {
 		// TODO Auto-generated method stub
 
 	}
