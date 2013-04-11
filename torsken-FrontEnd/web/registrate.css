@@ -79,12 +79,16 @@ body {
     border:1px solid #aaa;
     box-shadow: 0px 0px 3px #ccc, 0 10px 15px #eee inset;
     border-radius:2px;
+    -moz-transition: padding .30s;
+    -webkit-transition: padding .30s;
+    -o-transition: padding .30s;
+    transition: padding .30s;
 }
 .registration_form input:focus, .registration_form textarea:focus {
     background: #fff;
     border:1px solid #555;
     box-shadow: 0 0 3px #aaa;
-    padding-right: 70px;  /*The expansion of the input field when you select it!*/
+    padding-right: 30px;  /*The expansion of the input field when you select it!*/
 }
 /* Button Style */
 button.submit {
