@@ -4,18 +4,9 @@ import android.app.Activity;
 
 public class Globals{
 	
-	private static IGmailModel _gmailModel;
 	private static String _accessToken;
 	private static String _email;
 	private static Activity _activity;
-	
-	public static IGmailModel getGmailModel() {
-		return _gmailModel;
-	}
-
-	public static void setGmailModel(IGmailModel gmailModel) {
-		_gmailModel = gmailModel;		
-	}
 
 	public static String getAccessToken() {
 		return _accessToken;
