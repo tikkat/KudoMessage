@@ -3,9 +3,9 @@ package se.kudomessage.jessica;
 import java.util.List;
 
 public interface IGmailModel {
-	KudoMessage addReceivedMessage(KudoMessage m);
-	KudoMessage addSentMessage(KudoMessage m);
-	KudoMessage getMessage(KudoMessage m);
+	void addReceivedMessage(KudoMessage m);
+	void addSentMessage(KudoMessage m);
+	KudoMessage getMessage(String id);
 	List<KudoMessage> findMessage(String query);
 	void moveMessage(KudoMessage m, Label target);
 }

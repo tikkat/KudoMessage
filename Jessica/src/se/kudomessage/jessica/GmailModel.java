@@ -5,21 +5,17 @@ import java.util.List;
 public class GmailModel implements IGmailModel {
 
 	@Override
-	public KudoMessage addReceivedMessage(KudoMessage m) {
+	public void addReceivedMessage(KudoMessage m) {
 		// TODO Auto-generated method stub
-		
-		return null;
 	}
 
 	@Override
-	public KudoMessage addSentMessage(KudoMessage m) {
+	public void addSentMessage(KudoMessage m) {
 		// TODO Auto-generated method stub
-		
-		return null;
 	}
 
 	@Override
-	public KudoMessage getMessage(KudoMessage m) {
+	public KudoMessage getMessage(String id) {
 		// TODO Auto-generated method stub
 		
 		return null;
