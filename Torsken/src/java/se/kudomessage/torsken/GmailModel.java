@@ -8,6 +8,7 @@ import com.sun.mail.imap.IMAPSSLStore;
 import java.io.IOException;
 import java.security.Provider;
 import java.security.Security;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -143,10 +144,49 @@ public class GmailModel {
         }
     }
 
-    public List<KudoMessage> findMessage(String query) {
-        // TODO Auto-generated method stub
+    public List<KudoMessage> findMessage(final String query) {
+        ArrayList<KudoMessage> result = new ArrayList<KudoMessage>();
 
-        return null;
+        SearchTerm term = new SearchTerm() {
+            public boolean match(Message message) {
+                if (message.isExpunged()) {
+                    return false;
+                }
+
+                try {
+                    if (message.getContent().toString().toLowerCase().contains(query.toLowerCase())) {
+                        return true;
+                    }
+                } catch (IOException e) {
+                } catch (MessagingException e) {
+                }
+
+                return false;
+            }
+        };
+
+        Message[] messages = null;
+
+        try {
+            messages = rootFolder.search(term);
+        } catch (MessagingException e) {
+        }
+
+        for (Message message : messages) {
+            try {
+                KudoMessage tmp = new KudoMessage(
+                        getMessageId(message),
+                        message.getContent().toString(),
+                        message.getFrom()[0].toString(),
+                        message.getAllRecipients()[0].toString());
+                
+                result.add(tmp);
+            } catch (IOException e) {
+            } catch (MessagingException e) {
+            }
+        }
+
+        return result;
     }
 
     public void moveMessage(KudoMessage m, Label target) {
