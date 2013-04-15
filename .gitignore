@@ -1,6 +1,8 @@
 !Jessica/bin/AndroidManifest.xml
 Jessica/bin/*
 
+/Torsken/nbproject/private/
+
 *.class
 
 # OS generated files #
