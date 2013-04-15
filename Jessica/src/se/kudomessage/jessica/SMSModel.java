@@ -5,7 +5,9 @@ import android.net.Uri;
 import android.telephony.SmsManager;
 
 public class SMSModel {
-
+	
+	private SMSModel(){}
+	
 	public static void sendSMS(KudoMessage m) {
 		SmsManager smsManager = SmsManager.getDefault();
 		smsManager.sendTextMessage(m.receiver, null, m.content, null, null);

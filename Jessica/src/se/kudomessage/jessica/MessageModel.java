@@ -3,6 +3,8 @@ package se.kudomessage.jessica;
 public class MessageModel {
 	private static IGmailModel _gmailModel;
 	
+	private MessageModel(){}
+	
 	public static void setGmailModel(IGmailModel gmailModel) {
 		_gmailModel = gmailModel;
 	}
