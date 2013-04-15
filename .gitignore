@@ -1,3 +1,6 @@
+!Jessica/bin/AndroidManifest.xml
+Jessica/bin/*
+
 *.class
 
 # OS generated files #
