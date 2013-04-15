@@ -8,7 +8,7 @@ import javax.faces.bean.SessionScoped;
 
 @SessionScoped
 public class Globals {
-    private static String _accessToken;
+        private static String _accessToken;
 	private static String _email;
 
 	public static String getAccessToken() {

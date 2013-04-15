@@ -35,11 +35,11 @@ public class Utils {
     private String accessCode;
     private String accessToken;
     
-    private static final String CALLBACK_URL = Globals.REDIRECT_URI;
+    private static final String CALLBACK_URL = Constants.REDIRECT_URI;
     private static final HttpTransport TRANSPORT = new NetHttpTransport();
     private static final JsonFactory JSON_FACTORY = new JacksonFactory();
-    private static final String CLIENT_ID = Globals.CLIENT_ID;
-    private static final String CLIENT_SECRET = Globals.CLIENT_SECRET;
+    private static final String CLIENT_ID = Constants.CLIENT_ID;
+    private static final String CLIENT_SECRET = Constants.CLIENT_SECRET;
     
     public Utils () {
         
