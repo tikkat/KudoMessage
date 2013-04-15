@@ -6,7 +6,17 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        Hello from Facelets
+        <h1>Kudo Message </h1><br/>
+        
+        <h:form>
+            <h:commandButton value="Logga in med ditt Google konto" action="#{oAuthController.redirectToGoogleOAuth()}" />
+        
+            <br/>
+            
+            <h:commandButton value="Hej" action="hej" />
+        </h:form>
+        
+        
     </h:body>
 </html>
 
