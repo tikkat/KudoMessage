@@ -23,8 +23,9 @@ public class OAuthModel implements IOAuthModel{
 
 	@Override
 	public void renewAccessToken() {
-		// TODO Auto-generated method stub
-		
+		AccountManager am = AccountManager.get(Globals.getActivity());
+		am.invalidateAuthToken("com.google", Globals.getAccessToken());
+		am.getAuthTokenByFeatures("com.google", oauthScope, null, Globals.getActivity(), null, null, new OAuthCallback(), null);
 	}
 	
 	private class OAuthCallback implements AccountManagerCallback<Bundle> {
