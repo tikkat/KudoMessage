@@ -6,29 +6,28 @@ import android.accounts.AccountManagerFuture;
 import android.accounts.OperationCanceledException;
 import android.os.Bundle;
 
-public class OAuthModel implements IOAuthModel{
-	private String oauthScope = "oauth2:https://mail.google.com https://www.google.com/m8/feeds https://www.googleapis.com/auth/userinfo.email";
+public class OAuthModel{
+	private final static String OAUTH_SCOPE = "oauth2:https://mail.google.com https://www.google.com/m8/feeds https://www.googleapis.com/auth/userinfo.email";
 	
-	@Override
-	public void requestAccessToken() {
+	// Static Class
+	private OAuthModel(){}
+	
+	public static void requestAccessToken() {
 		AccountManager am = AccountManager.get(Globals.getActivity());
-		am.getAuthTokenByFeatures("com.google", oauthScope, null, Globals.getActivity(), null, null, new OAuthCallback(), null);
+		am.getAuthTokenByFeatures("com.google", OAUTH_SCOPE, null, Globals.getActivity(), null, null, new OAuthCallback(), null);
 	}
 
-	@Override
-	public void revokeAccessToken() {
+	public static void revokeAccessToken() {
 		AccountManager am = AccountManager.get(Globals.getActivity());
 		am.invalidateAuthToken("com.google", Globals.getAccessToken());
 	}
 
-	@Override
-	public void renewAccessToken() {
-		AccountManager am = AccountManager.get(Globals.getActivity());
-		am.invalidateAuthToken("com.google", Globals.getAccessToken());
-		am.getAuthTokenByFeatures("com.google", oauthScope, null, Globals.getActivity(), null, null, new OAuthCallback(), null);
+	public static void renewAccessToken() {
+		OAuthModel.revokeAccessToken();
+		OAuthModel.requestAccessToken();
 	}
 	
-	private class OAuthCallback implements AccountManagerCallback<Bundle> {
+	private static class OAuthCallback implements AccountManagerCallback<Bundle> {
 		@Override
 		public void run(AccountManagerFuture<Bundle> result) {
 			try {
