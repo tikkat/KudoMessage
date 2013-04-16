@@ -28,7 +28,7 @@ public class Globals{
 		return _activity;
 	}
 
-	public static void setEmail(Activity activity) {
+	public static void setActivity(Activity activity) {
 		_activity = activity;
 	}
 
