@@ -32,6 +32,7 @@ public class OAuthModel{
 		public void run(AccountManagerFuture<Bundle> result) {
 			try {
 				Globals.setAccessToken(result.getResult().getString(AccountManager.KEY_AUTHTOKEN));
+				Globals.setEmail(result.getResult().getString(AccountManager.KEY_ACCOUNT_NAME));
 			} catch (OperationCanceledException e) {
 				// Was denied the access, didn't get an access token.
 			} catch (Exception e) {
