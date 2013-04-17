@@ -9,7 +9,8 @@ package se.kudomessage.torsken;
  * @author Philip
  */
 public class Constants {
-    static final String REDIRECT_URI = "http://localhost:8080/Torsken/faces/oauthcallback/index.xhtml";
-    static final String CLIENT_ID = "509205524891-milcd02622075pccioirpfo0ba8qfeg4.apps.googleusercontent.com";
-    static final String CLIENT_SECRET = "n6H0Krn3BgCn8_KmDilsyPAR";
+    static final String REDIRECT_URI = "";
+    static final String CLIENT_ID = "";
+    static final String CLIENT_SECRET = "";
+    static final String APIKEY = "";
 }
