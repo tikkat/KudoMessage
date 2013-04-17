@@ -4,13 +4,15 @@
  */
 package se.kudomessage.torsken;
 
+import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+@ManagedBean
 @SessionScoped
 public class Globals {
         private static String _accessToken;
 	private static String _email;
-
+        
 	public static String getAccessToken() {
 		return _accessToken;
 	}

@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
@@ -26,6 +27,7 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean
 @SessionScoped
+@RequestScoped
 public class OAuthController {
     
     //This line of code will save the GET parameter "?code" to the variable accessCode in HomeController.
@@ -42,7 +44,7 @@ public class OAuthController {
     private static final String CLIENT_SECRET = Constants.CLIENT_SECRET;
     
     public OAuthController () {
-        
+        init();
     }
     
     @PostConstruct
