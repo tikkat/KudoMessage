@@ -10,28 +10,27 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Utils {
     public static Map<String, String> getUserInfo (String accessToken) {
-        String url = "http://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=" + accessToken;
-        String result = getContentOfURL(url);
-        
-        Map<String, String> m = new HashMap<String, String>();
-        m.put("userID", "kudomessage@gmail.com");
-        
-        JSONObject info = null;
         try {
-            info = (JSONObject) new JSONParser().parse(result);
+            String url = "http://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=" + accessToken;
+            String result = getContentOfURL(url);
             
-            m.put("email", (String)info.get("email"));
-            m.put("userID", (String)info.get("kudomessage@gmail.com"));
-        } catch (ParseException ex) {
+            JSONObject info = new JSONObject(result);
+            
+            Map<String, String> m = new HashMap<String, String>();
+            m.put("email", info.getString("email"));
+            m.put("userID", info.getString("email"));
+            
+            return m;
+        } catch (JSONException ex) {
+            return null;
         }
-        
-        return m;
     }
 
     private static String getContentOfURL(String url) {

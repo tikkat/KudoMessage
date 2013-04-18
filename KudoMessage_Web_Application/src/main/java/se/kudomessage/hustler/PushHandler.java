@@ -4,7 +4,6 @@
  */
 package se.kudomessage.hustler;
 
-import se.kudomessage.hustler.Globals;
 import com.google.android.gcm.server.Message;
 import com.google.android.gcm.server.Result;
 import com.google.android.gcm.server.Sender;

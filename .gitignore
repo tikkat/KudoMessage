@@ -1,7 +1,7 @@
 !Jessica/bin/AndroidManifest.xml
 Jessica/bin/*
 
-/Torsken/nbproject/private/
+/KudoMessage_Web_Application/target/
 
 *.class
 
@@ -15,7 +15,3 @@ Jessica/bin/*
 Icon?
 ehthumbs.db
 Thumbs.db
-<<<<<<< HEAD
-=======
-/Torsken/build/
->>>>>>> Updated configuration files
