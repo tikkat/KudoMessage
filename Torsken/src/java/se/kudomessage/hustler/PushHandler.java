@@ -2,16 +2,20 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package se.kudomessage.torsken;
+package se.kudomessage.hustler;
 
+import se.kudomessage.hustler.Globals;
 import com.google.android.gcm.server.Message;
 import com.google.android.gcm.server.Result;
 import com.google.android.gcm.server.Sender;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import javax.faces.bean.ApplicationScoped;
+import javax.faces.bean.ManagedBean;
 
-
+@ManagedBean
+@ApplicationScoped
 public class PushHandler {
     
     private static Map<String, String> userIDToGCM = new HashMap<String, String>();
@@ -22,6 +26,10 @@ public class PushHandler {
     
     public static void registerAndroidDevice (String userID, String GCM) {
         userIDToGCM.put(userID, GCM);
+    }
+    
+    public static void testPush() {
+        notifyAndroidNewMessage(Globals.getEmail(), "Test meddelande");
     }
     
     public static void notifyAndroidNewMessage(String userID, String messageID) {

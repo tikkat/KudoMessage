@@ -4,10 +4,6 @@
  */
 package se.kudomessage.torsken;
 
-/**
- *
- * @author Philip
- */
 public class Constants {
     static final String REDIRECT_URI = "";
     static final String CLIENT_ID = "";

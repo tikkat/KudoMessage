@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package se.kudomessage.torsken;
+package se.kudomessage.hustler;
 
 import com.sun.mail.imap.IMAPSSLStore;
 import java.io.IOException;
@@ -11,15 +11,13 @@ import java.security.Security;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
 import javax.mail.search.SearchTerm;
-import se.kudomessage.torsken.oauth.OAuth2SaslClientFactory;
+import se.kudomessage.hustler.oauth.OAuth2SaslClientFactory;
 
 public class GmailModel {
 
@@ -191,5 +189,11 @@ public class GmailModel {
 
     public void moveMessage(KudoMessage m, Label target) {
         // TODO Auto-generated method stub
+    }
+    
+    public enum Label {
+        PENDING, 
+        SENT, 
+        ERROR
     }
 }

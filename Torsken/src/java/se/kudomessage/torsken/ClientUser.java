@@ -9,23 +9,16 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.faces.bean.SessionScoped;
 
-/**
- *
- * @author Philip
- */
 @SessionScoped
 public class ClientUser {
-    
+    private static String accessToken;
     private Map<String, ArrayList<KudoMessage>> conversationMap;
    
-    
-    
     /**
      * Initializes the map which holds all of the conversations.
      */
     public ClientUser () {
         conversationMap = new HashMap<String, ArrayList<KudoMessage>>();
-        
     }
     
     public void addMessageToConversation (KudoMessage m, String conversationNumber) {
@@ -54,4 +47,7 @@ public class ClientUser {
         return false;
     }
 
+    public static void setAccessToken(String token) {
+        accessToken = token;
+    }
 }

@@ -1,4 +1,4 @@
-package se.kudomessage.torsken.oauth;
+package se.kudomessage.hustler.oauth;
 
 import java.io.IOException;
 

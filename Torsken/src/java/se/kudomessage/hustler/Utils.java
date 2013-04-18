@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package se.kudomessage.torsken;
+package se.kudomessage.hustler;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,23 +14,20 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-/**
- *
- * @author Philip
- */
 public class Utils {
     public static Map<String, String> getUserInfo (String accessToken) {
         String url = "http://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=" + accessToken;
         String result = getContentOfURL(url);
         
         Map<String, String> m = new HashMap<String, String>();
+        m.put("userID", "kudomessage@gmail.com");
         
         JSONObject info = null;
         try {
             info = (JSONObject) new JSONParser().parse(result);
             
             m.put("email", (String)info.get("email"));
-            m.put("userID", (String)info.get("email"));
+            m.put("userID", (String)info.get("kudomessage@gmail.com"));
         } catch (ParseException ex) {
         }
         
@@ -48,8 +45,7 @@ public class Utils {
             is.close();
             
             return result;
-        } catch (IOException e) {
-        }
+        } catch (IOException e) {}
         
         return "";
     }

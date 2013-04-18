@@ -21,15 +21,10 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-/**
- *
- * @author Philip
- */
 @ManagedBean
 @SessionScoped
 @RequestScoped
 public class OAuthController {
-    
     //This line of code will save the GET parameter "?code" to the variable accessCode in HomeController.
     //The Home page will be loaded every time you login with OAuth, google will send the accessCode
     //in the URL
@@ -54,22 +49,21 @@ public class OAuthController {
             setAccessTokenAsGlobal();
         } catch (IOException ex) {
             Logger.getLogger(OAuthController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        }    
     }
     
-    public static String getTokenFromCode(String code) throws IOException {
-            
+    public static String getTokenFromCode(String code) throws IOException {  
         if (code == null)
             return "The code is null";
         
-        GoogleAccessTokenRequest.GoogleAuthorizationCodeGrant authRequest = new GoogleAccessTokenRequest.GoogleAuthorizationCodeGrant(TRANSPORT,
-                        JSON_FACTORY, CLIENT_ID, CLIENT_SECRET, code, CALLBACK_URL);
+        GoogleAccessTokenRequest.GoogleAuthorizationCodeGrant authRequest = 
+                new GoogleAccessTokenRequest.GoogleAuthorizationCodeGrant(
+                TRANSPORT, JSON_FACTORY, CLIENT_ID, CLIENT_SECRET, code, CALLBACK_URL);
         authRequest.useBasicAuthorization = false;
         AccessTokenResponse authResponse = authRequest.execute();
         String accessToken = authResponse.accessToken;
-        GoogleAccessProtectedResource access = new GoogleAccessProtectedResource(accessToken,
-                        TRANSPORT, JSON_FACTORY, CLIENT_ID, CLIENT_SECRET, authResponse.refreshToken);
+        GoogleAccessProtectedResource access = new GoogleAccessProtectedResource(
+                accessToken, TRANSPORT, JSON_FACTORY, CLIENT_ID, CLIENT_SECRET, authResponse.refreshToken);
         TRANSPORT.createRequestFactory(access);
         
         return authResponse.accessToken;
@@ -80,7 +74,7 @@ public class OAuthController {
     }
     
     public void setAccessTokenAsGlobal () {
-        Globals.setAccessToken(accessToken);
+        ClientUser.setAccessToken(accessToken);
     }
     
     public String getAccessCode() {
@@ -89,6 +83,5 @@ public class OAuthController {
 
     public void setAccessCode(String accessCode) {
         this.accessCode = accessCode;
-    }
-    
+    }   
 }

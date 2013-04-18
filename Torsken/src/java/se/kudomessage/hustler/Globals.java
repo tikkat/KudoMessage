@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package se.kudomessage.torsken;
+package se.kudomessage.hustler;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
