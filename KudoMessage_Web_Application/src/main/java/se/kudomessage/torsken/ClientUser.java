@@ -31,6 +31,19 @@ public class ClientUser {
         }
     }
     
+    public void addMessageListToConversationNumber ( ArrayList<KudoMessage> list, String conversationNumber ) {
+        if (conversationExists(conversationNumber)) {
+            conversationMap.get(conversationNumber).addAll(list);
+        } else {
+            conversationMap.put(conversationNumber, list);
+        }
+    }
+    
+    //Returns null if the conversation dont exists
+    public ArrayList<KudoMessage> getMessageListFromNumber ( String conversationNumber ) {
+        return conversationMap.get(conversationNumber);
+    }
+    
     /**
      * This method will return true if the conversation exists in the map i.e
      * if the number is a key in the map. Otherwise it will return false.
