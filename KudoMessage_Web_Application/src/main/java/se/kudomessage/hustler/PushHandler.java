@@ -27,10 +27,6 @@ public class PushHandler {
         userIDToGCM.put(userID, GCM);
     }
     
-    public static void testPush() {
-        notifyAndroidNewMessage(Globals.getEmail(), "Test meddelande");
-    }
-    
     public static void notifyAndroidNewMessage(String userID, String messageID) {
         String GCMKey = getGCMKey(userID);
         
