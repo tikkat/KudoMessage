@@ -43,6 +43,11 @@
             <version>20090211</version>
         </dependency>
         <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-jaxrs</artifactId>
+            <version>2.3.6.Final</version>
+        </dependency>
+        <dependency>
             <groupId>gcm-server</groupId>
             <artifactId>com.google.android.gcm.server</artifactId>
             <version>1.0</version>
@@ -112,6 +117,9 @@
             <id>snapshots</id>
             <url>http://anonsvn.icefaces.org/repo/maven2/releases/</url>
         </repository>
-        
+        <repository>
+            <id>JBoss repository</id>
+            <url>https://repository.jboss.org/nexus/content/groups/public-jboss/</url>
+        </repository>
     </repositories>
 </project>
