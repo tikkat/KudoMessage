@@ -1,9 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package se.kudomessage.torsken;
 
+import javax.faces.bean.ManagedBean;
+
+@ManagedBean
 public class KudoMessage {
 	protected String id, 
 		content, 
@@ -26,9 +25,30 @@ public class KudoMessage {
 		this.content = content;
 		this.origin = origin;
 	}
+        
+        public KudoMessage ( String content, String receiver ) {
+            this.content = content;
+            this.receiver = receiver;
+        }
 	
 	public KudoMessage(String id){
 		this.id = id;
 	}
+
+    public String getId() {
+        return id;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public String getOrigin() {
+        return origin;
+    }
+
+    public String getReceiver() {
+        return receiver;
+    }
 	
 }
