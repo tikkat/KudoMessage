@@ -10,8 +10,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -25,7 +24,7 @@ public class Utils {
             
             Map<String, String> m = new HashMap<String, String>();
             m.put("email", info.getString("email"));
-            m.put("userID", info.getString("email"));
+            m.put("userID", DigestUtils.sha1Hex(info.getString("email")));
             
             return m;
         } catch (JSONException ex) {
