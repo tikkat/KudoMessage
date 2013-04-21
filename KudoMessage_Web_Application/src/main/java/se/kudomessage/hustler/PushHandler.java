@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import org.icefaces.application.PushRenderer;
 
 @ManagedBean
 @ApplicationScoped
@@ -23,11 +24,18 @@ public class PushHandler {
         return userIDToGCM.get(userID);
     }
     
-    public static void registerAndroidDevice (String userID, String GCM) {
+    public static void registerAndroidServer (String userID, String GCM) {
         userIDToGCM.put(userID, GCM);
     }
     
-    public static void notifyAndroidNewMessage(String userID, String messageID) {
+    public static void notifyAllServers(String userID, String messageID) {
+        if (userIDToGCM.containsKey(userID)) {
+            // The user has a registered Android device server, lets notify it!
+            notifyAndroidServer(userID, messageID);
+        }
+    }
+    
+    public static void notifyAndroidServer(String userID, String messageID) {
         String GCMKey = getGCMKey(userID);
         
         Message messageObject = new Message.Builder().
@@ -40,5 +48,9 @@ public class PushHandler {
             Result result = sender.send(messageObject, GCMKey, 5);
         } catch (IOException e) {
         }
+    }
+    
+    public static void notifyAllClients(String userID) {
+        PushRenderer.render(userID);
     }
 }
