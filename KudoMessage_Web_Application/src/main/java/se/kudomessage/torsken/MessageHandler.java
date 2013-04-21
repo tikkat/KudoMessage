@@ -9,7 +9,7 @@ import org.icefaces.application.PushRenderer;
 @SessionScoped
 public class MessageHandler {
     
-    private String PUSH_GROUP = "test";
+    private String PUSH_GROUP;
     private String message, number;
     private ClientUser client;
     private ArrayList<ConversationList> list = new ArrayList<ConversationList>();
@@ -18,24 +18,27 @@ public class MessageHandler {
     
     public MessageHandler () {
         client = ClientUser.getInstance();
+        this.PUSH_GROUP = client.getID();
         PushRenderer.addCurrentSession(PUSH_GROUP);
     }
     
     public void sendMessage () {
-        tmpMess = new KudoMessage(message, number);
+        if (!message.isEmpty() && !number.isEmpty()) {
+            tmpMess = new KudoMessage(message, number);
         
-        if (conversationExists(number) >= 0) {
-            list.get(conversationExists(number)).addToList(tmpMess);
-        } else {
-            tmpList = new ConversationList();
-            tmpList.setConversationNumber(number);
-            tmpList.addToList(tmpMess);
-            list.add(tmpList);
-        }
+            if (conversationExists(number) >= 0) {
+                list.get(conversationExists(number)).addToList(tmpMess);
+            } else {
+                tmpList = new ConversationList();
+                tmpList.setConversationNumber(number);
+                tmpList.addToList(tmpMess);
+                list.add(tmpList);
+            }
 
-        PushRenderer.render(PUSH_GROUP);
-        message = "";
-        number = "";
+            PushRenderer.render(PUSH_GROUP);
+            message = "";
+            number = "";
+        }
     }
     
     public int conversationExists ( String num ) {
