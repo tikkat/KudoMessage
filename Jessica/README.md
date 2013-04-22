@@ -20,4 +20,4 @@ The way KudoMessage is built is with access tokens using OAuth 2.0.
 ####Hustler
 For Hustler to be able to reach out to Jessica it uses a service provided by Google called Google Cloud Message, it's a push service.
 
-When ever Jessica wants to say something to Hustler it does so by executing urls on Hustler, with certain variables in it.
+When ever Jessica wants to say something to Hustler it does so by using a way called RESTful, with JSON objects.
