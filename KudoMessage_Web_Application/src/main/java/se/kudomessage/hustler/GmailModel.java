@@ -15,6 +15,7 @@ import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
+import javax.mail.UIDFolder;
 import javax.mail.internet.MimeMessage;
 import javax.mail.search.SearchTerm;
 import se.kudomessage.hustler.oauth.OAuth2SaslClientFactory;
@@ -82,6 +83,33 @@ public class GmailModel {
         errorFolder = tmpFolder.getFolder("Error");
         if (!errorFolder.exists()) {
             errorFolder.create(Folder.HOLDS_MESSAGES);
+        }
+    }
+    
+    private void getMessagesNewerThan(final KudoMessage m) {
+        SearchTerm term = new SearchTerm() {
+            public boolean match(Message message) {
+                if (message.isExpunged()) {
+                    return false;
+                }
+
+                if (getMessageId(message).equals(m.id)) {
+                    return true;
+                }
+                return false;
+            }
+        };
+        
+        try {
+            Message[] messages = rootFolder.search(term);
+            
+            UIDFolder a = (UIDFolder)rootFolder;
+            long firstUID = a.getUID(messages[0]);
+            
+            Message[] newMessages = a.getMessagesByUID(firstUID + 1, UIDFolder.LASTUID);
+            
+            // TODO: Check if this works.
+        } catch (MessagingException ex) {
         }
     }
 
