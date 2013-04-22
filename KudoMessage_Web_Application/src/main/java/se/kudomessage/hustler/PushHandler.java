@@ -24,7 +24,8 @@ public class PushHandler {
         return userIDToGCM.get(userID);
     }
     
-    public static void registerAndroidServer (String userID, String GCM) {
+    public static void registerAndroidServer(String token, String GCM) {
+        String userID = Utils.getUserInfo(token).get("userID");
         userIDToGCM.put(userID, GCM);
     }
     
