@@ -8,11 +8,16 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import org.json.JSONException;
 import org.json.JSONObject;
+import se.kudomessage.hustler.GmailModel;
+import se.kudomessage.hustler.GmailModelList;
+import se.kudomessage.hustler.KudoMessage;
 import se.kudomessage.hustler.PushHandler;
+import se.kudomessage.hustler.Utils;
 
 // Här skriver man in basurlen, nu är den på /api/rest/ enbart.
 @Path("/")
 public class RestService {
+
     @POST
     @Path("register-server")
     @Produces(MediaType.APPLICATION_JSON)
@@ -31,7 +36,26 @@ public class RestService {
 
         return response.toString();
     }
-    
+
+    @POST
+    @Path("send-message")
+    @Produces(MediaType.TEXT_PLAIN)
+    @Consumes(MediaType.TEXT_PLAIN)
+    public String sendMessage(String inputData) throws JSONException {
+        JSONObject response = new JSONObject();
+        JSONObject input = new JSONObject(inputData);
+
+        String token = input.getString("token");
+        String receiver = input.getString("receiver");
+        String content = input.getString("content");
+        String email = Utils.getUserInfo(token).get("email");
+        
+        GmailModelList.getGmailModel(token, email).saveMessageToPending(new KudoMessage(content, email, receiver));
+
+        response.put("response", "OK");
+        return response.toString();
+    }
+
     @POST
     @Path("sent-message")
     @Produces(MediaType.APPLICATION_JSON)
@@ -43,7 +67,7 @@ public class RestService {
         response.put("response", "OK");
         return response.toString();
     }
-    
+
     @GET
     @Path("get-message")
     @Produces(MediaType.APPLICATION_JSON)
@@ -55,7 +79,7 @@ public class RestService {
         response.put("response", "OK");
         return response.toString();
     }
-    
+
     @GET
     @Path("get-messages")
     @Produces(MediaType.APPLICATION_JSON)
