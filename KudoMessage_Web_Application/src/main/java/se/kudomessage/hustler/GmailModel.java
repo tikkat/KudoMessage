@@ -11,25 +11,28 @@ import java.security.Security;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import javax.mail.Flags.Flag;
 import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.UIDFolder;
+import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.search.SearchTerm;
 import se.kudomessage.hustler.oauth.OAuth2SaslClientFactory;
 
 public class GmailModel {
-
     private IMAPSSLStore store;
+    private Session session;
     private Folder rootFolder, standardFolder, pendingFolder, errorFolder;
-
-    public GmailModel() {
+    
+    public GmailModel(String token, String email) {
+        System.out.println("##### Skapade GmailModel");
         Security.addProvider(new OAuth2Provider());
 
         try {
-            setupStore();
+            setupStore(token, email);
             createAllFolders();
         } catch (MessagingException ex) {
             // Something went wrong.
@@ -37,25 +40,24 @@ public class GmailModel {
     }
 
     public static final class OAuth2Provider extends Provider {
-
         public OAuth2Provider() {
             super("Google OAuth2 Provider", 1.0,
                     "Provides the XOAUTH2 SASL Mechanism");
             put("SaslClientFactory.XOAUTH2",
-                    "se.kudomessage.torsken.oauth.OAuth2SaslClientFactory");
+                    "se.kudomessage.hustler.oauth.OAuth2SaslClientFactory");
         }
     }
 
-    private void setupStore() throws MessagingException {
+    private void setupStore(String token, String email) throws MessagingException {
         Properties properties = new Properties();
         properties.put("mail.imaps.sasl.enable", "true");
         properties.put("mail.imaps.sasl.mechanisms", "XOAUTH2");
-        properties.put(OAuth2SaslClientFactory.OAUTH_TOKEN_PROP, Globals.getAccessToken());
+        properties.put(OAuth2SaslClientFactory.OAUTH_TOKEN_PROP, token);
 
-        Session session = Session.getInstance(properties);
+        session = Session.getInstance(properties);
 
         store = new IMAPSSLStore(session, null);
-        store.connect("imap.google.com", 993, Globals.getEmail(), "");
+        store.connect("imap.gmail.com", 993, email, "");
     }
 
     private void createAllFolders() throws MessagingException {
@@ -85,7 +87,7 @@ public class GmailModel {
             errorFolder.create(Folder.HOLDS_MESSAGES);
         }
     }
-    
+
     private void getMessagesNewerThan(final KudoMessage m) {
         SearchTerm term = new SearchTerm() {
             public boolean match(Message message) {
@@ -99,15 +101,15 @@ public class GmailModel {
                 return false;
             }
         };
-        
+
         try {
             Message[] messages = rootFolder.search(term);
-            
-            UIDFolder a = (UIDFolder)rootFolder;
+
+            UIDFolder a = (UIDFolder) rootFolder;
             long firstUID = a.getUID(messages[0]);
-            
+
             Message[] newMessages = a.getMessagesByUID(firstUID + 1, UIDFolder.LASTUID);
-            
+
             // TODO: Check if this works.
         } catch (MessagingException ex) {
         }
@@ -170,6 +172,32 @@ public class GmailModel {
         }
     }
 
+    public String saveMessageToPending(KudoMessage m) {
+        try {
+            if (!pendingFolder.isOpen()) {
+                pendingFolder.open(Folder.READ_WRITE);
+            }
+
+            MimeMessage message = new MimeMessage(session);
+
+            message.setFrom(new InternetAddress(m.origin));
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(m.receiver));
+            message.setSubject("SMS med XXX");
+            message.setText(m.content);
+
+            message.setFlag(Flag.DRAFT, true);
+
+            MimeMessage draftMessages[] = {message};
+            pendingFolder.appendMessages(draftMessages);
+
+            Message latestMessage = pendingFolder.getMessage(pendingFolder.getMessageCount());
+
+            return getMessageId(latestMessage);
+        } catch (MessagingException e) {
+            return "";
+        }
+    }
+
     public List<KudoMessage> findMessage(final String query) {
         ArrayList<KudoMessage> result = new ArrayList<KudoMessage>();
 
@@ -205,7 +233,7 @@ public class GmailModel {
                         message.getContent().toString(),
                         message.getFrom()[0].toString(),
                         message.getAllRecipients()[0].toString());
-                
+
                 result.add(tmp);
             } catch (IOException e) {
             } catch (MessagingException e) {
@@ -218,10 +246,11 @@ public class GmailModel {
     public void moveMessage(KudoMessage m, Label target) {
         // TODO Auto-generated method stub
     }
-    
+
     public enum Label {
-        PENDING, 
-        SENT, 
+
+        PENDING,
+        SENT,
         ERROR
     }
 }
