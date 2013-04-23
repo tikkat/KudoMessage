@@ -9,26 +9,17 @@ public class KudoMessage {
 		content, 
 		origin, 
 		receiver;
-	
-	public KudoMessage(){
-		//Empty message
-	}
+        
+        public KudoMessage (String content, String origin, String receiver) {
+            this.content = content;
+            this.origin = origin;
+            this.receiver = receiver;
+        }
 
-	public KudoMessage(String id, String content, String origin, String receiver){
+	public KudoMessage(String id, String content, String origin, String receiver) {
 		this.id = id;
 		this.content = content;
 		this.origin = origin;
 		this.receiver = receiver;
 	}
-	
-	public KudoMessage(String id, String content, String origin){
-		this.id = id;
-		this.content = content;
-		this.origin = origin;
-	}
-	
-	public KudoMessage(String id){
-		this.id = id;
-	}
-	
 }
