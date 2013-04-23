@@ -17,14 +17,14 @@ import org.json.JSONObject;
 public class Utils {
     public static Map<String, String> getUserInfo (String accessToken) {
         try {
-            String url = "http://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=" + accessToken;
+            String url = "https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=" + accessToken;
             String result = getContentOfURL(url);
             
             JSONObject info = new JSONObject(result);
             
             Map<String, String> m = new HashMap<String, String>();
             m.put("email", info.getString("email"));
-            m.put("userID", DigestUtils.sha1Hex(info.getString("email")));
+            m.put("userID", info.getString("email"));
             
             return m;
         } catch (JSONException ex) {
