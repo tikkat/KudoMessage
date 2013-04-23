@@ -1,77 +1,60 @@
 package se.kudomessage.torsken;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import org.icefaces.application.PushRenderer;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 @ManagedBean
 @SessionScoped
 public class MessageHandler {
-    
-    private String PUSH_GROUP;
-    private String message, number;
-    private ClientUser client;
-    private ArrayList<ConversationList> list = new ArrayList<ConversationList>();
-    private KudoMessage tmpMess;
-    private ConversationList tmpList;
+    private String content, receiver;
+    private Map<String, ArrayList> messages;
+    private String conversationName;
     
     public MessageHandler () {
-        client = ClientUser.getInstance();
-        this.PUSH_GROUP = client.getID();
-        PushRenderer.addCurrentSession(PUSH_GROUP);
+        messages = new HashMap<String, ArrayList>();
     }
     
     public void sendMessage () {
-        if (!message.isEmpty() && !number.isEmpty()) {
-            tmpMess = new KudoMessage(message, number);
+        JSONObject message = new JSONObject();
+        try {
+            message.put("token", ClientUser.getInstance().getAccessToken());
+            message.put("receiver", receiver);
+            message.put("content", content);
+        } catch (JSONException ex) {
+            return;
+        }
         
-            if (conversationExists(number) >= 0) {
-                list.get(conversationExists(number)).addToList(tmpMess);
-            } else {
-                tmpList = new ConversationList();
-                tmpList.setConversationNumber(number);
-                tmpList.addToList(tmpMess);
-                list.add(tmpList);
-            }
-
-            PushRenderer.render(PUSH_GROUP);
-            message = "";
-            number = "";
-        }
+        addMessageToConversation(new KudoMessage(content, ClientUser.getInstance().getEmail(), receiver));
+        RESTHandler.post("send-message", message.toString());
     }
     
-    public int conversationExists ( String num ) {
-        for ( int i = 0; i < list.size(); i++) {
-            if (list.get(i).getConversationNumber().equals(num)) {
-                return i;
-            }
-        }
-        return -1;
+    private void addMessageToConversation(KudoMessage m) {
+        conversationName = m.origin.equals(ClientUser.getInstance().getEmail()) ? m.receiver : m.origin;
+        
+        if (!messages.containsKey(conversationName))
+            messages.put(conversationName, new ArrayList<KudoMessage>());
+        
+        messages.get(conversationName).add(m);
     }
 
-    public String getMessage() {
-        return message;
+    public String getContent() {
+        return content;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public String getNumber() {
-        return number;
+    public String getReceiver() {
+        return receiver;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public void setReceiver(String receiver) {
+        this.receiver = receiver;
     }
-
-    public ArrayList<ConversationList> getList() {
-        return list;
-    }
-
-    public void setList(ArrayList<ConversationList> list) {
-        this.list = list;
-    }
-    
 }
