@@ -8,7 +8,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
-import se.kudomessage.hustler.Globals;
 
 @ManagedBean
 @RequestScoped
@@ -19,7 +18,8 @@ public class CallbackBean {
         
         try {
             String accessToken = OAuthController.getTokenFromCode(params.get("code"));
-            Globals.setAccessToken(accessToken);
+            ClientUser.getInstance().setAccessToken(accessToken);
+            
             redirectToHomePage();
         } catch (IOException ex) {
             Logger.getLogger(CallbackBean.class.getName()).log(Level.SEVERE, null, ex);

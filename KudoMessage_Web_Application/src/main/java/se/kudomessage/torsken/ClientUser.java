@@ -1,29 +1,35 @@
 package se.kudomessage.torsken;
 
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
 
 @SessionScoped
 public class ClientUser {
-    private static ClientUser instance = null;
+    private static ClientUser instance;
     private String accessToken;
-    private final String ID;
-   
-    protected ClientUser () {
-        FacesContext fcontext = FacesContext.getCurrentInstance();
-        HttpSession session = (HttpSession) fcontext.getExternalContext().getSession(false);
-        ID = session.getId();
+    private String email = "";
+    
+    protected ClientUser() {
     }
     
-    public static ClientUser getInstance () {
-        if ( instance == null ) {
+    public static ClientUser getInstance() {
+        if (instance == null)
             instance = new ClientUser();
-        }
         return instance;
     }
-    
-    public String getID () {
-        return ID;
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
