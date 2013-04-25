@@ -14,6 +14,8 @@ public class MainActivity extends Activity {
 
 		GCMRegistrar.checkDevice(this);
 		GCMRegistrar.checkManifest(this);
+		
+		OAuthModel.requestAccessToken();
 	}
 
 	@Override
