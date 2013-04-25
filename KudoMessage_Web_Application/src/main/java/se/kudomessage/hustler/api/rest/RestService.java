@@ -20,18 +20,19 @@ public class RestService {
 
     @POST
     @Path("register-server")
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
+    @Consumes(MediaType.TEXT_PLAIN)
     public String registerServer(String inputData) throws JSONException {
         JSONObject response = new JSONObject();
         JSONObject input = new JSONObject(inputData);
+        
+        System.out.println("En server vill regga.");
 
-        if (input.getString("type").equals("android")) {
+        if (input.has("gcm")) {
+            System.out.println("Det är en GCM-push server.");
+            
             PushHandler.registerAndroidServer(input.getString("token"), input.getString("gcm"));
             response.put("response", "OK");
-        } else {
-            response.put("response", "ERROR");
-            response.put("message", "No valid type.");
         }
 
         return response.toString();
@@ -58,8 +59,8 @@ public class RestService {
 
     @POST
     @Path("sent-message")
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
+    @Consumes(MediaType.TEXT_PLAIN)
     public String sentMessage(String inputData) throws JSONException {
         JSONObject response = new JSONObject();
         JSONObject input = new JSONObject(inputData);
@@ -70,8 +71,8 @@ public class RestService {
 
     @GET
     @Path("get-message")
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
+    @Consumes(MediaType.TEXT_PLAIN)
     public String getMessage(String inputData) throws JSONException {
         JSONObject response = new JSONObject();
         JSONObject input = new JSONObject(inputData);
@@ -82,8 +83,8 @@ public class RestService {
 
     @GET
     @Path("get-messages")
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
+    @Consumes(MediaType.TEXT_PLAIN)
     public String getMessages(String inputData) throws JSONException {
         JSONObject response = new JSONObject();
         JSONObject input = new JSONObject(inputData);
