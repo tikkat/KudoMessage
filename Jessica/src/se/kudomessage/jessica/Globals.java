@@ -4,42 +4,42 @@ import android.app.Activity;
 
 public class Globals{
 	
-	private static String _accessToken;
-	private static String _email;
-	private static Activity _activity;
-	private static String _apiPath = "http://domain.com:8080/KudoMessage_Web_Application/api/rest/";
+	private static String accessToken;
+	private static String email;
+	private static Activity activity;
+	private static String apiPath = "http://domain.com:8080/KudoMessage_Web_Application/api/rest/";
 	private static String GCM;
 
 	public static String getAccessToken() {
-		return _accessToken;
+		return accessToken;
 	}
 
 	public static void setAccessToken(String accessToken) {
-		_accessToken = accessToken;
+		Globals.accessToken = accessToken;
 	}
 
 	public static String getEmail() {
-		return _email;
+		return email;
 	}
 
 	public static void setEmail(String email) {
-		_email = email;
+		Globals.email = email;
 	}
 	
 	public static Activity getActivity() {
-		return _activity;
+		return activity;
 	}
 
 	public static void setActivity(Activity activity) {
-		_activity = activity;
+		Globals.activity = activity;
 	}
 	
 	public static void setApiPath(String apiPath){
-		_apiPath = apiPath;
+		Globals.apiPath = apiPath;
 	}
 
 	public static String getApiPath(){
-		return _apiPath;
+		return apiPath;
 	}
 
 	public static String getGCM() {
