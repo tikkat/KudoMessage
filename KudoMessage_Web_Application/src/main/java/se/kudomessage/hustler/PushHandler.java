@@ -25,6 +25,8 @@ public class PushHandler {
     }
     
     public static void registerAndroidServer(String token, String GCM) {
+        System.out.println("Reggar en Androids server med token " + token + " och gcm " + GCM);
+        
         String userID = Utils.getUserInfo(token).get("userID");
         userIDToGCM.put(userID, GCM);
     }
