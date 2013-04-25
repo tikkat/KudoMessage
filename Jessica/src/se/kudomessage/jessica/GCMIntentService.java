@@ -14,6 +14,9 @@ public class GCMIntentService extends GCMBaseIntentService{
 
 	@Override
 	protected void onRegistered(Context arg0, String registrationId) {
+		Globals.setGCM(registrationId);
+		((MainActivity) Globals.getActivity()).initOAuth();
+		Log.v("GCMKey", registrationId);
 	}
 
 	@Override
