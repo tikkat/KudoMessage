@@ -52,7 +52,7 @@
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
             <version>1.7</version>
-    </dependency>
+        </dependency>
         <dependency>
             <groupId>gcm-server</groupId>
             <artifactId>com.google.android.gcm.server</artifactId>
@@ -60,6 +60,12 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/src/main/resources/gcm-server.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+            
     </dependencies>
 
     <build>

@@ -4,7 +4,7 @@ import javax.faces.bean.ManagedBean;
 
 @ManagedBean
 public class KudoMessage {
-    protected String id,
+    public String id,
             content,
             origin,
             receiver;

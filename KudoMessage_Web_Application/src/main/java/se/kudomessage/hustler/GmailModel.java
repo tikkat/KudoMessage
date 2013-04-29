@@ -88,6 +88,8 @@ public class GmailModel {
         if (!errorFolder.exists()) {
             errorFolder.create(Folder.HOLDS_MESSAGES);
         }
+        
+        standardFolder.open(Folder.READ_WRITE);
     }
 
     private void getMessagesNewerThan(final KudoMessage m) {
@@ -253,12 +255,13 @@ public class GmailModel {
         List<KudoMessage> messages =  new ArrayList<KudoMessage>();
         
         int totalNumMessages = standardFolder.getMessageCount();
+        
         upper = upper > totalNumMessages ? totalNumMessages : upper;
         
         if (totalNumMessages < lower || upper < lower)
             return messages;
         
-        for (int i = lower; i < upper + 1; i++) {
+        for (int i = lower + 1; i < upper + 1; i++) {
             Message message = standardFolder.getMessage(i);
             
             try {

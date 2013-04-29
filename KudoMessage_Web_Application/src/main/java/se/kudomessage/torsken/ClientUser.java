@@ -5,7 +5,7 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class ClientUser {
     private static ClientUser instance;
-    private String accessToken;
+    private String accessToken = "";
     private String email = "";
     
     protected ClientUser() {
