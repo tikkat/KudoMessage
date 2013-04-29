@@ -53,8 +53,12 @@ public class RestService {
         String content = input.getString("content");
         String email = Utils.getUserInfo(token).get("email");
         
+        // Upload the message to Gmail
         GmailModelList.getGmailModel(token, email).saveMessageToPending(new KudoMessage(content, email, receiver));
 
+        // Notify the servers
+        PushHandler.notifyAllServers(Utils.getUserInfo(token).get("userID"), "a message id");
+        
         response.put("response", "OK");
         return response.toString();
     }
