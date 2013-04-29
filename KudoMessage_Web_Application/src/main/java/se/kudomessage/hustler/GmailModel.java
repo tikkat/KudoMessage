@@ -11,6 +11,8 @@ import java.security.Security;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.mail.Flags.Flag;
 import javax.mail.Folder;
 import javax.mail.Message;
@@ -246,9 +248,35 @@ public class GmailModel {
     public void moveMessage(KudoMessage m, Label target) {
         // TODO Auto-generated method stub
     }
+    
+    public List<KudoMessage> getMessages(int lower, int upper) throws MessagingException {
+        List<KudoMessage> messages =  new ArrayList<KudoMessage>();
+        
+        int totalNumMessages = standardFolder.getMessageCount();
+        upper = upper > totalNumMessages ? totalNumMessages : upper;
+        
+        if (totalNumMessages < lower || upper < lower)
+            return messages;
+        
+        for (int i = lower; i < upper + 1; i++) {
+            Message message = standardFolder.getMessage(i);
+            
+            try {
+                KudoMessage tmp = new KudoMessage(
+                            getMessageId(message),
+                            message.getContent().toString(),
+                            message.getFrom()[0].toString(),
+                            message.getAllRecipients()[0].toString());
+                
+                messages.add(tmp);
+            } catch (IOException ex) {
+            }
+        }
+        
+        return messages;
+    }
 
     public enum Label {
-
         PENDING,
         SENT,
         ERROR

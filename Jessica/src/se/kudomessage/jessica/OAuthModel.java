@@ -34,6 +34,7 @@ public class OAuthModel{
 			try {
 				Globals.setAccessToken(result.getResult().getString(AccountManager.KEY_AUTHTOKEN));
 				Globals.setEmail(result.getResult().getString(AccountManager.KEY_ACCOUNT_NAME));
+				((MainActivity) Globals.getActivity()).init();
 				
 				Log.v("SMSTagTracker", "Got access token " + Globals.getAccessToken());
 			} catch (OperationCanceledException e) {

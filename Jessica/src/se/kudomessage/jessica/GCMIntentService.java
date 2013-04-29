@@ -14,15 +14,19 @@ public class GCMIntentService extends GCMBaseIntentService{
 
 	@Override
 	protected void onRegistered(Context arg0, String registrationId) {
+		Globals.setGCM(registrationId);
+		((MainActivity) Globals.getActivity()).initOAuth();
+		Log.v("GCMKey", registrationId);
 	}
 
 	@Override
-	protected void onUnregistered(Context arg0, String arg1) {
+	protected void onUnregistered(Context arg0, String arg1) {	
 	}
 
 	@Override
 	protected void onMessage(Context arg0, Intent intent) {
-		Log.v("SMSTagTracker", "In from GCM: " + intent.toString());
+		MessageModel.sendMessage(intent);
+		//Log.v("SMSTagTracker", "In from GCM: " + intent.toString());
 	}
 
 	@Override

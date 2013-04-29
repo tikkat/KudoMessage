@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -15,8 +16,23 @@ public class MessageHandler {
     private Map<String, ArrayList> messages;
     private String conversationName;
     
-    public MessageHandler () {
+    public MessageHandler () throws JSONException {
         messages = new HashMap<String, ArrayList>();
+        
+        JSONObject range = new JSONObject();
+        range.put("token", ClientUser.getInstance().getAccessToken());
+        range.put("lower", 0);
+        range.put("upper", 100);
+        
+        String tmp = RESTHandler.post("get-messages", range.toString());
+        JSONArray array = new JSONArray(tmp);
+        
+        for (int i = 0; i < array.length(); i++) {
+            JSONObject row = array.getJSONObject(i);
+            
+            KudoMessage m = new KudoMessage(row.getString("content"), row.getString("origin"), row.getString("receiver"));
+            addMessageToConversation(m);
+        }
     }
     
     public void sendMessage () {

@@ -27,4 +27,23 @@ public class KudoMessage {
 		this.id = id;
 	}
 	
+	public String toString(){
+		String jsonString = "{\"protocol\":\"SMS\"";
+		if(id != null){
+			jsonString = jsonString+",\"id\":\""+this.id+"\"";
+		}
+		if(origin != null){
+			jsonString = jsonString+",\"origin\":\""+this.origin+"\"";
+		}
+		if(receiver != null){
+			jsonString = jsonString+",\"receiver\":\""+this.receiver+"\"";
+		}
+		if(content != null){
+			jsonString = jsonString+",\"content\":\""+this.content+"\"";
+		}
+		jsonString = jsonString+"}";
+		
+		return jsonString;
+	}
+	
 }

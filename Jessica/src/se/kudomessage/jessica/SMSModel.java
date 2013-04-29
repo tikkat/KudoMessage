@@ -15,7 +15,7 @@ public class SMSModel {
 		saveSMSToSent(m);
 	}
 	
-	private static  void saveSMSToSent(KudoMessage m) {
+	private static void saveSMSToSent(KudoMessage m) {
 		ContentValues values = new ContentValues();
 		values.put("address", m.receiver);
 		values.put("body", m.content);
