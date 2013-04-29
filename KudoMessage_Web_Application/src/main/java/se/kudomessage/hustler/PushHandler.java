@@ -13,6 +13,7 @@ import java.util.Map;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import org.icefaces.application.PushRenderer;
+import org.json.simple.JSONObject;
 
 @ManagedBean
 @ApplicationScoped
@@ -32,6 +33,8 @@ public class PushHandler {
     }
     
     public static void notifyAllServers(String userID, String messageID) {
+        System.out.println("Try to notify userID " + userID);
+        
         if (userIDToGCM.containsKey(userID)) {
             // The user has a registered Android device server, lets notify it!
             notifyAndroidServer(userID, messageID);
@@ -40,11 +43,12 @@ public class PushHandler {
     
     public static void notifyAndroidServer(String userID, String messageID) {
         String GCMKey = getGCMKey(userID);
+        System.out.println("DEN JÄVLA GCMNYCKELN ÄR FÖR FAN " + GCMKey + "!!!!!!");
         
-        Message messageObject = new Message.Builder().
-                                addData("action", "send_sms").
-                                addData("message_id", messageID).
-                                build();
+        Message messageObject = new Message.Builder().build();
+                                //addData("action", "send_sms").
+                                //addData("message_id", messageID).
+                                //build();
         
         try {
             Sender sender = new Sender(Constants.APIKEY);

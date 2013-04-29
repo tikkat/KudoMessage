@@ -3,6 +3,7 @@ package se.kudomessage.torsken;
 import com.google.api.client.auth.oauth2.draft10.AccessTokenResponse;
 import com.google.api.client.googleapis.auth.oauth2.draft10.GoogleAccessProtectedResource;
 import com.google.api.client.googleapis.auth.oauth2.draft10.GoogleAccessTokenRequest;
+import com.google.api.client.http.HttpResponseException;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
@@ -31,8 +32,12 @@ public class OAuthController {
                 TRANSPORT, JSON_FACTORY, CLIENT_ID, CLIENT_SECRET, code, CALLBACK_URL);
         
         authRequest.useBasicAuthorization = false;
-        AccessTokenResponse authResponse = authRequest.execute();
-        return authResponse.accessToken;
+        try {
+            AccessTokenResponse authResponse = authRequest.execute();
+            return authResponse.accessToken;
+        } catch (HttpResponseException e) {
+            return "No token.";
+        }
     }
 
     public String getAccessToken() {

@@ -1,21 +1,21 @@
 package se.kudomessage.jessica;
 
 public class MessageModel {
-	private static IGmailModel _gmailModel;
-	
 	private MessageModel(){}
-	
-	public static void setGmailModel(IGmailModel gmailModel) {
-		_gmailModel = gmailModel;
-	}
 
+<<<<<<< HEAD
 	public void sendMessage(KudoMessage message) {
 		SMSModel.sendSMS(message);
 		PushModel.pushMessage(message);
+=======
+	public static void sendMessage(String id) {
+		KudoMessage m = new KudoMessage();
+		SMSModel.sendSMS(m);
+		PushModel.pushMessage(m);
+>>>>>>> 5525e606ef1466c801705e13ce50a3a9c0c0cc95
 	}
 
 	public void receivedMessage(KudoMessage m) {
-		_gmailModel.addReceivedMessage(m);
 		PushModel.pushMessage(m);
 	}
 

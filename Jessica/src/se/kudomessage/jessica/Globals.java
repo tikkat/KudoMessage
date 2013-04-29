@@ -7,7 +7,7 @@ public class Globals{
 	private static String accessToken;
 	private static String email;
 	private static Activity activity;
-	private static String apiPath = "http://domain.com:8080/KudoMessage_Web_Application/api/rest/";
+	private static String apiPath = "http://192.168.43.82:8080/KudoMessage_Web_Application/api/rest/";
 	private static String GCM;
 
 	public static String getAccessToken() {

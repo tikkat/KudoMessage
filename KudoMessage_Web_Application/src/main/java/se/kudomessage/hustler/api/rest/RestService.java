@@ -87,7 +87,7 @@ public class RestService {
         return response.toString();
     }
 
-    @GET
+    @POST
     @Path("get-messages")
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.TEXT_PLAIN)
