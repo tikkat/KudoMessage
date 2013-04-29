@@ -9,10 +9,9 @@ public class MessageModel {
 		_gmailModel = gmailModel;
 	}
 
-	public void sendMessage(String id) {
-		KudoMessage m = _gmailModel.getMessage(id);
-		SMSModel.sendSMS(m);
-		PushModel.pushMessage(m);
+	public void sendMessage(KudoMessage message) {
+		SMSModel.sendSMS(message);
+		PushModel.pushMessage(message);
 	}
 
 	public void receivedMessage(KudoMessage m) {
