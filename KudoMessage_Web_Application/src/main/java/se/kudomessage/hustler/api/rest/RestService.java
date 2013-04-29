@@ -1,14 +1,16 @@
 package se.kudomessage.hustler.api.rest;
 
+import java.util.List;
+import javax.mail.MessagingException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import se.kudomessage.hustler.GmailModel;
 import se.kudomessage.hustler.GmailModelList;
 import se.kudomessage.hustler.KudoMessage;
 import se.kudomessage.hustler.PushHandler;
@@ -85,10 +87,23 @@ public class RestService {
     @Path("get-messages")
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.TEXT_PLAIN)
-    public String getMessages(String inputData) throws JSONException {
+    public String getMessages(String inputData) throws JSONException, MessagingException {
         JSONObject response = new JSONObject();
         JSONObject input = new JSONObject(inputData);
-
+        
+        int lower = input.getInt("lower");
+        int upper = input.getInt("upper");
+        String token = input.getString("token");
+        String email = Utils.getUserInfo(token).get("email");
+        
+        List<KudoMessage> result = GmailModelList.getGmailModel(token, email).getMessages(lower, upper);
+        
+        JSONArray list = new JSONArray();
+        for (KudoMessage m : result) {
+            list.put(new JSONObject(m.toString()));
+        }
+        response.put("messages", list);
+        
         response.put("response", "OK");
         return response.toString();
     }
