@@ -13,24 +13,12 @@ public class ClientUser {
     private String email = "";
     
     protected ClientUser() {
-        JSONObject json = new JSONObject();
-        try {
-            json.put("token", ClientUser.getInstance().getAccessToken());
-        } catch (JSONException ex) {
-            return;
-        }
-        
-        String result = RESTHandler.post("get-email", json.toString());
-        try {
-            email = new JSONObject(result).getString("email");
-        } catch (JSONException ex) {
-            Logger.getLogger(ClientUser.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
     
     public static ClientUser getInstance() {
         if (instance == null)
             instance = new ClientUser();
+          
         return instance;
     }
 

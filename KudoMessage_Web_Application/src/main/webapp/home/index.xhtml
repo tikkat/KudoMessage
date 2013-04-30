@@ -23,7 +23,6 @@
             
         </div>
         
-<<<<<<< HEAD
         <div id="right">
             
                 <c:forEach items="#{messageHandler.activeConversation}" var="conv">
@@ -56,12 +55,10 @@
             </h:form>
         </div>
         
-=======
         <h:form>
             Meddelande: <h:inputText value="#{messageHandler.content}" /><br/>
             Mottagare: <h:inputText value="#{messageHandler.receiver}" /><br/>
             <h:commandButton value="Skicka" action="#{messageHandler.sendMessage}" />
         </h:form>
->>>>>>> Now gets the message to Jessica via GCM.
     </h:body>
 </html>
