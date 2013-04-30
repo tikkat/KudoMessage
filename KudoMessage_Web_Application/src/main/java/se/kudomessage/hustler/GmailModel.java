@@ -11,8 +11,6 @@ import java.security.Security;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.mail.Flags.Flag;
 import javax.mail.Folder;
 import javax.mail.Message;
@@ -30,15 +28,16 @@ public class GmailModel {
     private Folder rootFolder, standardFolder, pendingFolder, errorFolder;
     
     public GmailModel(String token, String email) {
-        System.out.println("##### Skapade GmailModel");
         Security.addProvider(new OAuth2Provider());
 
         try {
             setupStore(token, email);
             createAllFolders();
+            
+            System.out.println("##### Skapade GmailModel");
         } catch (MessagingException ex) {
             // Something went wrong.
-        }
+        } 
     }
 
     public static final class OAuth2Provider extends Provider {
