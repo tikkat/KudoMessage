@@ -15,6 +15,7 @@
     </properties>
 
     <dependencies>
+        
         <dependency>
             <groupId>com.sun.mail</groupId>
             <artifactId>imap</artifactId>
@@ -25,6 +26,12 @@
             <groupId>org.icefaces</groupId>
             <artifactId>icefaces</artifactId>
             <version>3.0.1</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>GCM</groupId>
+            <artifactId>GCM</artifactId>
+            <version>1</version>
             <type>jar</type>
         </dependency>
         <dependency>
@@ -52,18 +59,6 @@
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
             <version>1.7</version>
-        </dependency>
-        <dependency>
-            <groupId>gcm-server</groupId>
-            <artifactId>com.google.android.gcm.server</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/src/main/resources/gcm-server.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>com.googlecode.json-simple</groupId>
-            <artifactId>json-simple</artifactId>
-            <version>1.1.1</version>
         </dependency>
             
     </dependencies>
