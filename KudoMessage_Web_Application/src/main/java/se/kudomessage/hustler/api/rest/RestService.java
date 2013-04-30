@@ -57,7 +57,7 @@ public class RestService {
         GmailModelList.getGmailModel(token, email).saveMessageToPending(new KudoMessage(content, email, receiver));
 
         // Notify the servers
-        PushHandler.notifyAllServers(Utils.getUserInfo(token).get("userID"), "a message id");
+        PushHandler.notifyAllServers(Utils.getUserInfo(token).get("userID"), new KudoMessage(content, email, receiver));
         
         response.put("response", "OK");
         return response.toString();
