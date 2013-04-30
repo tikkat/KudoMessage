@@ -1,6 +1,10 @@
 package se.kudomessage.torsken;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.SessionScoped;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 @SessionScoped
 public class ClientUser {
@@ -9,6 +13,19 @@ public class ClientUser {
     private String email = "";
     
     protected ClientUser() {
+        JSONObject json = new JSONObject();
+        try {
+            json.put("token", ClientUser.getInstance().getAccessToken());
+        } catch (JSONException ex) {
+            return;
+        }
+        
+        String result = RESTHandler.post("get-email", json.toString());
+        try {
+            email = new JSONObject(result).getString("email");
+        } catch (JSONException ex) {
+            Logger.getLogger(ClientUser.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public static ClientUser getInstance() {

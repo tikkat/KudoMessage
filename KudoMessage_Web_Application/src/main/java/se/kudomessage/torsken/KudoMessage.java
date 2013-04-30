@@ -21,4 +21,21 @@ public class KudoMessage {
         this.origin = origin;
         this.receiver = receiver;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public String getOrigin() {
+        return origin;
+    }
+
+    public String getReceiver() {
+        return receiver;
+    }
+    
 }
