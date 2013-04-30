@@ -1,5 +1,8 @@
 package se.kudomessage.jessica;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -15,8 +18,10 @@ public class GCMIntentService extends GCMBaseIntentService{
 	@Override
 	protected void onRegistered(Context arg0, String registrationId) {
 		Globals.setGCM(registrationId);
+		
+		Log.v("GCMKey", "GOT GCM:" + registrationId);
+		
 		((MainActivity) Globals.getActivity()).initOAuth();
-		Log.v("GCMKey", registrationId);
 	}
 
 	@Override
@@ -25,8 +30,24 @@ public class GCMIntentService extends GCMBaseIntentService{
 
 	@Override
 	protected void onMessage(Context arg0, Intent intent) {
+<<<<<<< HEAD
 		MessageModel.sendMessage(intent);
 		//Log.v("SMSTagTracker", "In from GCM: " + intent.toString());
+=======
+		Log.v("SMSTagTracker", "In from GCM: " + intent.toString());
+		
+		try {
+			JSONObject json = new JSONObject(intent.getExtras().getString("message"));
+			KudoMessage message = new KudoMessage();
+			
+			message.content = json.getString("content");
+			message.receiver = json.getString("receiver");
+			
+			MessageModel.sendMessage(message);
+		} catch (JSONException e) {
+			Log.v("SMSTagTracker", "Något fel i json från Hustler.");
+		}
+>>>>>>> Jessica can now send SMS given by Hustler.
 	}
 
 	@Override

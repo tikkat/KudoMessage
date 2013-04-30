@@ -17,7 +17,7 @@ public class PushModel {
 	private PushModel(){}
 	
 	public static void pushMessage(KudoMessage m) {
-		post("pushMessage", m.toString());
+		//post("pushMessage", m.toString());
 	}
 
 	public static void registerServer() {
