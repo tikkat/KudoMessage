@@ -74,6 +74,21 @@ public class RestService {
         response.put("response", "OK");
         return response.toString();
     }
+    
+    @POST
+    @Path("get-email")
+    @Produces(MediaType.TEXT_PLAIN)
+    @Consumes(MediaType.TEXT_PLAIN)
+    public String getEmail(String inputData) throws JSONException {
+        JSONObject response = new JSONObject();
+        JSONObject input = new JSONObject(inputData);
+
+        String email = Utils.getUserInfo(input.getString("token")).get("email");
+        response.put("email", email);
+        
+        response.put("response", "OK");
+        return response.toString();
+    }
 
     @GET
     @Path("get-message")
