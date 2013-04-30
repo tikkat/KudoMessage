@@ -30,10 +30,6 @@ public class GCMIntentService extends GCMBaseIntentService{
 
 	@Override
 	protected void onMessage(Context arg0, Intent intent) {
-<<<<<<< HEAD
-		MessageModel.sendMessage(intent);
-		//Log.v("SMSTagTracker", "In from GCM: " + intent.toString());
-=======
 		Log.v("SMSTagTracker", "In from GCM: " + intent.toString());
 		
 		try {
@@ -47,7 +43,6 @@ public class GCMIntentService extends GCMBaseIntentService{
 		} catch (JSONException e) {
 			Log.v("SMSTagTracker", "Något fel i json från Hustler.");
 		}
->>>>>>> Jessica can now send SMS given by Hustler.
 	}
 
 	@Override
