@@ -264,11 +264,14 @@ public class GmailModel {
             Message message = standardFolder.getMessage(i);
             
             try {
+                String receviver = message.getAllRecipients()[0].toString();
+                receviver = receviver.substring(0, receviver.length() - 2);
+                
                 KudoMessage tmp = new KudoMessage(
                             getMessageId(message),
                             message.getContent().toString(),
                             message.getFrom()[0].toString(),
-                            message.getAllRecipients()[0].toString());
+                            receviver);
                 
                 messages.add(tmp);
             } catch (IOException ex) {
