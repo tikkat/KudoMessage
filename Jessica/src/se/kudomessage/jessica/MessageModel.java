@@ -12,6 +12,10 @@ public class MessageModel {
 	public static void receivedMessage(KudoMessage m) {
 		PushModel.pushMessage(m);
 	}
+	
+	public static void sentMessage(KudoMessage m) {
+		PushModel.pushMessage(m);
+	}
 
 	public void addMessage(KudoMessage m) {
 		// TODO Auto-generated method stub
