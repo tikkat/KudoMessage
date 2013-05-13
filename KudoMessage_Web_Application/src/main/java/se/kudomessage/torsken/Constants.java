@@ -9,4 +9,5 @@ public class Constants {
     static final String CLIENT_ID = "509205524891-milcd02622075pccioirpfo0ba8qfeg4.apps.googleusercontent.com";
     static final String CLIENT_SECRET = "kZL0LlXNR6yu6E1CiSq6nhpt";
     static final String APIKEY = "AIzaSyBlfEo9yWVYFfEXt5SUncKa6A_2Y3byTVE";
+    static final String APPLICATION_NAME = "KudoMessage_Web_Application";
 }
