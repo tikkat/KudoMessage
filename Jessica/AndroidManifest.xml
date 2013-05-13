@@ -58,6 +58,16 @@
             </intent-filter>
         </receiver>
         
+        <!-- Intent for the SMS Listener -->
+        <receiver 
+            android:name=".SMSReceiver"
+            android:enabled="true" >
+    		<intent-filter>
+    		    <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+    		</intent-filter>
+		</receiver>
+        <!-- Intent for the SMS Listener -->
+        
         <service android:name=".GCMIntentService" />
     </application>
 
