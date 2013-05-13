@@ -51,5 +51,25 @@ public class Contact {
     public void setName(String name) {
         this.name = name;
     }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public ArrayList<String> getNumbers() {
+        return numbers;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getName() {
+        return name;
+    }
     
 }

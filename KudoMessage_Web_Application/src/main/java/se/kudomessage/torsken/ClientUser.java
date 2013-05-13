@@ -13,7 +13,7 @@ public class ClientUser {
     private String accessToken = "";
     private String email = "";
     private ArrayList<Contact> contacts = new ArrayList<Contact>();
-    //ContactsService contactsService;
+    ContactsService contactsService;
     
     protected ClientUser() {
     }
@@ -45,5 +45,13 @@ public class ClientUser {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public ArrayList<Contact> getContacts() {
+        return contacts;
+    }
+
+    public ContactsService getContactsService() {
+        return contactsService;
     }
 }

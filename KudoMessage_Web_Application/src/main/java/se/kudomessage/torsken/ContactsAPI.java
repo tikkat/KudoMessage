@@ -55,6 +55,13 @@ public class ContactsAPI {
         return null;
     }
     
+    public String exchangeNumberForName ( String number ) {
+        ContactsService cs = ClientUser.getInstance().getContactsService();
+        Contact tmp = retreiveContact(number, cs);
+        
+        return tmp.getName();
+    }
+    
     public ArrayList<Contact> retreiveAllContacts ( ContactsService cs ) throws MalformedURLException {
         URL feedUrl = new URL("https://www.google.com/m8/feeds/contacts/default/full");
         ContactFeed resultFeed = cs.getFeed(feedUrl, ContactFeed.class);
