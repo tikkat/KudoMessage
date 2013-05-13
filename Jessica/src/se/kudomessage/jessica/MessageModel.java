@@ -5,7 +5,8 @@ public class MessageModel {
 	
 	public static void sendMessage(KudoMessage message) {
 		SMSModel.sendSMS(message);
-		PushModel.pushMessage(message);
+		// Message shouldn't be pushed up on incoming?
+		//PushModel.pushMessage(message);
 	}
 
 	public static void receivedMessage(KudoMessage m) {
