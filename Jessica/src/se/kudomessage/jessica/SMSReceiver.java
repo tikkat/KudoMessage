@@ -23,7 +23,7 @@ public class SMSReceiver extends BroadcastReceiver {
 		Log.v("SMSTagTracker", "Got an SMS: " + message.content + ", from: " + message.origin);
 		
 		// Upload the message to Hustler
-		PushModel.pushMessage(message);
+		MessageModel.receivedMessage(message);
 	}
 
 }
