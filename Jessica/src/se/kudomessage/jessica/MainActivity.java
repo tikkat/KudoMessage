@@ -1,6 +1,8 @@
 package se.kudomessage.jessica;
 
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.app.Activity;
 import android.util.Log;
 import android.view.Menu;
@@ -39,6 +41,8 @@ public class MainActivity extends Activity {
 	
 	public void init(){
 		PushModel.registerServer(); 
+		this.getContentResolver().registerContentObserver(Uri.parse("content://sms/"), true, new SMSSentObserver(new Handler(), this));
+		
 	}
 
 	public void initOAuth() {
