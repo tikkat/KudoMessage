@@ -8,7 +8,7 @@ public class MessageModel {
 		PushModel.pushMessage(message);
 	}
 
-	public void receivedMessage(KudoMessage m) {
+	public static void receivedMessage(KudoMessage m) {
 		PushModel.pushMessage(m);
 	}
 
