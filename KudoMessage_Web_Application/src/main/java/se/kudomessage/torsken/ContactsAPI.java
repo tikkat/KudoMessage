@@ -45,11 +45,19 @@ public class ContactsAPI {
         return null;
     }
     
+    /**
+     * Returns the number if there is no name for this contact
+     * @param number
+     * @return
+     * @throws MalformedURLException
+     * @throws IOException
+     * @throws ServiceException 
+     */
     public String exchangeNumberForName ( String number ) throws MalformedURLException, IOException, ServiceException {
         ContactsService cs = ClientUser.getInstance().getContactsService();
         Contact tmp = retreiveContact(number, cs);
         
-        return tmp.getName();
+        return (tmp == null) ? number : tmp.getName();
     }
     
     public ArrayList<Contact> retreiveAllContacts ( ContactsService cs ) throws MalformedURLException, IOException, ServiceException {
