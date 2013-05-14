@@ -79,6 +79,20 @@ public class ContactsAPI {
         return tmp;
     }
     
+    public void deleteContact ( ContactsService cs, String number ) throws MalformedURLException {
+        URL feedUrl = new URL("https://www.google.com/m8/feeds/contacts/default/full");
+        ContactFeed resultFeed = cs.getFeed(feedUrl, ContactFeed.class);
+        
+        for ( int i = 0; i < resultFeed.getEntries().size(); i++ ) {
+            ContactEntry entry = resultFeed.getEntries().get(i);
+            for ( int j = 0; j < entry.getPhoneNumbers().size(); j++ ) {
+                if (entry.getPhoneNumbers().get(j).getPhoneNumber().equals(number)) {
+                    entry.delete();
+                }
+            }
+        }
+    }
+    
     public void createContact ( ContactsService cs, String name, String number ) throws MalformedURLException, IOException, ServiceException {
         
         ContactEntry contact = new ContactEntry();
