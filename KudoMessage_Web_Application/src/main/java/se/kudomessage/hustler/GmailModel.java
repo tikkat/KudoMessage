@@ -174,13 +174,23 @@ public class GmailModel {
             return null;
         }
     }
-
-    public String saveMessageToPending(KudoMessage m) {
+    
+    public String saveMessage(Label label, KudoMessage m) {
+        Folder folder;
+        
+        if (label == Label.PENDING) {
+            folder = pendingFolder;
+        } else if (label == Label.STANDARD) {
+            folder = standardFolder;
+        } else {
+            folder = errorFolder;
+        }
+        
         try {
-            if (!pendingFolder.isOpen()) {
-                pendingFolder.open(Folder.READ_WRITE);
+            if (!folder.isOpen()) {
+                folder.open(Folder.READ_WRITE);
             }
-
+            
             MimeMessage message = new MimeMessage(session);
 
             message.setFrom(new InternetAddress(m.origin));
@@ -191,14 +201,18 @@ public class GmailModel {
             message.setFlag(Flag.DRAFT, true);
 
             MimeMessage draftMessages[] = {message};
-            pendingFolder.appendMessages(draftMessages);
+            folder.appendMessages(draftMessages);
 
-            Message latestMessage = pendingFolder.getMessage(pendingFolder.getMessageCount());
+            Message latestMessage = folder.getMessage(folder.getMessageCount());
 
             return getMessageId(latestMessage);
         } catch (MessagingException e) {
             return "";
         }
+    }
+
+    public String saveMessageToPending(KudoMessage m) {
+        return saveMessage(Label.PENDING, m);
     }
 
     public List<KudoMessage> findMessage(final String query) {
@@ -283,7 +297,7 @@ public class GmailModel {
 
     public enum Label {
         PENDING,
-        SENT,
+        STANDARD,
         ERROR
     }
 }
