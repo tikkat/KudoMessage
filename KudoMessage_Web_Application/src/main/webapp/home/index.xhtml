@@ -28,14 +28,14 @@
         
         <div id="right">
             <div id="rightTop">
-                Här ska numret för den aktuella konervastionen visas!
+                #{messageHandler.activeNumber}
+                <p:commandButton id="addContact" value="Lägg till" type="button" />  
+
+                <p:overlayPanel id="contactPanel" for="addContact" showEffect="fade" hideEffect="fade" dynamic="true">
+                    Namn: <p:inputText /><br/>
+                    <p:button id="addContactButton" value="Lägg till kontakt" />
+                </p:overlayPanel>
             </div>
-            <p:commandButton id="addContact" value="Lägg till" type="button" />  
-  
-            <p:overlayPanel id="contactPanel" for="addContact" hideEffect="fade" dynamic="true">
-                Namn: <p:inputText /><br/>
-                <p:button value="Lägg till kontakt" />
-            </p:overlayPanel>
                 <c:forEach items="#{messageHandler.activeConversation}" var="conv">
                     <div class="chat">
                         

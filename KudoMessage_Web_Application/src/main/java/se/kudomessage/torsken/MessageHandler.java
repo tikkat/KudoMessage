@@ -19,6 +19,7 @@ public class MessageHandler {
     private Map<String, ArrayList> messages;
     private String conversationName;
     private ArrayList<KudoMessage> activeConversation;
+    private String activeNumber;
     private static final String PUSH_GROUP = "colorPage";
 
     public MessageHandler() throws JSONException {
@@ -44,8 +45,14 @@ public class MessageHandler {
         Set<String> t = messages.keySet();
         List h = new ArrayList<String>(t);
         
-        if (h.size() > 0)
+        if (h.size() > 0){
             activeConversation = messages.get(h.get(0));
+            if (activeConversation.get(0).getReceiver().equals(ClientUser.getInstance().getEmail())) {
+                activeNumber = activeConversation.get(0).getOrigin();
+            } else {
+                activeNumber = activeConversation.get(0).getReceiver();
+            }
+        }
     }
 
     public <T, S> List<Map.Entry<T, S>> mapToList(Map<T, S> map) {
@@ -64,6 +71,8 @@ public class MessageHandler {
     }
     
     public void changeConversation ( String conv ) {
+        System.out.println(conv);
+        activeNumber = conv;
         activeConversation = messages.get(conv);
     }
     
@@ -120,6 +129,10 @@ public class MessageHandler {
 
     public void setActiveConversation(ArrayList<KudoMessage> activeConversation) {
         this.activeConversation = activeConversation;
+    }
+
+    public String getActiveNumber() {
+        return activeNumber;
     }
     
 }

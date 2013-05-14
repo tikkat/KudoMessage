@@ -16,6 +16,20 @@ body {
     border-bottom: 1px solid black;
 }
 
+#addContact {
+    margin: 0px;
+    padding: 0;
+    font-size: 12px;
+    color: #616161;
+}
+
+#addContactButton {
+    margin: 0px;
+    padding: 0;
+    font-size: 12px;
+    color: #616161;
+}
+
 #right {
     float: right;
     width: 75%;
