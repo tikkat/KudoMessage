@@ -81,7 +81,7 @@ public class ContactsAPI {
         return tmp;
     }
     
-    public void deleteContact ( ContactsService cs, String number ) throws MalformedURLException {
+    public void deleteContact ( ContactsService cs, String number ) throws MalformedURLException, IOException, ServiceException {
         URL feedUrl = new URL("https://www.google.com/m8/feeds/contacts/default/full");
         ContactFeed resultFeed = cs.getFeed(feedUrl, ContactFeed.class);
         
