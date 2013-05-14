@@ -9,11 +9,25 @@ body {
     background-color: yellow;
 }
 
+#leftTop {
+    float: left;
+    width: 100%;
+    height: 40px;
+    border-bottom: 1px solid black;
+}
+
 #right {
     float: right;
     width: 75%;
     height: 500px;
     background-color: red;
+}
+
+#rightTop {
+    float: right;
+    width: 100%;
+    height: 40px;
+    border-bottom: 1px solid black;
 }
 
 #messageBox {

@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:c="http://java.sun.com/jsp/jstl/core">
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Facelet Title</title>
         <link rel="stylesheet" type="text/css" href="../style/style.css" />
@@ -11,7 +12,9 @@
     <h:body>
         <h1>Skicka ett meddelande nedan!</h1>
         <div id="left">
-            
+            <div id="leftTop">
+                Sök: <p:inputText />
+            </div>
             <div jsfc="ui:repeat" value="#{messageHandler.mapToList(messageHandler.messages)}" var="entry">
                 <div id="conversation" >
                     <h:form styleClass="button">
@@ -24,7 +27,15 @@
         </div>
         
         <div id="right">
-            
+            <div id="rightTop">
+                Här ska numret för den aktuella konervastionen visas!
+            </div>
+            <p:commandButton id="addContact" value="Lägg till" type="button" />  
+  
+            <p:overlayPanel id="contactPanel" for="addContact" hideEffect="fade" dynamic="true">
+                Namn: <p:inputText /><br/>
+                <p:button value="Lägg till kontakt" />
+            </p:overlayPanel>
                 <c:forEach items="#{messageHandler.activeConversation}" var="conv">
                     <div class="chat">
                         
@@ -54,9 +65,5 @@
                 <h:commandButton value="Skicka" action="#{messageHandler.sendMessage}" />
             </h:form>
         </div>
-        
-        <h:form>
-            <h:commandButton value="Skapa Kontakt" />
-        </h:form>
     </h:body>
 </html>
