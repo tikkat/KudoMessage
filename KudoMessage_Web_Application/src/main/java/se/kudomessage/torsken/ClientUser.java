@@ -1,11 +1,8 @@
 package se.kudomessage.torsken;
 
+import com.google.gdata.client.contacts.ContactsService;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.faces.bean.SessionScoped;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 @SessionScoped
 public class ClientUser {
