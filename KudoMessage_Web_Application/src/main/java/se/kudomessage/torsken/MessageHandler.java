@@ -43,7 +43,9 @@ public class MessageHandler {
         }
         Set<String> t = messages.keySet();
         List h = new ArrayList<String>(t);
-        activeConversation = messages.get(h.get(0));
+        
+        if (h.size() > 0)
+            activeConversation = messages.get(h.get(0));
     }
 
     public <T, S> List<Map.Entry<T, S>> mapToList(Map<T, S> map) {
