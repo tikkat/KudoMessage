@@ -13,7 +13,9 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class ContactsAPI {
-    
+    //------------------------------
+    //  Remember to refactor the retreiveContact methods!!!
+    //------------------------------
     public static ContactsService authenticateId(String token){
 
         ContactsService contactService = null;
