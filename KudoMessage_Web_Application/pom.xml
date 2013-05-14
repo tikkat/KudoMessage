@@ -68,7 +68,11 @@
             <artifactId>core</artifactId>
             <version>1.47.1</version>
         </dependency>
-            
+        <dependency>  
+            <groupId>org.primefaces</groupId>  
+            <artifactId>primefaces</artifactId>  
+            <version>3.5</version>  
+        </dependency> 
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
@@ -147,5 +151,11 @@
             <id>kudomessage-releases</id>
             <url>https://github.com/sirmackan/KudoMessageMaven/raw/master/releases/</url>
         </repository>
+        <repository>  
+            <id>prime-repo</id>  
+            <name>PrimeFaces Maven Repository</name>  
+            <url>http://repository.primefaces.org</url>  
+            <layout>default</layout>  
+        </repository> 
     </repositories>
 </project>
