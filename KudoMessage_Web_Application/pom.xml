@@ -64,6 +64,12 @@
             <version>1.4.0-alpha</version>
         </dependency>
         <dependency>
+            <groupId>com.google.gdata</groupId>
+            <artifactId>core</artifactId>
+            <version>1.47.1</version>
+        </dependency>
+            
+        <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>20090211</version>
@@ -136,6 +142,10 @@
         <repository>
             <id>snapshots</id>
             <url>http://anonsvn.icefaces.org/repo/maven2/releases/</url>
+        </repository>
+        <repository>
+            <id>kudomessage-releases</id>
+            <url>https://github.com/sirmackan/KudoMessageMaven/raw/master/releases/</url>
         </repository>
     </repositories>
 </project>
