@@ -11,7 +11,11 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 
+@SessionScoped
+@ManagedBean
 public class ContactsAPI {
     //------------------------------
     //  Remember to refactor the retreiveContact methods!!!

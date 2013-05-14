@@ -18,14 +18,13 @@ public class ClientUser {
     public static ClientUser getInstance() {
         if (instance == null){
             instance = new ClientUser();
-            instance.authenticateContacts();
         }
           
         return instance;
     }
     
-    private void authenticateContacts () {
-        //contactsService = ContactsAPI.authenticateId(accessToken);
+    public void authenticateContacts () {
+        contactsService = ContactsAPI.authenticateId(accessToken);
     }
 
     public String getAccessToken() {

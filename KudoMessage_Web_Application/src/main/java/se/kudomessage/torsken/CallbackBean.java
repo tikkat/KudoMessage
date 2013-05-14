@@ -39,6 +39,7 @@ public class CallbackBean {
             }
         }
         
+        ClientUser.getInstance().authenticateContacts();
         redirectToHomePage();
     }
     
