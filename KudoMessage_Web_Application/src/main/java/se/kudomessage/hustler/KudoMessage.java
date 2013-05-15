@@ -1,5 +1,8 @@
 package se.kudomessage.hustler;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class KudoMessage {
 
     protected String id,
@@ -20,22 +23,24 @@ public class KudoMessage {
         this.receiver = receiver;
     }
 
-    public String toString() {
-        String jsonString = "{\"protocol\":\"SMS\"";
-        if (id != null) {
-            jsonString = jsonString + ",\"id\":\"" + this.id + "\"";
-        }
-        if (origin != null) {
-            jsonString = jsonString + ",\"origin\":\"" + this.origin + "\"";
-        }
-        if (receiver != null) {
-            jsonString = jsonString + ",\"receiver\":\"" + this.receiver + "\"";
-        }
-        if (content != null) {
-            jsonString = jsonString + ",\"content\":\"" + this.content + "\"";
-        }
-        jsonString = jsonString + "}";
+	public String toString(){
+		return toJSON().toString();
+	}
+	
+	public JSONObject toJSON() {
+            JSONObject json = new JSONObject();
 
-        return jsonString;
+            try {
+                    json.put("protocol", "SMS");
+                    json.put("id", this.id);
+                    json.put("origin", this.origin);
+                    json.put("receiver", this.receiver);
+                    json.put("content", this.content);
+            } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+            }
+
+            return json;
     }
 }
