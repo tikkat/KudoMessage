@@ -4,6 +4,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+/**
+ * @author hultner
+ *
+ * Fetches and saves preferences using SharedPreferences when it makes sense to save them between sessions.
+ * 
+ */
+
 public class Globals{
 	
 	private static String accessToken;
@@ -15,19 +22,21 @@ public class Globals{
 	private static SharedPreferences prefs;
 
 	public static String getAccessToken() {
-		return accessToken;
+		return prefs.getString(prefKey("accessToken"), null);
 	}
 
 	public static void setAccessToken(String accessToken) {
-		Globals.accessToken = accessToken;
+		//Globals.accessToken = accessToken;
+		prefs.edit().putString(prefKey("accessToken"), accessToken).commit();
 	}
 
 	public static String getEmail() {
-		return email;
+		return prefs.getString(prefKey("email"), null);
 	}
 
 	public static void setEmail(String email) {
-		Globals.email = email;
+		//Globals.email = email;
+		prefs.edit().putString(prefKey("email"), email).commit();
 	}
 	
 	public static Activity getActivity() {
@@ -42,18 +51,24 @@ public class Globals{
 	}
 	
 	public static void setApiPath(String apiPath){
-		Globals.apiPath = apiPath;
+		//Globals.apiPath = apiPath;
+		prefs.edit().putString(prefKey("apiPath"), apiPath).commit();
 	}
 
 	public static String getApiPath(){
-		return apiPath;
+		return prefs.getString(prefKey("apiPath"), null);
 	}
 
 	public static String getGCM() {
-		return GCM;
+		return prefs.getString(prefKey("GCM"), null);
 	}
 
 	public static void setGCM(String GCM) {
-		Globals.GCM = GCM;
+		//Globals.GCM = GCM;
+		prefs.edit().putString(prefKey("GCM"), GCM).commit();
+	}
+	
+	private static String prefKey(String pref){
+		return Globals.packageIdentifier+"."+pref;
 	}
 }
