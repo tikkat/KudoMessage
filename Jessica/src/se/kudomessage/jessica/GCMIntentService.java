@@ -21,7 +21,7 @@ public class GCMIntentService extends GCMBaseIntentService{
 		
 		Log.v("GCMKey", "GOT GCM:" + registrationId);
 		
-		((MainActivity) Globals.getActivity()).initOAuth();
+		//((MainActivity) Globals.getActivity()).initOAuth();
 	}
 
 	@Override

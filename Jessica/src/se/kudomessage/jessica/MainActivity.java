@@ -6,6 +6,8 @@ import android.os.Handler;
 import android.app.Activity;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
+
 import com.google.android.gcm.GCMRegistrar;
 
 public class MainActivity extends Activity {
@@ -31,7 +33,7 @@ public class MainActivity extends Activity {
 			GCMRegistrar.register(this, CONSTANTS.SENDER_ID );
 		}else{
 			Globals.setGCM(GCMKey);
-			this.initOAuth();
+			//this.initOAuth();
 		}
 		
 	}
@@ -49,8 +51,33 @@ public class MainActivity extends Activity {
 		
 	}
 
-	public void initOAuth() {
+	/**
+	 * Triggered when the user clicks the "Sign in with Google" button
+	 * 
+	 * @param view required for button listeners 
+	 */
+	public void initOAuth(View view) {
 		OAuthModel.requestAccessToken();
+	}
+	
+	/**
+	 * Triggered when the users clicks the "Continue" button
+	 * 
+	 * @param view required for button listeners 
+	 */
+	public void registerUser(View view){
+		// To be added some error control, check so that the server 
+		// address is a valid server and that the user have connected with google.
+		if(Globals.getAccessToken() != null ){
+			//Error stuff for accesstoken
+		}else if(PushModel.testServer() != false){
+			//If the server isn't a valid KudoMessage server.
+		}else if(Globals.getGCM() != null){
+			//Please wait for GCM something message
+		}else{
+			//Success
+			init();
+		}
 	}
 
 }
