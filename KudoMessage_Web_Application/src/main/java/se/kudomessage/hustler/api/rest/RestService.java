@@ -49,18 +49,17 @@ public class RestService {
         JSONObject response = new JSONObject();
         JSONObject input = new JSONObject(inputData);
         
-        /*String token = input.getString("token");
+        String token = input.getString("token");
         String receiver = input.getString("receiver");
+        String origin = input.getString("origin");
         String content = input.getString("content");
         String email = Utils.getUserInfo(token).get("email");
         
         // Upload the message to Gmail
-        GmailModelList.getGmailModel(token, email).saveMessage(GmailModel.Label.STANDARD, new KudoMessage(content, email, receiver));
+        GmailModelList.getGmailModel(token, email).saveMessage(GmailModel.Label.STANDARD, new KudoMessage(content, origin, receiver));
 
         // Push to the client web gui
-        PushHandler.notifyAllClients(Utils.getUserInfo(token).get("userID"));*/
-        
-        System.out.println("#############################" + input.toString());
+        // PushHandler.notifyAllClients(Utils.getUserInfo(token).get("userID"));
         
         response.put("response", "OK");
         return response.toString();
@@ -150,6 +149,9 @@ public class RestService {
         response.put("messages", list);
         
         response.put("response", "OK");
+        
+        System.out.println("THE F*****KING RESPONSE : " + response.toString());
+        
         return response.toString();
     }
 }

@@ -61,6 +61,7 @@ public class PushHandler {
     }
     
     public static void notifyAllClients(String userID) {
+        System.out.println("Försöker att notifiera klienten " + userID);
         PushRenderer.render(userID);
     }
 }

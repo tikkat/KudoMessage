@@ -15,12 +15,10 @@ import org.json.JSONObject;
 @SessionScoped
 public class MessageHandler {
 
-    private String content, receiver;
+    private String content;
     private Map<String, ArrayList> messages;
-    private String conversationName;
     private ArrayList<KudoMessage> activeConversation;
     private String activeNumber;
-    private static final String PUSH_GROUP = "colorPage";
 
     public MessageHandler() throws JSONException {
         messages = new HashMap<String, ArrayList>();
@@ -31,6 +29,7 @@ public class MessageHandler {
         range.put("upper", 100);
 
         String tmp = RESTHandler.post("get-messages", range.toString());
+        
         JSONArray array = new JSONObject(tmp).getJSONArray("messages");
 
         ClientUser.getInstance();
@@ -80,23 +79,26 @@ public class MessageHandler {
         JSONObject message = new JSONObject();
         try {
             message.put("token", ClientUser.getInstance().getAccessToken());
-            message.put("receiver", receiver);
+            message.put("receiver", activeNumber);
             message.put("content", content);
         } catch (JSONException ex) {
             return;
         }
 
-        addMessageToConversation(new KudoMessage(content, ClientUser.getInstance().getEmail(), receiver));
+        addMessageToConversation(new KudoMessage(content, ClientUser.getInstance().getEmail(), activeNumber));
         RESTHandler.post("send-message", message.toString());
     }
 
     private void addMessageToConversation(KudoMessage m) {
-        conversationName = m.origin.equals("Kudo Message <" + ClientUser.getInstance().getEmail() + ">") ? m.receiver : m.origin;
-        if (!messages.containsKey(conversationName)) {
-            messages.put(conversationName, new ArrayList<KudoMessage>());
+        String test = m.origin.equals(ClientUser.getInstance().getEmail()) ? m.receiver : m.origin;
+        
+        System.out.println("BAAAAJS ::: " + test);
+        
+        if (!messages.containsKey(test)) {
+            messages.put(test, new ArrayList<KudoMessage>());
         }
 
-        messages.get(conversationName).add(m);
+        messages.get(test).add(m);
     }
 
     public String getContent() {
@@ -105,14 +107,6 @@ public class MessageHandler {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public String getReceiver() {
-        return receiver;
-    }
-
-    public void setReceiver(String receiver) {
-        this.receiver = receiver;
     }
 
     public Map<String, ArrayList> getMessages() {
