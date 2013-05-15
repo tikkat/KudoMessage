@@ -15,6 +15,10 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		Globals.setActivity(this);
+		
+		if(Globals.getApiPath() == null){
+			Globals.setApiPath(CONSTANTS.DEFAULT_API_PATH);
+		}
 
 		GCMRegistrar.checkDevice(this);
 		GCMRegistrar.checkManifest(this);
