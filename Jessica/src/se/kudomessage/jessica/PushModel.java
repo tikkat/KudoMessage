@@ -9,70 +9,78 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.util.Log;
 
 public class PushModel {
 
 	private PushModel(){}
-	
+
 	public static void pushMessage(KudoMessage m) {
-		post("pushMessage", m.toString());
+		post("push-message", m.toJSON());
 	}
 
 	public static void registerServer() {
-		
-		final String pushData = 
-		"{" +
-			"\"token\":\""+Globals.getAccessToken()+"\"," +
-			"\"gcm\":\""+Globals.getGCM()+"\"," +
-			"\"protocol\":\"SMS\"" +
-		"}";
+		JSONObject pushData = new JSONObject();
+		try {
+			pushData.put("gcm", Globals.getGCM());
+			pushData.put("protocol", "SMS");
+			
+			post("register-server", pushData);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
+	public static String post(final String method, final JSONObject data) {
+		// TODO: Make the return work!
+		
+		try {
+			data.put("token", Globals.getAccessToken());
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		new Thread( new Runnable(){
 			@Override
 			public void run() {
-				post("register-server", pushData);
+				DefaultHttpClient httpClient = new DefaultHttpClient();
+				HttpPost postRequest = new HttpPost(Globals.getApiPath() + method);
+
+				StringEntity input;
+				try {
+					input = new StringEntity(data.toString(), "UTF-8");
+				} catch (UnsupportedEncodingException ex) {
+					input = null;
+				}
+
+				input.setContentType("text/plain");
+				postRequest.setEntity(input);
+
+				HttpResponse response;
+				BufferedReader br = null;
+				try {
+					response = httpClient.execute(postRequest);
+					br = new BufferedReader(new InputStreamReader((response.getEntity().getContent())));
+				} catch (IOException ex) {}
+
+				String result = "";
+				String output  = "";
+				try {
+					while ((output = br.readLine()) != null) {
+						result += output;
+					}
+
+					httpClient.getConnectionManager().shutdown();
+					Log.e("http-Response:", result);
+				} catch (IOException ex) {}
 			}
 		}).start();
+		
+		return "Unimplemented result handeling";
 	}
-	
-    public static String post(String method, String data) {
-        DefaultHttpClient httpClient = new DefaultHttpClient();
-        HttpPost postRequest = new HttpPost(Globals.getApiPath() + method);
-
-        StringEntity input;
-        try {
-            input = new StringEntity(data, "UTF-8");
-        } catch (UnsupportedEncodingException ex) {
-            return null;
-        }
-        
-        input.setContentType("text/plain");
-        postRequest.setEntity(input);
-
-        HttpResponse response;
-        BufferedReader br;
-        try {
-            response = httpClient.execute(postRequest);
-            br = new BufferedReader(new InputStreamReader((response.getEntity().getContent())));
-        } catch (IOException ex) {
-            return null;
-        }
-        
-        String result = "";
-        String output  = "";
-        try {
-            while ((output = br.readLine()) != null) {
-                result += output;
-            }
-            
-            httpClient.getConnectionManager().shutdown();
-            Log.e("http-Response:", result);
-            return result;
-        } catch (IOException ex) {
-            return null;
-        }
-    }
-
 }
