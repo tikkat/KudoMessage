@@ -70,12 +70,16 @@ public class MainActivity extends Activity {
 		// address is a valid server and that the user have connected with google.
 		if(Globals.getAccessToken() != null ){
 			//Error stuff for accesstoken
+			Log.e("registerUser", "Accesstoken not granted");
 		}else if(PushModel.testServer() != false){
 			//If the server isn't a valid KudoMessage server.
+			Log.e("registerUser", "The message server wasn't valid");
 		}else if(Globals.getGCM() != null){
 			//Please wait for GCM something message
+			Log.e("registerUser", "GCM wasn't fetched yet");
 		}else{
 			//Success
+			Log.d("registerUser", "Successfully");
 			init();
 		}
 	}
