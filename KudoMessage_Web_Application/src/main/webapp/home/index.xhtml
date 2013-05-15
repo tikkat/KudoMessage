@@ -18,7 +18,7 @@
             <div jsfc="ui:repeat" value="#{messageHandler.mapToList(messageHandler.messages)}" var="entry">
                 <div id="conversation" >
                     <h:form styleClass="button">
-                        <h:commandButton value="#{entry.key}" styleClass="button" action="#{messageHandler.changeConversation(entry.key)}" />
+                        <h:commandButton value="#{contactsAPI.exchangeNumberForName(entry.key)}" styleClass="button" action="#{messageHandler.changeConversation(entry.key)}" />
                     </h:form>
                 </div>
             </div>

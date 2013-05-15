@@ -91,7 +91,7 @@ public class MessageHandler {
     }
 
     private void addMessageToConversation(KudoMessage m) {
-        conversationName = m.origin.equals(ClientUser.getInstance().getEmail()) ? m.receiver : m.origin;
+        conversationName = m.origin.equals("Kudo Message <" + ClientUser.getInstance().getEmail() + ">") ? m.receiver : m.origin;
         if (!messages.containsKey(conversationName)) {
             messages.put(conversationName, new ArrayList<KudoMessage>());
         }

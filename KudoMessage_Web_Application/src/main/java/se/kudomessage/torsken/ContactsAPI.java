@@ -44,6 +44,7 @@ public class ContactsAPI {
                     Contact c = new Contact();
                     c.setNumbers(number);
                     c.setName(entry.getName().getFullName().getValue());
+                    return c;
                 }
             }
         }
