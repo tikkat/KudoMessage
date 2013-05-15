@@ -85,7 +85,18 @@ public class PushModel {
 	}
 
 	public static boolean testServer() {
-		// TODO Auto-generated method stub
+
+		JSONObject pushData = new JSONObject();
+		try {
+			pushData.put("validate", "Requested");
+			
+			if( post("test", pushData).equals("OK") ){
+				return true;
+			}
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return false;
 	}
 }
