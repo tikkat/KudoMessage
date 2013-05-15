@@ -42,14 +42,14 @@ public class RestService {
     }
     
     @POST
-    @Path("pushMessage")
+    @Path("push-message")
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.TEXT_PLAIN)
     public String pushMessage(String inputData) throws JSONException {
         JSONObject response = new JSONObject();
         JSONObject input = new JSONObject(inputData);
         
-        String token = input.getString("token");
+        /*String token = input.getString("token");
         String receiver = input.getString("receiver");
         String content = input.getString("content");
         String email = Utils.getUserInfo(token).get("email");
@@ -58,7 +58,9 @@ public class RestService {
         GmailModelList.getGmailModel(token, email).saveMessage(GmailModel.Label.STANDARD, new KudoMessage(content, email, receiver));
 
         // Push to the client web gui
-        PushHandler.notifyAllClients(Utils.getUserInfo(token).get("userID"));
+        PushHandler.notifyAllClients(Utils.getUserInfo(token).get("userID"));*/
+        
+        System.out.println("#############################" + input.toString());
         
         response.put("response", "OK");
         return response.toString();
