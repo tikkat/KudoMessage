@@ -279,12 +279,15 @@ public class GmailModel {
             
             try {
                 String receviver = message.getAllRecipients()[0].toString();
-                receviver = receviver.substring(0, receviver.length() - 2);
+                receviver = receviver.replace(":", "");
+                receviver = receviver.replace(";", "");
+                
+                String origin = parseEmail(message.getFrom()[0].toString());
                 
                 KudoMessage tmp = new KudoMessage(
                             getMessageId(message),
                             message.getContent().toString(),
-                            message.getFrom()[0].toString(),
+                            origin,
                             receviver);
                 
                 messages.add(tmp);
@@ -293,6 +296,14 @@ public class GmailModel {
         }
         
         return messages;
+    }
+    
+    private String parseEmail(String email) {
+        if (email.contains("<")) {
+            return email.substring(email.indexOf("<") + 1, email.indexOf(">"));
+        } else {
+            return email;
+        }
     }
 
     public enum Label {
