@@ -83,4 +83,9 @@ public class PushModel {
 		
 		return "Unimplemented result handeling";
 	}
+
+	public static boolean testServer() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
