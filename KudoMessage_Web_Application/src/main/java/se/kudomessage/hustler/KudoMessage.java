@@ -7,40 +7,55 @@ public class KudoMessage {
 
     protected String id,
             content,
-            origin,
-            receiver;
+            origin;
+	protected ArrayList<String> receivers;
 
     public KudoMessage(String content, String origin, String receiver) {
         this.content = content;
         this.origin = origin;
-        this.receiver = receiver;
+		this.receivers.add(receiver);
     }
 
     public KudoMessage(String id, String content, String origin, String receiver) {
         this.id = id;
         this.content = content;
         this.origin = origin;
-        this.receiver = receiver;
+		this.receivers.add(receiver);
     }
+	
+	public String getFirstReceiver(){
+		return receivers.get(0);
+	}
+	
+	public void addReceiver(String receiver){
+		this.receivers.add(receiver);
+	}
 
 	public String toString(){
 		return toJSON().toString();
 	}
 	
 	public JSONObject toJSON() {
-            JSONObject json = new JSONObject();
-
-            try {
-                    json.put("protocol", "SMS");
-                    json.put("id", this.id);
-                    json.put("origin", this.origin);
-                    json.put("receiver", this.receiver);
-                    json.put("content", this.content);
-            } catch (JSONException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-            }
-
-            return json;
-    }
+		JSONObject json = new JSONObject();
+		
+		try {
+			json.put("protocol", "SMS");
+			json.put("id", this.id);
+			json.put("origin", this.origin);
+			json.put("content", this.content);
+			
+			JSONArray rl = new JSONArray();
+			for( String r : receivers){
+				rl.put(r);
+			}
+			
+			json.put("receivers", rl);
+			
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return json;
+	}
 }

@@ -31,11 +31,7 @@ public class KudoMessage {
 	
 	public KudoMessage(String id){
 		this.id = id;
-	}
-	
-	public String toString(){
-		return toJSON().toString();
-	}
+	}	
 	
 	public String getFirstReceiver(){
 		return receivers.get(0);
@@ -45,6 +41,11 @@ public class KudoMessage {
 		this.receivers.add(receiver);
 	}
 	
+	
+	public String toString(){
+		return toJSON().toString();
+	}
+
 	public JSONObject toJSON() {
 		JSONObject json = new JSONObject();
 		
