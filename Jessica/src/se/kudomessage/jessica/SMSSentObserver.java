@@ -36,7 +36,7 @@ public class SMSSentObserver extends ContentObserver {
         		// Might not be the whole message body!
         		message.content = content;
         		message.origin = Globals.getEmail();
-        		message.receiver = receiver;
+        		message.addReceiver(receiver);
         		
                 Log.v("SMSTagTracker", "SMS SENT: The user sent the message \"" + content + "\" to " + receiver);
                 

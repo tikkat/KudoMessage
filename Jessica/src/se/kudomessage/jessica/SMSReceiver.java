@@ -18,7 +18,7 @@ public class SMSReceiver extends BroadcastReceiver {
 		// Might not be the whole message body!
 		message.content = sms.getMessageBody();
 		message.origin = sms.getOriginatingAddress();
-		message.receiver = Globals.getEmail();
+		message.addReceiver(Globals.getEmail());
 		
 		Log.v("SMSTagTracker", "Got an SMS: " + message.content + ", from: " + message.origin);
 		
