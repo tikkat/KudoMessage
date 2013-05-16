@@ -1,13 +1,16 @@
 package se.kudomessage.jessica;
 
+import java.util.ArrayList;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class KudoMessage {
 	protected String id, 
 		content, 
-		origin, 
-		receiver;
+		origin;
+	protected ArrayList<String> receivers;
 	
 	public KudoMessage(){
 		//Empty message
@@ -17,7 +20,7 @@ public class KudoMessage {
 		this.id = id;
 		this.content = content;
 		this.origin = origin;
-		this.receiver = receiver;
+		this.receivers.add(receiver);
 	}
 	
 	public KudoMessage(String id, String content, String origin){
@@ -34,6 +37,14 @@ public class KudoMessage {
 		return toJSON().toString();
 	}
 	
+	public String getFirstReceiver(){
+		return receivers.get(0);
+	}
+	
+	public void addReceiver(String receiver){
+		this.receivers.add(receiver);
+	}
+	
 	public JSONObject toJSON() {
 		JSONObject json = new JSONObject();
 		
@@ -41,8 +52,15 @@ public class KudoMessage {
 			json.put("protocol", "SMS");
 			json.put("id", this.id);
 			json.put("origin", this.origin);
-			json.put("receiver", this.receiver);
 			json.put("content", this.content);
+			
+			JSONArray rl = new JSONArray();
+			for( String r : receivers){
+				rl.put(r);
+			}
+			
+			json.put("receivers", rl);
+			
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
