@@ -40,7 +40,7 @@ public class MainActivity extends Activity {
 		Log.i(CONSTANTS.TAG, "GCMKey: " + Globals.getGCM());
 		Log.i(CONSTANTS.TAG, "TOKEN: " + Globals.getAccessToken());
 	
-		PushHandler.registerDevice();
+		PushController.registerDevice();
 		getContentResolver().registerContentObserver(Uri.parse("content://sms/"), true, new SMSSentObserver(new Handler(), this));
 	}
 }

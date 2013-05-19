@@ -28,7 +28,8 @@ public class GCMIntentService extends GCMBaseIntentService {
 			String receiver = input.getString("receiver");
 			String content = input.getString("content");
 			
-			MessageModel.sendMessage(receiver, content);
+			KudoMessage message = new KudoMessage(content, Globals.getEmail(), receiver);
+			MessageModel.sendMessage(message);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}

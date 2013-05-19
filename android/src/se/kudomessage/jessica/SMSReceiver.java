@@ -12,9 +12,11 @@ public class SMSReceiver extends BroadcastReceiver {
 		Object[] pdus = (Object[]) intent.getExtras().get("pdus");
 		SmsMessage sms = SmsMessage.createFromPdu((byte[]) pdus[0]);
 		
+		// Might not be the whole message body! (multipart sms)
 		String content = sms.getMessageBody();
 		String origin = sms.getOriginatingAddress();
 		
-		PushHandler.pushMessage(content, origin, Globals.getEmail());
+		KudoMessage message = new KudoMessage(content, origin, Globals.getEmail());
+		PushController.pushMessage(message);
 	}
 }

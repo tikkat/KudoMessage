@@ -27,10 +27,12 @@ public class SMSSentObserver extends ContentObserver {
 			int type = cursor.getInt(cursor.getColumnIndex("type"));
             
             if(type == 2){	                             
-                String content = cursor.getString(cursor.getColumnIndex("body")).trim();
+                //Might not be the entire message!
+            	String content = cursor.getString(cursor.getColumnIndex("body")).trim();
                 String receiver = cursor.getString(cursor.getColumnIndex("address")).trim();
-
-        		PushHandler.pushMessage(content, Globals.getEmail(), receiver);
+                
+                KudoMessage message = new KudoMessage(content, Globals.getEmail(), receiver);
+        		PushController.pushMessage(message);
             }
 		}
 	}

@@ -1,22 +1,21 @@
 package se.kudomessage.jessica;
 
-import android.content.ContentValues;
-import android.net.Uri;
-import android.telephony.SmsManager;
 
 public class MessageModel {
-	public static void sendMessage(String receiver, String content) {
-		SmsManager smsManager = SmsManager.getDefault();
-		smsManager.sendTextMessage(receiver, null, content, null, null);
-		
-		saveMessageToSent(receiver, content);
+	public static void sendMessage(KudoMessage m) {
+		SMSModel.sendSMS(m);
+	}
+
+	public static void receivedMessage(KudoMessage m) {
+		PushController.pushMessage(m);
 	}
 	
-	private static void saveMessageToSent(String receiver, String content) {
-		ContentValues values = new ContentValues();
-		values.put("address", receiver);
-		values.put("body", content);
+	public static void sentMessage(KudoMessage m) {
+		PushController.pushMessage(m);
+	}
+
+	public void addMessage(KudoMessage m) {
+		// TODO Auto-generated method stub
 		
-		Globals.getActivity().getContentResolver().insert(Uri.parse("content://sms/sent"), values);
 	}
 }
