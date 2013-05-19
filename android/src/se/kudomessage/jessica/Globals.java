@@ -56,7 +56,8 @@ public class Globals{
 	}
 
 	public static String getServer(){
-		return prefs.getString(prefKey("server"), null);
+		String server = prefs.getString(prefKey("server"), null);
+		return ( server == null ) ? CONSTANTS.DEFAULT_SERVER_ADDRESS : server;
 	}
 
 	public static String getGCM() {
