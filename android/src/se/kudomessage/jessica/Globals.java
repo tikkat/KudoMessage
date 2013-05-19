@@ -17,7 +17,7 @@ public class Globals{
 	private static String email;
 	private static Activity activity;
 	private static String packageIdentifier;
-	private static String apiPath = "http://172.20.10.5:8080/KudoMessage_Web_Application/api/rest/";
+	private static String server;
 	private static String GCM;
 	private static SharedPreferences prefs;
 
@@ -50,12 +50,12 @@ public class Globals{
 				Globals.packageIdentifier, Context.MODE_PRIVATE);
 	}
 	
-	public static void setApiPath(String apiPath){
+	public static void setServer(String server){
 		//Globals.apiPath = apiPath;
-		prefs.edit().putString(prefKey("apiPath"), apiPath).commit();
+		prefs.edit().putString(prefKey("server"), server).commit();
 	}
 
-	public static String getApiPath(){
+	public static String getServer(){
 		return prefs.getString(prefKey("apiPath"), null);
 	}
 
