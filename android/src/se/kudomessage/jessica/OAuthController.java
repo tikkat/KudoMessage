@@ -17,13 +17,13 @@ public class OAuthController {
 	}
 	
 	private static void getNewAccessToken() {
-		AccountManager am = AccountManager.get(Globals.activity);
-		am.getAuthTokenByFeatures("com.google", OAUTH_SCOPE, null, Globals.activity, null, null, new OAuthCallback(), null);
+		AccountManager am = AccountManager.get(Globals.getActivity());
+		am.getAuthTokenByFeatures("com.google", OAUTH_SCOPE, null, Globals.getActivity(), null, null, new OAuthCallback(), null);
 	}
 
 	public static void revokeAccessToken() {
-		AccountManager am = AccountManager.get(Globals.activity);
-		am.invalidateAuthToken("com.google", Globals.accessToken);
+		AccountManager am = AccountManager.get(Globals.getActivity());
+		am.invalidateAuthToken("com.google", Globals.getAccessToken());
 	}
 
 	private static void renewAccessToken() {
@@ -36,10 +36,12 @@ public class OAuthController {
 		@Override
 		public void run(AccountManagerFuture<Bundle> result) {
 			try {
-				Globals.accessToken = result.getResult().getString(AccountManager.KEY_AUTHTOKEN);
-				Globals.email = result.getResult().getString(AccountManager.KEY_ACCOUNT_NAME);
+				String accessToken = result.getResult().getString(AccountManager.KEY_AUTHTOKEN);
+				String email = result.getResult().getString(AccountManager.KEY_ACCOUNT_NAME);
+				Globals.setAccessToken(accessToken);
+				Globals.setEmail(email);
 
-				((MainActivity) Globals.activity).init();
+				((MainActivity) Globals.getActivity()).init();
 			} catch (OperationCanceledException e) {
 				// Was denied the access, didn't get an access token.
 			} catch (Exception e) {
