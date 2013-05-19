@@ -13,12 +13,8 @@ import android.content.SharedPreferences;
 
 public class Globals{
 	
-	private static String accessToken;
-	private static String email;
 	private static Activity activity;
 	private static String packageIdentifier;
-	private static String server;
-	private static String GCM;
 	private static SharedPreferences prefs;
 
 	public static String getAccessToken() {
