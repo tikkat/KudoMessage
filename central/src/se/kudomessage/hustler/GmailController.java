@@ -1,4 +1,4 @@
-package se.kudomessage;
+package se.kudomessage.hustler;
 
 import com.sun.mail.imap.IMAPSSLStore;
 import java.security.Provider;
@@ -15,6 +15,8 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import se.kudomessage.hustler.oauth.OAuth2SaslClientFactory;
 
 public class GmailController {
     private IMAPSSLStore store;
@@ -49,7 +51,7 @@ public class GmailController {
             super("Google OAuth2 Provider", 1.0,
                     "Provides the XOAUTH2 SASL Mechanism");
             put("SaslClientFactory.XOAUTH2",
-                    "oauth.OAuth2SaslClientFactory");
+                    "se.kudomessage.hustler.oauth.OAuth2SaslClientFactory");
         }
     }
 
@@ -57,7 +59,7 @@ public class GmailController {
         Properties properties = new Properties();
         properties.put("mail.imaps.sasl.enable", "true");
         properties.put("mail.imaps.sasl.mechanisms", "XOAUTH2");
-        properties.put(oauth.OAuth2SaslClientFactory.OAUTH_TOKEN_PROP, token);
+        properties.put(OAuth2SaslClientFactory.OAUTH_TOKEN_PROP, token);
 
         session = Session.getInstance(properties);
 

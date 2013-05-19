@@ -1,4 +1,4 @@
-package se.kudomessage;
+package se.kudomessage.hustler;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;

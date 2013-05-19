@@ -1,4 +1,4 @@
-package oauth;
+package se.kudomessage.hustler.oauth;
 
 import java.util.Map;
 
