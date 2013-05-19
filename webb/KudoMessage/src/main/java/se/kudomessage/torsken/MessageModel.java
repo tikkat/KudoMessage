@@ -22,7 +22,10 @@ public class MessageModel {
                     JSONObject output = new JSONObject();
                     output.put("action", "send-message");
                     
-                    KudoMessage message = new KudoMessage(messageContent, "", ConversationsHolder.getCurrentConversationName());
+                    JSONObject message = new JSONObject();
+                    message.put("receiver", ConversationsHolder.getCurrentConversationName());
+                    message.put("content", messageContent);
+                    
                     output.put("message", message);
 
                     SocketHandler.getOut().println(output.toString());
