@@ -14,7 +14,6 @@ import org.json.JSONObject;
 @SessionScoped
 @ManagedBean
 public class BackendBean {
-
     private Socket socket = null;
     private BufferedReader in = null;
     private PrintWriter out = null;
@@ -100,11 +99,12 @@ public class BackendBean {
                     JSONArray f = e.getJSONArray("messages");
 
                     for (int i = 0; i < f.length(); i++) {
-                        String content = f.getJSONObject(i).getString("content");
-                        String origin = f.getJSONObject(i).getString("origin");
-                        String receiver = f.getJSONObject(i).getString("receiver");
-
-                        ConversationsHolder.getInstance().addMessage(content, origin, receiver);
+                        KudoMessage message = new KudoMessage();
+                        message.content = f.getJSONObject(i).getString("content");
+                        message.origin = f.getJSONObject(i).getString("origin");
+                        message.addReceiver(f.getJSONObject(i).getString("receiver"));
+                        
+                        ConversationsHolder.getInstance().addMessage(message);
                     }
                 } catch (Exception ex) {
                     System.err.println("Something wrong in action init: " + ex.toString());
