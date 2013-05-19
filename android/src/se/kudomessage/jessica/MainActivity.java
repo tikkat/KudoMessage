@@ -1,7 +1,8 @@
-package se.kudomessage;
+package se.kudomessage.jessica;
 
-import se.kudomessage.CONSTANTS;
-import se.kudomessage.Globals;
+import se.kudomessage.R;
+import se.kudomessage.jessica.CONSTANTS;
+import se.kudomessage.jessica.Globals;
 
 import com.google.android.gcm.GCMRegistrar;
 

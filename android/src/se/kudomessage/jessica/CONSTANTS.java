@@ -1,4 +1,4 @@
-package se.kudomessage;
+package se.kudomessage.jessica;
 
 public final class CONSTANTS {
 	public static final String TAG = "KMCS";

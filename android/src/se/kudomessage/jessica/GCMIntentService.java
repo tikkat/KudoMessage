@@ -1,4 +1,4 @@
-package se.kudomessage;
+package se.kudomessage.jessica;
 
 import org.json.JSONException;
 import org.json.JSONObject;

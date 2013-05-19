@@ -1,4 +1,4 @@
-package se.kudomessage;
+package se.kudomessage.jessica;
 
 import android.app.Activity;
 
