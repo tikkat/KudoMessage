@@ -40,6 +40,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 		Log.i(CONSTANTS.TAG, "GCM DID REG");
 		
 		Globals.setGCM(GCMKey);
+		//To be removed once ui is reimplemented
 		OAuthController.requestAccessToken();
 	}
 
