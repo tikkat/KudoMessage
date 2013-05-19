@@ -19,7 +19,7 @@ public class PushController {
 	
 	private static boolean openConnection() {	
 		try {
-			socket = new Socket(CONSTANTS.SERVER_ADDRESS, CONSTANTS.SERVER_PORT);
+			socket = new Socket(Globals.getServer(), CONSTANTS.SERVER_PORT);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
