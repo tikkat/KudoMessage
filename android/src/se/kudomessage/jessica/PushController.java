@@ -38,7 +38,7 @@ public class PushController {
 			}
 			
 			if (in != null && out != null) {
-				Log.i(CONSTANTS.TAG, "Connected to server " + CONSTANTS.SERVER_ADDRESS + ":" + CONSTANTS.SERVER_PORT);
+				Log.i(CONSTANTS.TAG, "Connected to server " + Globals.getServer() + ":" + CONSTANTS.SERVER_PORT);
 			
 				out.println("GATEWAY");
 				out.flush();
@@ -91,6 +91,7 @@ public class PushController {
 	}
 	
 	public static void pushMessage(final String content, String origin, String receiver) {
+		//TODO: Fix for internationalization
 		final String _receiver = receiver.replace(" ", "").replace("+46", "0").replace("-", "");
 		final String _origin = origin.replace(" ", "").replace("+46", "0").replace("-", "");
 		
