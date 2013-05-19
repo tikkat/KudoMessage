@@ -1,4 +1,4 @@
-package se.kudomessage.oauth;
+package se.kudomessage.torsken.oauth;
 
 import com.google.api.client.auth.oauth2.draft10.AccessTokenResponse;
 import com.google.api.client.googleapis.auth.oauth2.draft10.GoogleAccessTokenRequest;
@@ -11,8 +11,8 @@ import java.io.IOException;
 import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
-import se.kudomessage.CONSTANTS;
-import se.kudomessage.Globals;
+import se.kudomessage.torsken.CONSTANTS;
+import se.kudomessage.torsken.Globals;
 
 @ManagedBean
 public class OAuthController {

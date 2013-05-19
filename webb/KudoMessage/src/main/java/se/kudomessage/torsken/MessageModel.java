@@ -1,4 +1,4 @@
-package se.kudomessage;
+package se.kudomessage.torsken;
 
 import javax.faces.bean.ManagedBean;
 import org.json.JSONObject;

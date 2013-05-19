@@ -1,4 +1,4 @@
-package se.kudomessage;
+package se.kudomessage.torsken;
 
 public class CONSTANTS {
     public static final String SERVER_ADDRESS = "127.0.0.1";

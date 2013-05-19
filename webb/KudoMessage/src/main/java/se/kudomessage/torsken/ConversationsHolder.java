@@ -1,4 +1,4 @@
-package se.kudomessage;
+package se.kudomessage.torsken;
 
 import java.util.ArrayList;
 import java.util.HashMap;

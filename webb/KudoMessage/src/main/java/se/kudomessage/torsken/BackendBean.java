@@ -1,4 +1,4 @@
-package se.kudomessage;
+package se.kudomessage.torsken;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
