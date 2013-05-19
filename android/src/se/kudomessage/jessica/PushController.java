@@ -12,7 +12,7 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
-public class PushHandler {
+public class PushController {
 	private static Socket socket = null;
 	private static BufferedReader in = null;
 	private static PrintWriter out = null;
@@ -119,5 +119,9 @@ public class PushHandler {
 				closeConnection();
 			}
 		}).start();
+	}
+
+	public static void pushMessage(KudoMessage message) {
+		pushMessage(message.content, message.origin, message.getFirstReceiver());
 	}
 }
