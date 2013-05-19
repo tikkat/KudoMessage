@@ -56,7 +56,7 @@ public class Globals{
 	}
 
 	public static String getServer(){
-		return prefs.getString(prefKey("apiPath"), null);
+		return prefs.getString(prefKey("server"), null);
 	}
 
 	public static String getGCM() {
