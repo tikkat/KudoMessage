@@ -47,12 +47,14 @@ public class SocketHandler extends Thread {
                 input = new JSONObject(inputString);
 
                 if (input.getString("action").equals("new-message")) {
-                    JSONObject message = input.getJSONObject("message");
-
-                    ConversationsHolder.getInstance().addMessage(
-                            message.getString("content"),
-                            message.getString("origin"),
-                            message.getString("receiver"));
+                    JSONObject json = input.getJSONObject("message");
+                    
+                    KudoMessage message = new KudoMessage();
+                    message.content = json.getString("content");
+                    message.origin = json.getString("origin");
+                    message.addReceiver(json.getString("receiver"));
+                    
+                    ConversationsHolder.getInstance().addMessage(message);
                 }
             } catch (Exception e) {}
         }

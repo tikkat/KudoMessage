@@ -13,7 +13,7 @@ import org.icefaces.application.PushRenderer;
 @ManagedBean
 public class ConversationsHolder {
     private static Map<String, Conversation> conversations = new HashMap<String, Conversation>();;
-    private static List<Conversation.Message> currentConversation = new ArrayList<Conversation.Message>();
+    private static List<KudoMessage> currentConversation = new ArrayList<KudoMessage>();
     private static LinkedList<String> allConversationsNames = new LinkedList<String>();
             
     private static String currentConversationName = "";
@@ -52,7 +52,7 @@ public class ConversationsHolder {
         }
     }
 
-    public void setCurrentConversation(List<Conversation.Message> currentConversation) {
+    public void setCurrentConversation(List<KudoMessage> currentConversation) {
         ConversationsHolder.currentConversation = currentConversation;
     }
     
@@ -60,12 +60,12 @@ public class ConversationsHolder {
         PushRenderer.addCurrentSession(Globals.email);
     }
 
-    public List<Conversation.Message> getCurrentConversation() {
+    public List<KudoMessage> getCurrentConversation() {
         return currentConversation;
     }
     
-    public void addMessage(String content, String origin, String receiver) {
-        String conversationName = getConversationName(origin, receiver);
+    public void addMessage(KudoMessage message) {
+        String conversationName = getConversationName(message.origin, message.getFirstReceiver());
         
         if (allConversationsNames.size() < 1)
             currentConversationName = conversationName;
@@ -83,15 +83,15 @@ public class ConversationsHolder {
             conversations.put(conversationName, new Conversation(conversationName));
         }
 
-        System.out.println("Adding message " + content + " to " + conversationName);
-        conversations.get(conversationName).addMessage(content, origin, receiver);
+        System.out.println("Adding message " + message.content + " to " + conversationName);
+        conversations.get(conversationName).addMessage(message);
         
         updateCurrentConversation();
     }
     
     public void updateCurrentConversation() {
         if (!conversations.containsKey(currentConversationName))
-            currentConversation = new ArrayList<Conversation.Message>();
+            currentConversation = new ArrayList<KudoMessage>();
         
         currentConversation = conversations.get(currentConversationName).getMessages();
         
@@ -108,56 +108,20 @@ public class ConversationsHolder {
     
     public class Conversation {
         private String name;
-        private List<Message> messages;
+        private List<KudoMessage> messages;
         
         public Conversation(String name) {
             this.name = name;
             
-            messages = new ArrayList<Message>();
+            messages = new ArrayList<KudoMessage>();
         }
         
-        public void addMessage(String content, String origin, String receiver) {
-            messages.add(new Message(content, origin, receiver));
+        public void addMessage(KudoMessage message) {
+            messages.add(message);
         }
         
-        public List<Message> getMessages() {
+        public List<KudoMessage> getMessages() {
             return messages;
-        }
-                
-        public class Message {
-            private String content;
-            private String origin;
-            private String receiver;
-            
-            public Message(String content, String origin, String receiver) {
-                this.content = content;
-                this.origin = origin;
-                this.receiver = receiver;
-            }
-
-            public String getContent() {
-                return content;
-            }
-
-            public void setContent(String content) {
-                this.content = content;
-            }
-
-            public String getOrigin() {
-                return origin;
-            }
-
-            public void setOrigin(String origin) {
-                this.origin = origin;
-            }
-
-            public String getReceiver() {
-                return receiver;
-            }
-
-            public void setReceiver(String receiver) {
-                this.receiver = receiver;
-            }
         }
     }
 }
