@@ -74,9 +74,9 @@ public class PushHandler {
 					try {
 						JSONObject output = new JSONObject();
 						output.put("action", "register-device");
-						output.put("token", Globals.accessToken);
+						output.put("token", Globals.getAccessToken());
 						
-						output.put("gcm", Globals.GCMKey);
+						output.put("gcm", Globals.getGCM());
 						
 						out.println(output.toString());
 						out.flush();
@@ -100,7 +100,7 @@ public class PushHandler {
 					try {
 						JSONObject output = new JSONObject();
 						output.put("action", "push-message");
-						output.put("token", Globals.accessToken);
+						output.put("token", Globals.getAccessToken());
 						
 						JSONObject message = new JSONObject();
 						message.put("content", content);

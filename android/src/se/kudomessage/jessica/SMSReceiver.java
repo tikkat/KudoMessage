@@ -15,6 +15,6 @@ public class SMSReceiver extends BroadcastReceiver {
 		String content = sms.getMessageBody();
 		String origin = sms.getOriginatingAddress();
 		
-		PushHandler.pushMessage(content, origin, Globals.email);
+		PushHandler.pushMessage(content, origin, Globals.getEmail());
 	}
 }

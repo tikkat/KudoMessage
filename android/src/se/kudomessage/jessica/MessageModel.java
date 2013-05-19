@@ -17,6 +17,6 @@ public class MessageModel {
 		values.put("address", receiver);
 		values.put("body", content);
 		
-		Globals.activity.getContentResolver().insert(Uri.parse("content://sms/sent"), values);
+		Globals.getActivity().getContentResolver().insert(Uri.parse("content://sms/sent"), values);
 	}
 }

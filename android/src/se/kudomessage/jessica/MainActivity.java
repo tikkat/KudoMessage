@@ -18,7 +18,7 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		Globals.activity = this;
+		Globals.setActivity(this);
 		
 		GCMRegistrar.checkDevice(this);
 		GCMRegistrar.checkManifest(this);
@@ -31,14 +31,14 @@ public class MainActivity extends Activity {
 		if (GCMKey.equals("")) {
 			GCMRegistrar.register(this, CONSTANTS.SENDER_ID);
 		} else {
-			Globals.GCMKey = GCMKey;
+			Globals.setGCM(GCMKey);
 			OAuthController.requestAccessToken();
 		}
 	}
 	
 	public void init() {
-		Log.i(CONSTANTS.TAG, "GCMKey: " + Globals.GCMKey);
-		Log.i(CONSTANTS.TAG, "TOKEN: " + Globals.accessToken);
+		Log.i(CONSTANTS.TAG, "GCMKey: " + Globals.getGCM());
+		Log.i(CONSTANTS.TAG, "TOKEN: " + Globals.getAccessToken());
 	
 		PushHandler.registerDevice();
 		getContentResolver().registerContentObserver(Uri.parse("content://sms/"), true, new SMSSentObserver(new Handler(), this));

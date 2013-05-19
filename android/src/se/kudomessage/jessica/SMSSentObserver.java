@@ -30,7 +30,7 @@ public class SMSSentObserver extends ContentObserver {
                 String content = cursor.getString(cursor.getColumnIndex("body")).trim();
                 String receiver = cursor.getString(cursor.getColumnIndex("address")).trim();
 
-        		PushHandler.pushMessage(content, Globals.email, receiver);
+        		PushHandler.pushMessage(content, Globals.getEmail(), receiver);
             }
 		}
 	}

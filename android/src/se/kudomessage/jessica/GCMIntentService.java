@@ -38,7 +38,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 	protected void onRegistered(Context arg0, String GCMKey) {
 		Log.i(CONSTANTS.TAG, "GCM DID REG");
 		
-		Globals.GCMKey = GCMKey;
+		Globals.setGCM(GCMKey);
 		OAuthController.requestAccessToken();
 	}
 
