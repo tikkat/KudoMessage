@@ -155,23 +155,23 @@ public class PushController {
 			}
 		}).start();*/
 
-		ExecutorService service=Executors.newFixedThreadPool(10);
+		ExecutorService service = Executors.newFixedThreadPool(10);
 
-		FutureTask<String> requestTask=new FutureTask<String>(new TestServerJob());
+		FutureTask<String> requestTask = new FutureTask<String>(new TestServerJob());
 		service.submit(requestTask);
+		
 		try {
 			String response = requestTask.get(30, TimeUnit.SECONDS);
 			Log.d("ServerTest", response);
 			return response.equals("TEST_OK");
-
 		} catch (ExecutionException e1) {
-			Log.e("ServerTest","failed in execution: "+e1.getMessage());
+			Log.e("ServerTest","Failed in execution: " + e1.getMessage());
 			return false;
 		} catch (InterruptedException e2) {
 			Log.e("ServerTest","InterruptedException");
 			return false;
 		} catch (TimeoutException e3) {
-			Log.e("ServerTest","TimeoutException: "+e3.getMessage());
+			Log.e("ServerTest","TimeoutException: " + e3.getMessage());
 			return false;
 		}
 	}
@@ -182,18 +182,16 @@ public class PushController {
 			if (openConnection()) {
 				try {
 					JSONObject output = new JSONObject();
-					output.put("action", "testServer");
+					output.put("action", "test-server");
 					
 					out.println(output.toString());
 					out.flush();
 					
 					return in.readLine();
-
 				} catch (Exception e) {
 					e.printStackTrace();
 					return "TEST_ERROR";
-				}
-				
+				}	
 			}
 			
 			closeConnection();

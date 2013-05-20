@@ -7,8 +7,11 @@ import java.net.Socket;
 import org.json.JSONObject;
 
 public class GatewayHandler {
+	private PrintWriter out;
 
 	public GatewayHandler(Socket socket, BufferedReader in, PrintWriter out) {
+		this.out = out;
+		
 		System.out.println("A new gateway.");
 		
 		String inputString;
@@ -46,11 +49,18 @@ public class GatewayHandler {
 					break;
 					case "push-message":				pushMessage(input);
 					break;
+					case "test-server":					testServer();
+					break;
 				}
 			} catch (Exception e) {
 				System.out.println("### ERROR WITH GATEWAY ### " + e + " ### IN FROM GATEWAY: " + inputString);
 			}
 		}
+	}
+	
+	public void testServer() {
+		out.println("TEST_OK");
+		out.flush();
 	}
 	
 	public void registerDevice(JSONObject input) {
