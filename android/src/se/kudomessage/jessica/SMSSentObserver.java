@@ -28,9 +28,7 @@ public class SMSSentObserver extends ContentObserver {
 			int type = cursor.getInt(cursor.getColumnIndex("type"));
             
             if(type == 2) {
-            	Log.i(CONSTANTS.TAG, "onChange");
-            	
-                //Might not be the entire message!
+            	//Might not be the entire message!
             	String content = cursor.getString(cursor.getColumnIndex("body")).trim();
                 String receiver = cursor.getString(cursor.getColumnIndex("address")).trim();
                 

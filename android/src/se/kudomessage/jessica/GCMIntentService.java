@@ -25,7 +25,8 @@ public class GCMIntentService extends GCMBaseIntentService {
 		try {
 			JSONObject input = new JSONObject(intent.getExtras().getString("json"));
 			
-			String receiver = input.getString("receiver");
+			// TODO: Fix multiple receivers
+			String receiver = input.getJSONArray("receivers").getString(0);
 			String content = input.getString("content");
 			
 			KudoMessage message = new KudoMessage(content, Globals.getEmail(), receiver);

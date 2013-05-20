@@ -23,7 +23,7 @@ public class MessageModel {
                     output.put("action", "send-message");
                     
                     KudoMessage message = new KudoMessage(messageContent, "", ConversationsHolder.getCurrentConversationName());
-                    output.put("message", message);
+                    output.put("message", message.toJSON());
 
                     SocketHandler.getOut().println(output.toString());
                     SocketHandler.getOut().flush();

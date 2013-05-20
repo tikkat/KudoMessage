@@ -99,8 +99,6 @@ public class PushController {
 	}
 	
 	public static void pushMessage(final String content, String origin, String receiver) {
-		Log.i(CONSTANTS.TAG, "KÖR PUSH");
-		
 		//TODO: Fix for internationalization
 		final String _receiver = receiver.replace(" ", "").replace("+46", "0").replace("-", "");
 		final String _origin = origin.replace(" ", "").replace("+46", "0").replace("-", "");
