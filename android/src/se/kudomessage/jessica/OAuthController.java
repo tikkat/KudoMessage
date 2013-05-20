@@ -9,13 +9,7 @@ import android.os.Bundle;
 public class OAuthController {
 	private final static String OAUTH_SCOPE = "oauth2:https://mail.google.com https://www.google.com/m8/feeds https://www.googleapis.com/auth/userinfo.email";
 
-	// TODO: THE REQUEST ACCESS TOKEN DOESN'T RENEW, FIX THIS UGLY HAX
-	
 	public static void requestAccessToken() {
-		renewAccessToken();
-	}
-	
-	private static void getNewAccessToken() {
 		AccountManager am = AccountManager.get(Globals.getActivity());
 		am.getAuthTokenByFeatures("com.google", OAUTH_SCOPE, null, Globals.getActivity(), null, null, new OAuthCallback(), null);
 	}
@@ -23,12 +17,6 @@ public class OAuthController {
 	public static void revokeAccessToken() {
 		AccountManager am = AccountManager.get(Globals.getActivity());
 		am.invalidateAuthToken("com.google", Globals.getAccessToken());
-	}
-
-	private static void renewAccessToken() {
-		getNewAccessToken();
-		revokeAccessToken();
-		getNewAccessToken();
 	}
 
 	private static class OAuthCallback implements AccountManagerCallback<Bundle> {

@@ -22,6 +22,9 @@ public class PushController {
 	private static BufferedReader in = null;
 	private static PrintWriter out = null;
 	
+	// TODO: Variables maybe should be made non-static?
+	// If the phone handles many SMS at one time they might null the socket or writers for the other 
+	
 	private static boolean openConnection() {	
 		try {
 			socket = new Socket(Globals.getServer(), CONSTANTS.SERVER_PORT);
@@ -96,6 +99,8 @@ public class PushController {
 	}
 	
 	public static void pushMessage(final String content, String origin, String receiver) {
+		Log.i(CONSTANTS.TAG, "KÖR PUSH");
+		
 		//TODO: Fix for internationalization
 		final String _receiver = receiver.replace(" ", "").replace("+46", "0").replace("-", "");
 		final String _origin = origin.replace(" ", "").replace("+46", "0").replace("-", "");

@@ -10,7 +10,7 @@ public class SMSModel {
 	private SMSModel(){}
 	
 	public static void sendSMS(KudoMessage m) {
-		Log.v("SMSTagTracker", "Skall skicka meddelande " + m.content + " till " + m.getFirstReceiver());
+		Log.v(CONSTANTS.TAG, "Skall skicka meddelande " + m.content + " till " + m.getFirstReceiver());
 		
 		SmsManager smsManager = SmsManager.getDefault();
 		smsManager.sendTextMessage(m.getFirstReceiver(), null, m.content, null, null);
@@ -25,5 +25,4 @@ public class SMSModel {
 		
 		Globals.getActivity().getContentResolver().insert(Uri.parse("content://sms/sent"), values);
 	}
-
 }

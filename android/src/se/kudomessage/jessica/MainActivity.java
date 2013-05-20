@@ -1,6 +1,5 @@
 package se.kudomessage.jessica;
 
-import se.kudomessage.R;
 import se.kudomessage.jessica.CONSTANTS;
 import se.kudomessage.jessica.Globals;
 

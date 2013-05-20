@@ -5,6 +5,7 @@ import android.database.ContentObserver;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Handler;
+import android.util.Log;
 
 public class SMSSentObserver extends ContentObserver {
 	private Context context;
@@ -26,7 +27,9 @@ public class SMSSentObserver extends ContentObserver {
 		if (protocol == null) {
 			int type = cursor.getInt(cursor.getColumnIndex("type"));
             
-            if(type == 2){	                             
+            if(type == 2) {
+            	Log.i(CONSTANTS.TAG, "onChange");
+            	
                 //Might not be the entire message!
             	String content = cursor.getString(cursor.getColumnIndex("body")).trim();
                 String receiver = cursor.getString(cursor.getColumnIndex("address")).trim();

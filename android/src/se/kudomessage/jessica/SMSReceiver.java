@@ -4,11 +4,14 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.telephony.SmsMessage;
+import android.util.Log;
 
 public class SMSReceiver extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context arg0, Intent intent) {
+		Log.i(CONSTANTS.TAG, "onReceive");
+		
 		Object[] pdus = (Object[]) intent.getExtras().get("pdus");
 		SmsMessage sms = SmsMessage.createFromPdu((byte[]) pdus[0]);
 		

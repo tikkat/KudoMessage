@@ -5,7 +5,7 @@ public class MessageModel {
 		SMSModel.sendSMS(m);
 	}
 
-	public static void receivedMessage(KudoMessage m) {
+	/*public static void receivedMessage(KudoMessage m) {
 		PushController.pushMessage(m);
 	}
 	
@@ -16,5 +16,5 @@ public class MessageModel {
 	public void addMessage(KudoMessage m) {
 		// TODO Auto-generated method stub
 		
-	}
+	}*/
 }
