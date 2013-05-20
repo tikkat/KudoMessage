@@ -6,6 +6,13 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.FutureTask;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -129,7 +136,7 @@ public class PushController {
 	public static boolean testServer() {
 		//Not actually working yet
 		//TODO: Handle the response and timeouts
-		new Thread(new Runnable() {
+		/*new Thread(new Runnable() {
 			public void run() {
 				if (openConnection()) {
 					try {
@@ -146,7 +153,47 @@ public class PushController {
 				
 				closeConnection();
 			}
-		}).start();
-		return false;
+		}).start();*/
+
+		ExecutorService service=Executors.newFixedThreadPool(10);
+
+		FutureTask<String> requestTask=new FutureTask<String>(new TestServerJob());
+		service.submit(requestTask);
+		try {
+			String response = requestTask.get(30, TimeUnit.SECONDS);
+			Log.d("ServerTest", response);
+			return response.equals("TEST_OK");
+
+		} catch (ExecutionException e1) {
+			Log.e("ServerTest","failed in execution: "+e1.getMessage());
+			return false;
+		} catch (InterruptedException e2) {
+			Log.e("ServerTest","InterruptedException");
+			return false;
+		} catch (TimeoutException e3) {
+			Log.e("ServerTest","TimeoutException: "+e3.getMessage());
+			return false;
+		}
+	}
+	
+	public static class TestServerJob implements Callable<String> {
+		@Override
+		public String call() throws Exception {
+			if (openConnection()) {
+				try {
+					JSONObject output = new JSONObject();
+					output.put("action", "testServer");
+					
+					
+					out.println(output.toString());
+					out.flush();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			
+			closeConnection();
+			return "1!";
+		}
 	}
 }
