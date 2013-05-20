@@ -11,7 +11,7 @@ public class ClientHandler {
 	private PrintWriter out;
 	
 	private String email;
-	private String accessToken;
+	private String token;
 	
 	private GmailController gc;
 	
@@ -57,15 +57,17 @@ public class ClientHandler {
 				break;
 				case "get-messages":		getMessages(input);
 				break;
+				case "add-contact":		  	addContact(input);
+				break;
 			}
 		}
 	}
 	
 	public void init(JSONObject input) {
-		accessToken = input.getString("token");
-		email = Utils.getEmailByToken(accessToken);
+		token = input.getString("token");
+		email = Utils.getEmailByToken(token);
 		
-		gc = GmailController.getInstance(email, accessToken);
+		gc = GmailController.getInstance(email, token);
 		
 		out.println(email);
 		out.flush();
@@ -74,13 +76,20 @@ public class ClientHandler {
 	}
 	
 	public void getContacts() {
-		JSONArray contacts = GoogleContactsController.getContacts(email, accessToken);
+		JSONArray contacts = GoogleContactsController.getContacts(email, token);
 		
 		JSONObject output = new JSONObject();
 		output.put("contacts", contacts);
 		
 		out.println(output.toString());
 		out.flush();
+	}
+	
+	public void addContact(JSONObject input) {
+		String name = input.getString("name");
+		String number = input.getString("number");
+		
+		GoogleContactsController.addContact(email, token, name, number);
 	}
 	
 	public void getMessages(JSONObject input) {
