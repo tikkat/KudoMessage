@@ -127,7 +127,26 @@ public class PushController {
 	}
 
 	public static boolean testServer() {
-		// TODO Auto-generated method stub
+		//Not actually working yet
+		//TODO: Handle the response and timeouts
+		new Thread(new Runnable() {
+			public void run() {
+				if (openConnection()) {
+					try {
+						JSONObject output = new JSONObject();
+						output.put("action", "testServer");
+						
+						
+						out.println(output.toString());
+						out.flush();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				
+				closeConnection();
+			}
+		}).start();
 		return false;
 	}
 }
