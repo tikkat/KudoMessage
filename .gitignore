@@ -18,3 +18,5 @@ Thumbs.db
 webb/KudoMessage/target/maven-archiver/pom.properties
 webb/KudoMessage/target/KudoMessage-1.0-SNAPSHOT.war
 webb/KudoMessage/target/KudoMessage-1.0-SNAPSHOT/*
+
+*.apk
