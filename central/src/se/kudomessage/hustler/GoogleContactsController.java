@@ -4,6 +4,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class GoogleContactsController {
@@ -14,23 +15,31 @@ public class GoogleContactsController {
 		String url = "https://www.google.com/m8/feeds/contacts/" + email + "/base?alt=json&oauth_token=" + token;
 		String content = Utils.getContentOfURL(url);
 		
-		JSONObject a = new JSONObject(content);
-		JSONObject b = a.getJSONObject("feed");
-		JSONArray c = b.getJSONArray("entry");
+		JSONArray c;
+		try {
+			JSONObject a = new JSONObject(content);
+			JSONObject b = a.getJSONObject("feed");
+			c = b.getJSONArray("entry");
+		} catch (Exception e) {
+			System.out.println("ERROR IN GET-CONTACTS: " + e);
+			return contacts;
+		}
 		
 		for (int i = 0; i < c.length(); i++) {
-			JSONObject entry = c.getJSONObject(i);
-			
-			if (entry.has("gd$phoneNumber")) {
-				String name = entry.getJSONObject("title").getString("$t");
-				String number = entry.getJSONArray("gd$phoneNumber").getJSONObject(0).getString("$t");
+			try {
+				JSONObject entry = c.getJSONObject(i);
 				
-				JSONObject contact = new JSONObject();
-				contact.put("name", name);
-				contact.put("number", number);
-				
-				contacts.put(contact);
-			}
+				if (entry.has("gd$phoneNumber")) {
+					String name = entry.getJSONObject("title").getString("$t");
+					String number = entry.getJSONArray("gd$phoneNumber").getJSONObject(0).getString("$t");
+					
+					JSONObject contact = new JSONObject();
+					contact.put("name", name);
+					contact.put("number", number);
+					
+					contacts.put(contact);
+				}
+			} catch (JSONException e) {}
 		}
 		
 		return contacts;

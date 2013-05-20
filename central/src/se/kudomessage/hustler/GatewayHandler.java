@@ -64,24 +64,32 @@ public class GatewayHandler {
 	}
 	
 	public void registerDevice(JSONObject input) {
-		String token = input.getString("token");
-		String email = Utils.getEmailByToken(token);
-		
-		String GCMKey = input.getString("gcm");
-		
-		PushHandler.registerDevice(email, GCMKey);
+		try {
+			String token = input.getString("token");
+			String email = Utils.getEmailByToken(token);
+			
+			String GCMKey = input.getString("gcm");
+			
+			PushHandler.registerDevice(email, GCMKey);
+		} catch (Exception e) {
+			System.out.println("ERROR IN REGISTER-DEVICE: " + e);
+		}
 	}
 	
 	public void pushMessage(JSONObject input) {
-		String token = input.getString("token");
-		String email = Utils.getEmailByToken(token);
-		
-		JSONObject message = input.getJSONObject("message");
-		
-		// Upload the message to Gmail
-		GmailController gc = GmailController.getInstance(email, token);
-		gc.saveMessage(GmailController.Label.STANDARD, message);
-		
-		PushHandler.pushMessageToClients(email, message);
+		try {
+			String token = input.getString("token");
+			String email = Utils.getEmailByToken(token);
+			
+			JSONObject message = input.getJSONObject("message");
+			
+			// Upload the message to Gmail
+			GmailController gc = GmailController.getInstance(email, token);
+			gc.saveMessage(GmailController.Label.STANDARD, message);
+			
+			PushHandler.pushMessageToClients(email, message);
+		} catch (Exception e) {
+			System.out.println("ERROR IN PUSH-MESSAGE: " + e);
+		}
 	}
 }

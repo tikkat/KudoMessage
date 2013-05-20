@@ -127,17 +127,21 @@ public class GmailController {
                 folder.open(Folder.READ_WRITE);
             }
             
-            MimeMessage emailMessage = new MimeMessage(session);
-
-            emailMessage.setFrom(new InternetAddress(message.getString("origin")));
-            emailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(message.getString("receiver")));
-            emailMessage.setSubject("SMS med XXX");
-            emailMessage.setText(message.getString("content"));
-
-            emailMessage.setFlag(Flag.DRAFT, true);
-
-            MimeMessage draftMessages[] = {emailMessage};
-            folder.appendMessages(draftMessages);
+            try {
+	            MimeMessage emailMessage = new MimeMessage(session);
+	
+	            emailMessage.setFrom(new InternetAddress(message.getString("origin")));
+	            emailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(message.getString("receiver")));
+	            emailMessage.setSubject("SMS med XXX");
+	            emailMessage.setText(message.getString("content"));
+	
+	            emailMessage.setFlag(Flag.DRAFT, true);
+	
+	            MimeMessage draftMessages[] = {emailMessage};
+	            folder.appendMessages(draftMessages);
+            } catch (Exception e) {
+    			System.out.println("ERROR IN SAVE-MESSAGE: " + e);
+    		}
         } catch (MessagingException e) {}
     }
 

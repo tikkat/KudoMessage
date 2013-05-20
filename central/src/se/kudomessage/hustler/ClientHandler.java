@@ -46,76 +46,103 @@ public class ClientHandler {
 				break;
 			}
 
-			input = new JSONObject(inputString);
-
-			switch(input.getString("action")) {
-				case "init":				init(input);
-				break;
-				case "send-message":		sendMessage(input);
-				break;
-				case "get-contacts":		getContacts();
-				break;
-				case "get-messages":		getMessages(input);
-				break;
-				case "add-contact":		  	addContact(input);
-				break;
-			}
+			try {
+				input = new JSONObject(inputString);
+				
+				switch(input.getString("action")) {
+					case "init":				init(input);
+					break;
+					case "send-message":		sendMessage(input);
+					break;
+					case "get-contacts":		getContacts();
+					break;
+					case "get-messages":		getMessages(input);
+					break;
+					case "add-contact":		  	addContact(input);
+					break;
+				}
+			} catch (JSONException e) {}
 		}
 	}
 	
 	public void init(JSONObject input) {
-		token = input.getString("token");
-		email = Utils.getEmailByToken(token);
-		
-		gc = GmailController.getInstance(email, token);
-		
-		out.println(email);
-		out.flush();
-		
-		PushHandler.registerClient(email, this);
+		try {
+			token = input.getString("token");
+			email = Utils.getEmailByToken(token);
+			
+			gc = GmailController.getInstance(email, token);
+			
+			out.println(email);
+			out.flush();
+			
+			PushHandler.registerClient(email, this);
+		} catch (JSONException e) {
+			System.out.println("ERROR IN INIT: " + e);
+			
+			out.println("ERROR");
+			out.flush();
+		}
 	}
 	
 	public void getContacts() {
 		JSONArray contacts = GoogleContactsController.getContacts(email, token);
 		
 		JSONObject output = new JSONObject();
-		output.put("contacts", contacts);
+		try {
+			output.put("contacts", contacts);
+		} catch (JSONException e) {}
 		
 		out.println(output.toString());
 		out.flush();
 	}
 	
 	public void addContact(JSONObject input) {
-		String name = input.getString("name");
-		String number = input.getString("number");
-		
-		GoogleContactsController.addContact(email, token, name, number);
+		try {
+			String name = input.getString("name");
+			String number = input.getString("number");
+			
+			GoogleContactsController.addContact(email, token, name, number);
+		} catch (JSONException e) {
+			System.out.println("ERROR IN ADD-CONTACT: " + e);
+		}
 	}
 	
 	public void getMessages(JSONObject input) {
-		int lower = input.getInt("lower");
-		int upper = input.getInt("upper");
+		try {
+			int lower = input.getInt("lower");
+			int upper = input.getInt("upper");
 		
-		JSONArray messages = gc.getMessages(lower, upper);
+			JSONArray messages = gc.getMessages(lower, upper);
 		
-		JSONObject output = new JSONObject();
-		output.put("messages", messages);
+			JSONObject output = new JSONObject();
+			output.put("messages", messages);
 		
-		out.println(output.toString());
-		out.flush();
+			out.println(output.toString());
+			out.flush();
+		} catch (Exception e) {
+			System.out.println("ERROR IN GET-MESSAGES: " + e);
+		}
 	}
 	
 	public void sendMessage(JSONObject input) {
-		JSONObject message = input.getJSONObject("message");
-		PushHandler.pushMessageToDevice(email, message);
+		try {
+			JSONObject message = input.getJSONObject("message");
+			PushHandler.pushMessageToDevice(email, message);
+		} catch (Exception e) {
+			System.out.println("ERROR IN SEND-MESSAGE: " + e);
+		}
 	}
 	
 	public void pushMessage(JSONObject message) {
-		JSONObject output = new JSONObject();
-		output.put("action", "new-message");
-		output.put("message", message);
-		
-		out.println(output.toString());
-		out.flush();
+		try {
+			JSONObject output = new JSONObject();
+			output.put("action", "new-message");
+			output.put("message", message);
+			
+			out.println(output.toString());
+			out.flush();
+		} catch (Exception e) {
+			System.out.println("ERROR IN PUSH-MESSAGE: " + e);
+		}
 	}
 }

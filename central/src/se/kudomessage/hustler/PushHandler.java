@@ -31,14 +31,9 @@ public class PushHandler {
 	}
 	
 	public static void pushMessageToDevice(String email, JSONObject message) {
+		System.out.println("### I am supposed to deliver a message to the gateway.");
+		
 		String GCMKey = registeredDevices.get(email);
-		
-		System.out.println("\nI am supposed to deliver this message to the gateway:");
-		System.out.println("Receiver: " + message.getString("receiver"));
-		System.out.println("Content: " + message.getString("content"));
-		
-		System.out.println("GCM: " + GCMKey);
-		
 		Sender sender = new Sender(CONSTANTS.API_KEY);
         
         Message messageObject = new Builder()
@@ -55,10 +50,7 @@ public class PushHandler {
 	}
 	
 	public static void pushMessageToClients(String email, JSONObject message) {
-		System.out.println("\nI am supposed to deliver this message to the clients:");
-		System.out.println("Origin: " + message.getString("origin"));
-		System.out.println("Receiver: " + message.getString("receiver"));
-		System.out.println("Content: " + message.getString("content"));
+		System.out.println("### I am supposed to deliver a message to the clients.");
 		
 		if (email != null && !email.isEmpty() && registeredClients.containsKey(email)) {	
 			for (ClientHandler ch : registeredClients.get(email)) {
