@@ -184,16 +184,20 @@ public class PushController {
 					JSONObject output = new JSONObject();
 					output.put("action", "testServer");
 					
-					
 					out.println(output.toString());
 					out.flush();
+					
+					return in.readLine();
+
 				} catch (Exception e) {
 					e.printStackTrace();
+					return "TEST_ERROR";
 				}
+				
 			}
 			
 			closeConnection();
-			return "1!";
+			return "TEST_FAILED";
 		}
 	}
 }
