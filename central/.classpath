@@ -8,5 +8,6 @@
 	<classpathentry kind="lib" path="libs/httpclient-4.2.5.jar"/>
 	<classpathentry kind="lib" path="libs/commons-logging-1.1.1.jar"/>
 	<classpathentry kind="lib" path="libs/httpcore-4.2.4.jar"/>
+	<classpathentry kind="lib" path="libs/org-json.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
