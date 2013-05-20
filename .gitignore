@@ -1,9 +1,10 @@
-!Jessica/bin/AndroidManifest.xml
-Jessica/bin/*
+! android/bin/AndroidManifest.xml
 
-/KudoMessage_Web_Application/target/
+android/bin/*
+webb/KudoMessage/target/*
 
 *.class
+*.apk
 
 # OS generated files #
 ##################
@@ -15,8 +16,3 @@ Jessica/bin/*
 Icon?
 ehthumbs.db
 Thumbs.db
-webb/KudoMessage/target/maven-archiver/pom.properties
-webb/KudoMessage/target/KudoMessage-1.0-SNAPSHOT.war
-webb/KudoMessage/target/KudoMessage-1.0-SNAPSHOT/*
-
-*.apk
