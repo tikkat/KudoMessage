@@ -1,7 +1,6 @@
 package se.kudomessage.jessica;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
@@ -14,7 +13,6 @@ import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.util.Log;

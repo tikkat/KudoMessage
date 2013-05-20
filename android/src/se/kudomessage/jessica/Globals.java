@@ -5,10 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 /**
- * @author hultner
- *
  * Fetches and saves preferences using SharedPreferences when it makes sense to save them between sessions.
- * 
  */
 
 public class Globals{

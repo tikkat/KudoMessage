@@ -1,6 +1,5 @@
 package se.kudomessage.jessica;
 
-
 public class MessageModel {
 	public static void sendMessage(KudoMessage m) {
 		SMSModel.sendSMS(m);

@@ -62,7 +62,6 @@ public class KudoMessage {
 			}
 			
 			json.put("receivers", rl);
-			
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
