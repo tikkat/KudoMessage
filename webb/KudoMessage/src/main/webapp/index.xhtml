@@ -17,7 +17,7 @@
                     <div class="inputBoxKeeper" style="width: 75%; float: left;">
                         <h:inputText value="Sök..." />
                     </div>
-                    <h:commandButton class="sendButton" value="#+" />
+                    <h:commandButton class="sendButton" value="Ny" action="#{conversationsHolder.createNewConversationButton()}" />
                 </div>
                 
                 <c:forEach items="#{conversationsHolder.allConversationsNames}" var="number">
@@ -29,7 +29,7 @@
 
             <div class="messagesKeeper">
                 <div style="display: block; border-bottom: 1px solid #E0E0E0;">
-                    <p style="line-height: 42px; margin: 0px 0px 0px 20px;">0764292920</p>
+                    <p style="line-height: 42px; margin: 0px 0px 0px 20px;">#{conversationsHolder.activeConversationName} <h:commandButton class="sendButton" style="width: 30px;" value="+" /> </p>
                 </div>
                 
                 <!-- Meddelandena -->

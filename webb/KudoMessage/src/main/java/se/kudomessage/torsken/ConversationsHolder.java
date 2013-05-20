@@ -35,6 +35,10 @@ public class ConversationsHolder {
         return currentConversationName;
     }
     
+    public String getActiveConversationName() {
+        return currentConversationName;
+    }
+    
     public void setActiveConversation(String name) {
         currentConversationName = name;
         updateCurrentConversation();
@@ -50,6 +54,10 @@ public class ConversationsHolder {
         } else {
             return "No match: " + number;
         }
+    }
+    
+    public void createNewConversationButton () {
+        addMessage(new KudoMessage("", "Ny konversation", "Ny konversation"));
     }
 
     public void setCurrentConversation(List<KudoMessage> currentConversation) {
