@@ -9,7 +9,7 @@ import org.json.JSONObject;
 public class KudoMessage {
 
     protected String id, content, origin;
-    protected ArrayList<String> receivers;
+    protected ArrayList<String> receivers = new ArrayList<String>();
 
     public KudoMessage() {
         //Empty message
@@ -38,6 +38,14 @@ public class KudoMessage {
         this.receivers.add(receiver);
     }
 
+    public String getOrigin() {
+        return origin;
+    }
+
+    public String getContent() {
+        return content;
+    }
+    
     public String toString() {
         return toJSON().toString();
     }

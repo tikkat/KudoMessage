@@ -97,11 +97,13 @@ public class BackendBean {
                     
                     JSONObject e = new JSONObject(in.readLine());
                     JSONArray f = e.getJSONArray("messages");
+                    
+                    System.out.println("###### Got " + f.length());
 
                     for (int i = 0; i < f.length(); i++) {
                         KudoMessage message = new KudoMessage();
                         message.content = f.getJSONObject(i).getString("content");
-                        message.origin = f.getJSONObject(i).getString("origin");
+                        message.origin = f.getJSONObject(i).getString("receiver");
                         message.addReceiver(f.getJSONObject(i).getString("receiver"));
                         
                         ConversationsHolder.getInstance().addMessage(message);
