@@ -12,8 +12,10 @@ public class KudoMessage {
 		origin;
 	protected ArrayList<String> receivers;
 	
+	
 	public KudoMessage(){
 		//Empty message
+		this.receivers = new ArrayList<String>();
 	}
 
 	public KudoMessage(String content, String origin, String receiver, String id){
@@ -22,14 +24,16 @@ public class KudoMessage {
 	}
 	
 	public KudoMessage(String content, String origin, String receiver){
+		this();
 		this.content = content;
 		this.origin = origin;
 		this.receivers.add(receiver);
 	}
 	
 	public KudoMessage(String id){
+		this();
 		this.id = id;
-	}	
+	}
 	
 	public String getFirstReceiver(){
 		return receivers.get(0);
