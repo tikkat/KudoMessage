@@ -125,4 +125,9 @@ public class PushController {
 	public static void pushMessage(KudoMessage message) {
 		pushMessage(message.content, message.origin, message.getFirstReceiver());
 	}
+
+	public static boolean testServer() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
