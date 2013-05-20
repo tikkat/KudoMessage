@@ -5,12 +5,12 @@
  * should not be modified by hand.
  */
 
-package se.kudomessage;
+package se.kudomessage.jessica;
 
 public final class Manifest {
     public static final class permission {
         /**  GCM permissions 
          */
-        public static final String C2D_MESSAGE="se.kudomessage.permission.C2D_MESSAGE";
+        public static final String C2D_MESSAGE="se.kudomessage.jessica.permission.C2D_MESSAGE";
     }
 }
