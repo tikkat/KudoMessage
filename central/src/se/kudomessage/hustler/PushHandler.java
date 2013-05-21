@@ -1,4 +1,5 @@
 package se.kudomessage.hustler;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
