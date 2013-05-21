@@ -51,6 +51,8 @@ public class BackendBean {
             if (in != null && out != null) {
                 System.out.println("Connected to server " + CONSTANTS.SERVER_ADDRESS + ":" + CONSTANTS.SERVER_PORT);
 
+                // TODO: Do all things below in SocketHandler's constructor?
+                
                 out.println("CLIENT");
                 out.flush();
 
@@ -103,7 +105,7 @@ public class BackendBean {
                     for (int i = 0; i < f.length(); i++) {
                         KudoMessage message = new KudoMessage();
                         message.content = f.getJSONObject(i).getString("content");
-                        message.origin = f.getJSONObject(i).getString("receiver");
+                        message.origin = f.getJSONObject(i).getString("origin");
                         message.addReceiver(f.getJSONObject(i).getString("receiver"));
                         
                         ConversationsHolder.getInstance().addMessage(message);
