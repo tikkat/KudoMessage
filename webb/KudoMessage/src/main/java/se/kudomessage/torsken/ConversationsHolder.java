@@ -48,16 +48,25 @@ public class ConversationsHolder {
         return origin.equals(Globals.email);
     }
     
+    public boolean hasContact(String number) {
+        return Globals.contacts.containsKey(number);
+    }
+    
     public String getNameOfContact(String number) {
-        if (Globals.contacts.containsKey(number)) {
+        if (hasContact(number)) {
             return Globals.contacts.get(number);
         } else {
-            return "No match: " + number;
+            return "N: " + number;
         }
     }
     
     public String getNumUnreadMessages(String number) {
-        return conversations.get(number).getNumUnreadMessages();
+        int num = conversations.get(number).getNumUnreadMessages();
+        
+        if (num > 0)
+            return " (" + num + ")";
+        else
+            return "";
     }
     
     public void createNewConversationButton () {
@@ -140,8 +149,8 @@ public class ConversationsHolder {
             return messages;
         }
         
-        public String getNumUnreadMessages() {
-            return "" + numUnreadMessages;
+        public int getNumUnreadMessages() {
+            return numUnreadMessages;
         }
     }
 }

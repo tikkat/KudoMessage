@@ -23,7 +23,7 @@
                 
                 <c:forEach items="#{conversationsHolder.allConversationsNames}" var="number">
                     <div>
-                        <h:commandButton class="contact" action="#{conversationsHolder.setActiveConversation(number)}" value="#{conversationsHolder.getNameOfContact(number)} (#{conversationsHolder.getNumUnreadMessages(number)})" />
+                        <h:commandButton class="contact" action="#{conversationsHolder.setActiveConversation(number)}" value="#{conversationsHolder.getNameOfContact(number)}#{conversationsHolder.getNumUnreadMessages(number)}" />
                     </div>
                 </c:forEach>
             </div>
@@ -31,8 +31,10 @@
             <div class="messagesKeeper">
                 <div style="display: block; height: 42px; width: 100%; position: absolute; border-bottom: 1px solid #E0E0E0;">
                     <p style="line-height: 42px; margin: 0px 0px 0px 20px; display: block;">
-                        N: #{conversationsHolder.activeConversationName}
-                        <h:commandButton class="sendButton" style="width: 30px;" value="+" />
+                        #{conversationsHolder.getNameOfContact(conversationsHolder.activeConversationName)}
+                        <c:if test="#{!conversationsHolder.hasContact(conversationsHolder.activeConversationName)}">
+                            <h:commandButton class="sendButton" style="width: 30px;" value="+" />
+                        </c:if>
                     </p>
                 </div>
                 
