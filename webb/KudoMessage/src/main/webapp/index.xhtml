@@ -10,6 +10,7 @@
     </h:head>
     <h:body>
         <h:inputHidden value="#{backendBean.init()}"/>
+        
         <h:form>
             <!-- Konversationerna -->
             <div class="contactsKeeper">
@@ -22,37 +23,40 @@
                 
                 <c:forEach items="#{conversationsHolder.allConversationsNames}" var="number">
                     <div>
-                        <h:commandButton class="contact" action="#{conversationsHolder.setActiveConversation(number)}" value="#{conversationsHolder.getNameOfContact(number)}" />
+                        <h:commandButton class="contact" action="#{conversationsHolder.setActiveConversation(number)}" value="#{conversationsHolder.getNameOfContact(number)} (#{conversationsHolder.getNumUnreadMessages(number)})" />
                     </div>
                 </c:forEach>
             </div>
 
             <div class="messagesKeeper">
-                <div style="display: block; border-bottom: 1px solid #E0E0E0;">
-                    <p style="line-height: 42px; margin: 0px 0px 0px 20px;">#{conversationsHolder.activeConversationName} <h:commandButton class="sendButton" style="width: 30px;" value="+" /> </p>
+                <div style="display: block; height: 42px; width: 100%; position: absolute; border-bottom: 1px solid #E0E0E0;">
+                    <p style="line-height: 42px; margin: 0px 0px 0px 20px; display: block;">
+                        N: #{conversationsHolder.activeConversationName}
+                        <h:commandButton class="sendButton" style="width: 30px;" value="+" />
+                    </p>
                 </div>
                 
-                <!-- Meddelandena -->
-                <div style="height: 85%; padding: 2%; overflow-y: scroll;">
-                    <c:forEach items="#{conversationsHolder.currentConversation}" var="message">
-                        <div>
-                            <c:if test="#{!conversationsHolder.isSelf(message.origin)}">
-                                <div class="bubble me">
-                                    #{message.content}
-                                </div>
-                            </c:if>
-                            <c:if test="#{conversationsHolder.isSelf(message.origin)}">
-                                <div class="bubble you">
-                                    #{message.content}
-                                </div>
-                            </c:if>
-                            <br style="clear: both;" />
-                        </div>
-                    </c:forEach>
+                <div style="display: block; height: 100%; margin-top: -50px; overflow-y: scroll;">
+                    <div style="padding-top: 93px;">
+                        <c:forEach items="#{conversationsHolder.currentConversation}" var="message">
+                            <div>
+                                <c:if test="#{!conversationsHolder.isSelf(message.origin)}">
+                                    <div class="bubble me">
+                                        #{message.content}
+                                    </div>
+                                </c:if>
+                                <c:if test="#{conversationsHolder.isSelf(message.origin)}">
+                                    <div class="bubble you">
+                                        #{message.content}
+                                    </div>
+                                </c:if>
+                                <br style="clear: both;" />
+                            </div>
+                        </c:forEach>
+                    </div>
                 </div>
-
-                <!-- Skicka nytt meddelande -->
-                <div style="border-top: 1px solid #E0E0E0; height: 6%; padding-top: 1.5%;">
+                
+                <div style="display: block; height: 40px; padding-top: 9px; border-top: 1px solid #E0E0E0;">
                     <div class="inputBoxKeeper" style="width: 80%; float: left;">
                         <h:inputText value="#{messageModel.messageContent}" />
                     </div>
