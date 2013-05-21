@@ -60,7 +60,7 @@ public class ClientHandler {
 					break;
 					case "get-messages":		getMessages(input);
 					break;
-					case "add-contact":		  	addContact(input);
+					case "create-contact":		createContact(input);
 					break;
 				}
 			} catch (JSONException e) {}
@@ -117,14 +117,14 @@ public class ClientHandler {
 		out.flush();
 	}
 	
-	public void addContact(JSONObject input) {
+	public void createContact(JSONObject input) {
 		try {
 			String name = input.getString("name");
 			String number = input.getString("number");
 			
-			GoogleContactsController.addContact(email, token, name, number);
+			GoogleContactsController.createContact(email, token, name, number);
 		} catch (JSONException e) {
-			System.out.println("ERROR IN ADD-CONTACT: " + e);
+			System.out.println("ERROR IN CREATE-CONTACT: " + e);
 		}
 	}
 	
