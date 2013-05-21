@@ -37,6 +37,10 @@ public class ConversationsHolder {
         return currentConversationName;
     }
     
+    public String getActiveConversationNumner () {
+        return currentConversationName;
+    }
+    
     public String getActiveConversationName() {
         return currentConversationName;
     }
