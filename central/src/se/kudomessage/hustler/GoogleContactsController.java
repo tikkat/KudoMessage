@@ -46,7 +46,9 @@ public class GoogleContactsController {
 		return contacts;
 	}
 
-	public static void addContact(String email, String token, String name, String number) {
+	public static void createContact(String email, String token, String name, String number) {
+		System.out.println("Creating contact " + name + " with number " + number);
+		
 		String postURL = "https://www.google.com/m8/feeds/contacts/" + email + "/full?oauth_token=" + token;
 		
 		String rawBody = 
