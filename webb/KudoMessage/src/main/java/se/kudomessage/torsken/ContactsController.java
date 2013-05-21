@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import javax.faces.bean.ManagedBean;
+import org.icefaces.application.PushRenderer;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,6 +12,7 @@ import org.json.JSONObject;
 @ManagedBean
 public class ContactsController {
     public static Map<String, String> contacts = new HashMap<String, String>();
+    private String tmpContactName = "";
 
     public boolean hasContact(String number) {
         return contacts.containsKey(number);
@@ -27,6 +29,19 @@ public class ContactsController {
     public Collection<String> getNameOfContacts () {
         return contacts.values();
     }
+
+    public String getTmpContactName() {
+        return tmpContactName;
+    }
+
+    public void setTmpContactName(String tmpContactName) {
+        this.tmpContactName = tmpContactName;
+    }
+    
+    public void createContactFromJSF ( String name, String number ) {
+        createContact(name, number);
+        tmpContactName = "";
+    }
     
     public static void createContact(String name, String number) {
         try {
@@ -38,7 +53,7 @@ public class ContactsController {
             SocketHandler.getOut().println(output.toString());
             SocketHandler.getOut().flush();
             
-            contacts.put(number, name);
+            contacts.put(number, name);            
         } catch (JSONException ex) {}
     }
 
