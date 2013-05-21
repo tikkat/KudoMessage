@@ -14,6 +14,7 @@ import javax.mail.Session;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import se.kudomessage.hustler.oauth.OAuth2SaslClientFactory;
@@ -39,11 +40,11 @@ public class GmailController {
         try {
             setupStore(email, token);
             createAllFolders();
+            
+            System.out.println("Created a new GmailController for " + email);
         } catch (MessagingException ex) {
-            System.out.println("Fel i GC: " + ex.toString());
+            System.out.println("Fel i GmailController: " + ex.toString());
         } 
-        
-        System.out.println("Created a new GmailController for " + email);
     }
 
     public static final class OAuth2Provider extends Provider {
@@ -190,22 +191,24 @@ public class GmailController {
         return result;
     }*/
     
-    public JSONArray getMessages(int lower, int upper) {
+    public JSONArray getMessages(int lower, int count) {
     	JSONArray messages = new JSONArray();
-    	int totalNumMessages = 0;
     	
-        try {
+    	int totalNumMessages;
+		try {
 			totalNumMessages = standardFolder.getMessageCount();
 		} catch (MessagingException e) {
 			return messages;
 		}
-        
-        upper = upper > totalNumMessages ? totalNumMessages : upper;
-        
-        if (totalNumMessages < lower || upper < lower)
-            return messages;
-        
-        for (int i = lower + 1; i < upper + 1; i++) {
+    	
+    	int a = totalNumMessages - lower;
+    	int b = a - count < 1 ? 1 : a - count;
+    	
+    	if (a < 1 || b < 1 || b > a)
+    		return messages;
+    		
+    	
+        for (int i = a; i > b; i--) {
            try {
             	Message message = standardFolder.getMessage(i);
             	
@@ -221,7 +224,14 @@ public class GmailController {
             } catch (Exception ex) {}
         }
         
-        return messages;
+        JSONArray tmp = new JSONArray();
+        for (int i = messages.length() - 1; i >= 0; i--) {
+        	try {
+				tmp.put(messages.getJSONObject(i));
+			} catch (JSONException e) {}
+        }
+        
+        return tmp;
     }
     
     private String parseEmail(String email) {
