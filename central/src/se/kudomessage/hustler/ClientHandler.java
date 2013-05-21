@@ -41,6 +41,8 @@ public class ClientHandler {
 					in.close();
 					out.close();
 					socket.close();
+					
+					System.out.println("Did close the connection");
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
