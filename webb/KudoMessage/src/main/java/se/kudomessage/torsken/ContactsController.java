@@ -1,5 +1,6 @@
 package se.kudomessage.torsken;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import javax.faces.bean.ManagedBean;
@@ -21,6 +22,10 @@ public class ContactsController {
         } else {
             return "N: " + number;
         }
+    }
+    
+    public Collection<String> getNameOfContacts () {
+        return contacts.values();
     }
     
     public static void createContact(String name, String number) {
