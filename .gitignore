@@ -1,7 +1,9 @@
 ! android/bin/AndroidManifest.xml
 
-android/bin/*
-webb/KudoMessage/target/*
+android/bin/
+webb/KudoMessage/target/
+webb/KudoMessage/target/
+webb/KudoMessage/target/maven-archiver/
 
 *.class
 *.apk
