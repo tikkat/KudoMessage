@@ -7,9 +7,6 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import org.icefaces.application.PushRenderer;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 @SessionScoped
 @ManagedBean
@@ -31,9 +28,7 @@ public class BackendBean {
     private void doInit() {
         try {
             socket = new Socket(CONSTANTS.SERVER_ADDRESS, CONSTANTS.SERVER_PORT);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } catch (Exception e) {}
 
         if (socket != null) {
             in = null;
@@ -44,9 +39,7 @@ public class BackendBean {
 
                 OutputStreamWriter outstream = new OutputStreamWriter(socket.getOutputStream(), "UTF-8");
                 out = new PrintWriter(outstream, true);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            } catch (Exception e) {}
 
             if (in != null && out != null) {
                 System.out.println("Connected to server " + CONSTANTS.SERVER_ADDRESS + ":" + CONSTANTS.SERVER_PORT);

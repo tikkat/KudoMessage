@@ -2,13 +2,10 @@ package se.kudomessage.torsken;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import static se.kudomessage.torsken.MessageModel.messageContent;
 
 @ManagedBean
 public class ContactsController {
