@@ -48,18 +48,6 @@ public class ConversationsHolder {
         return origin.equals(Globals.email);
     }
     
-    public boolean hasContact(String number) {
-        return Globals.contacts.containsKey(number);
-    }
-    
-    public String getNameOfContact(String number) {
-        if (hasContact(number)) {
-            return Globals.contacts.get(number);
-        } else {
-            return "N: " + number;
-        }
-    }
-    
     public String getNumUnreadMessages(String number) {
         int num = conversations.get(number).getNumUnreadMessages();
         

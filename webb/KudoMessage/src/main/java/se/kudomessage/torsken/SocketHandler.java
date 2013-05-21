@@ -45,21 +45,7 @@ public class SocketHandler extends Thread {
             ConversationsHolder.getInstance().addViewToPush();
 
             // Get contacts
-            output = new JSONObject();
-            output.put("action", "get-contacts");
-
-            out.println(output.toString());
-            out.flush();
-
-            JSONObject c = new JSONObject(in.readLine());
-            JSONArray d = c.getJSONArray("contacts");
-
-            for (int i = 0; i < d.length(); i++) {
-                String name = d.getJSONObject(i).getString("name");
-                String number = d.getJSONObject(i).getString("number");
-
-                Globals.contacts.put(number, name);
-            }
+            ContactsController.getContacts();
 
             // Load the first emails
             output = new JSONObject();
@@ -88,6 +74,10 @@ public class SocketHandler extends Thread {
 
     public static PrintWriter getOut() {
         return out;
+    }
+    
+    public static BufferedReader getIn() {
+        return in;
     }
 
     @Override
