@@ -18,6 +18,8 @@ public class ConversationsHolder {
             
     private static String currentConversationName = "";
     
+    private static final String newConversationTag = "   ";
+    
     private static ConversationsHolder instance = null;
     
     public static ConversationsHolder getInstance() {
@@ -58,7 +60,16 @@ public class ConversationsHolder {
     }
     
     public void createNewConversationButton () {
-        addMessage(new KudoMessage("", "Ny konversation", "Ny konversation"));
+        addMessage(new KudoMessage("", newConversationTag, newConversationTag));
+        currentConversationName = newConversationTag;
+        updateCurrentConversation();
+    }
+    
+    public boolean isNewConversation () {
+        if (!currentConversation.isEmpty() && currentConversation.get(0).origin.equals(newConversationTag)) {
+            return true;
+        }
+        return false;
     }
 
     public void setCurrentConversation(List<KudoMessage> currentConversation) {
