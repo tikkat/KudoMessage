@@ -12,7 +12,7 @@ import org.icefaces.application.PushRenderer;
 @SessionScoped
 @ManagedBean
 public class ConversationsHolder {
-    private static Map<String, Conversation> conversations = new HashMap<String, Conversation>();;
+    private static Map<String, Conversation> conversations = new HashMap<String, Conversation>();
     private static List<KudoMessage> currentConversation = new ArrayList<KudoMessage>();
     private static LinkedList<String> allConversationsNames = new LinkedList<String>();
             
@@ -54,6 +54,10 @@ public class ConversationsHolder {
         } else {
             return "No match: " + number;
         }
+    }
+    
+    public String getNumUnreadMessages(String number) {
+        return conversations.get(number).getNumUnreadMessages();
     }
     
     public void createNewConversationButton () {
@@ -118,6 +122,8 @@ public class ConversationsHolder {
         private String name;
         private List<KudoMessage> messages;
         
+        private int numUnreadMessages = 0;
+        
         public Conversation(String name) {
             this.name = name;
             
@@ -126,10 +132,16 @@ public class ConversationsHolder {
         
         public void addMessage(KudoMessage message) {
             messages.add(message);
+            numUnreadMessages++;
         }
         
         public List<KudoMessage> getMessages() {
+            numUnreadMessages = 0;
             return messages;
+        }
+        
+        public String getNumUnreadMessages() {
+            return "" + numUnreadMessages;
         }
     }
 }
