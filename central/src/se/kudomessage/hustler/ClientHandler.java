@@ -7,6 +7,7 @@ import java.net.Socket;
 import org.json.*;
 
 public class ClientHandler {
+	private Socket socket;
 	private BufferedReader in;
 	private PrintWriter out;
 	
@@ -18,13 +19,14 @@ public class ClientHandler {
 	public ClientHandler(Socket socket, BufferedReader in, PrintWriter out) {
 		System.out.println("A new client.");
 		
+		this.socket = socket;
 		this.in = in;
 		this.out = out;
 		
 		String inputString;
 		JSONObject input;
 		
-		while (true) {
+		while (!Thread.interrupted()) {
 			try {
 				inputString = in.readLine();
 			} catch (IOException e) {
@@ -70,6 +72,25 @@ public class ClientHandler {
 			token = input.getString("token");
 			email = Utils.getEmailByToken(token);
 			
+			if (email == null || email.equals("")) {
+				System.out.println("### init() ## Got no email, sending close()...");
+				
+				// TODO: May put the closing procedure in a function? 
+				out.println("CLOSE");
+				out.flush();
+				
+				try {
+					in.close();
+					out.close();
+					socket.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				Thread.currentThread().interrupt();
+				return;
+			}
+			
 			gc = GmailController.getInstance(email, token);
 			
 			out.println(email);
@@ -110,9 +131,9 @@ public class ClientHandler {
 	public void getMessages(JSONObject input) {
 		try {
 			int lower = input.getInt("lower");
-			int upper = input.getInt("upper");
+			int count = input.getInt("count");
 		
-			JSONArray messages = gc.getMessages(lower, upper);
+			JSONArray messages = gc.getMessages(lower, count);
 		
 			JSONObject output = new JSONObject();
 			output.put("messages", messages);
