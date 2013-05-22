@@ -74,6 +74,15 @@ public class ConversationsHolder {
         updateCurrentConversation();
     }
     
+    public void deleteCurrentConversation ( String number ) {
+        allConversationsNames.remove(number);
+        conversations.remove(number);
+        
+        currentConversationName = allConversationsNames.getFirst();
+        currentConversation = conversations.get(currentConversationName).getMessages();
+        updateCurrentConversation();
+    }
+    
     public void finishNewConversation () {
         allConversationsNames.remove(newConversationTag);
         conversations.remove(newConversationTag);
@@ -133,6 +142,10 @@ public class ConversationsHolder {
         
         currentConversation = conversations.get(currentConversationName).getMessages();
         
+        Globals.pr.render(Globals.email);
+    }
+    
+    public void updateView () {
         Globals.pr.render(Globals.email);
     }
 
