@@ -24,8 +24,9 @@ public class ConnectionHandler extends Thread {
 			for (int i = 0; i < 5; i++) {
 				String inputString = in.readLine();
 
-				if (inputString == null || inputString.isEmpty())
+				if (inputString == null || inputString.isEmpty()) {
 					continue;
+				}
 
 				if (inputString.equals("CLIENT")) {
 					new ClientHandler(socket, in, out);

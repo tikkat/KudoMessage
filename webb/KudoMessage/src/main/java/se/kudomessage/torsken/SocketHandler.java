@@ -39,6 +39,8 @@ public class SocketHandler extends Thread {
 
             // First answer from server is the email.
             Globals.email = in.readLine();
+            
+            System.out.println("####### :: LOADED 1");
 
             // Global PushRenderer
             Globals.pr = PushRenderer.getPortableRenderer();
@@ -46,6 +48,8 @@ public class SocketHandler extends Thread {
 
             // Get contacts
             ContactsController.getContacts();
+            
+            System.out.println("####### :: LOADED 2");
 
             // Load the first emails
             output = new JSONObject();
@@ -58,6 +62,8 @@ public class SocketHandler extends Thread {
 
             JSONObject e = new JSONObject(in.readLine());
             JSONArray f = e.getJSONArray("messages");
+            
+            System.out.println("####### :: LOADED 3");
 
             for (int i = 0; i < f.length(); i++) {
                 KudoMessage message = new KudoMessage();
@@ -85,16 +91,29 @@ public class SocketHandler extends Thread {
         String inputString;
         JSONObject input;
 
+        int countErrors = 0;
+                
         while (true) {
+            if (countErrors > 5) {
+		System.out.println("################ countError > 5");
+		break;
+            }
+            
             try {
                 inputString = in.readLine();
             } catch (Exception e) {
+                System.out.println("################ ERROR 1"); 
+                countErrors++;
                 continue;
             }
 
             if (inputString == null || inputString.isEmpty()) {
+                System.out.println("################ ERROR 2");
+                countErrors++;
                 continue;
             }
+            
+            countErrors = 0;
             
             if (inputString.equals("CLOSE")) {
                 System.out.println("### GOT CLOSE ###");

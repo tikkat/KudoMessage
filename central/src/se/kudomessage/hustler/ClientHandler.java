@@ -26,15 +26,29 @@ public class ClientHandler {
 		String inputString;
 		JSONObject input;
 		
+		int countErrors = 0;
+		
 		while (!Thread.interrupted()) {
+			if (countErrors > 5) {
+				System.out.println("### countError > 5");
+				break;
+			}
+			
 			try {
 				inputString = in.readLine();
 			} catch (IOException e) {
+				System.out.println("### ERROR 1");
+				countErrors++;
 				continue;
 			}
 
-			if (inputString == null || inputString.isEmpty())
+			if (inputString == null || inputString.isEmpty()) {
+				System.out.println("### ERROR 2");
+				countErrors++;
 				continue;
+			}
+			
+			countErrors = 0;
 
 			if (inputString.equals("CLOSE")) {
 				try {
