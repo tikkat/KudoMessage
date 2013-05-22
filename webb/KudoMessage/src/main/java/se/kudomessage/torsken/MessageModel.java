@@ -16,6 +16,9 @@ public class MessageModel {
     }
     
     public void sendMessage() {
+        if (ConversationsHolder.getInstance().isNewConversation()) {
+            ConversationsHolder.getInstance().finishNewConversation();
+        }
         new Thread(new Runnable() {
             public void run() {
                 try {
