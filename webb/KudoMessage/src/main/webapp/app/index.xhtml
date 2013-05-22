@@ -8,6 +8,7 @@
     <h:head>
         <title>KudoMessage - Webbapplikation</title>
         <link rel="stylesheet" type="text/css" href="../css/app.style.css" />
+        <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
     </h:head>
     <h:body>
         <h:inputHidden value="#{backendBean.init()}"/>
@@ -39,12 +40,17 @@
                             <c:if test="#{!conversationsHolder.newConversation}">
                                 #{contactsController.getNameOfContact(conversationsHolder.activeConversationName)}
                                 <h:commandButton id="butt" class="sendButton" style="width: 30px;" value="+" type="button" />
-                                  
+                                <!-- ################# -->
+                                <!-- ################# -->
+                                <!-- ################# -->
+                                <!-- ################# --><!-- ################# -->
+                                <!-- ################# -->
+                                <!-- ################# -->
+                                <!-- ################# -->
+                                <!-- ################# --><!-- ################# -->
                                 
-                                <p:overlayPanel id="overlayPanel" for="butt" showEffect="fade" hideEffect="fade" style="width: 200px;">  
-                                    <h:inputText value="#{contactsController.tmpContactName}" />
-                                    <h:commandButton class="sendButton" style="width: 130px; margin-top: 6px; margin-left: 75px;" value="Lägg till kontakt" action="#{contactsController.createContactFromJSF(contactsController.tmpContactName, conversationsHolder.activeConversationNumner)}" />
-                                </p:overlayPanel>
+                                
+                                
                             </c:if>
                         </c:if>
                         <c:if test="#{conversationsHolder.newConversation}" >
@@ -54,7 +60,6 @@
                                     <f:selectItem itemLabel="#{contact}" />
                                 </c:forEach>
                             </h:selectOneMenu>
-                            <h:commandButton value="Skapa konversation" class="sendButton" action="#{conversationsHolder.completeNewConversation()}" />
                         </c:if>
                     </p>
                 </div>
