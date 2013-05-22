@@ -22,7 +22,7 @@ public class ContactsController {
         if (hasContact(number)) {
             return contacts.get(number);
         } else {
-            return "N: " + number;
+            return "" + number;
         }
     }
     
