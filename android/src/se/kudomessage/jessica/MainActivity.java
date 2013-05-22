@@ -10,7 +10,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 import android.app.Activity;
+import android.content.Intent;
 
 public class MainActivity extends Activity {
 	@Override
@@ -32,7 +35,16 @@ public class MainActivity extends Activity {
 			GCMRegistrar.register(this, CONSTANTS.SENDER_ID);
 		} else {
 			Globals.setGCM(GCMKey);
-			OAuthController.requestAccessToken();
+			//No longer needed as there's an button for the request now
+			//OAuthController.requestAccessToken();
+		}
+		
+		if(Globals.getGCM() != null && 
+		   Globals.getEmail() != null && 
+		   Globals.getAccessToken() != null &&
+		   Globals.getRegStatus()
+		){
+			this.registered();
 		}
 	}
 	
@@ -55,6 +67,12 @@ public class MainActivity extends Activity {
 		OAuthController.requestAccessToken();
 	}
 	
+	public void registered(){
+	    Intent intent = new Intent(this, RegisteredServerActivity.class);
+	    //intent.putExtra(EXTRA_MESSAGE, message);
+	    startActivity(intent);
+		
+	}
 	
 	/**
 	 * Triggered when the users clicks the "Continue" button
@@ -62,21 +80,39 @@ public class MainActivity extends Activity {
 	 * @param view required for button listeners 
 	 */
 	public void registerUser(View view){
-		// To be added some error control, check so that the server 
-		// address is a valid server and that the user have connected with google.
-		if(Globals.getAccessToken() != null ){
+		// TODO: Add more error checking on the server address.
+		String server = ((EditText) findViewById(R.id.edit_message)).toString();
+		if(server != null){
+			Log.d("registerUser", "Setting server to: \""+server+"\"");
+			Globals.setServer(server);
+		}
+		if(Globals.getAccessToken() == null ){
 			//Error stuff for accesstoken
 			Log.e("registerUser", "Accesstoken not granted");
-		}else if(PushController.testServer() != false){
+			Toast.makeText(this, 
+					"You haven't granted access to Google", 
+					Toast.LENGTH_SHORT).show();
+		}else if(PushController.testServer() == false){
 			//If the server isn't a valid KudoMessage server.
 			Log.e("registerUser", "The message server wasn't valid");
-		}else if(Globals.getGCM() != null){
+			Toast.makeText(this, 
+					"The server you specified isn't a valid KudoMessage-server.", 
+					Toast.LENGTH_SHORT).show();
+		}else if(Globals.getGCM() == null){
 			//Please wait for GCM something message
 			Log.e("registerUser", "GCM wasn't fetched yet");
+			Toast.makeText(this, 
+					"Waiting for Google repsone, please try again in a few seconds.", 
+					Toast.LENGTH_SHORT).show();
 		}else{
 			//Success
 			Log.d("registerUser", "Successfully");
 			init();
+			Globals.setRegStatus(true);
+			Toast.makeText(this, 
+					"Successfully registered to KudoMessage", 
+					Toast.LENGTH_SHORT).show();
+			this.registered();
 		}
 	}
 }
