@@ -42,7 +42,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 		
 		Globals.setGCM(GCMKey);
 		//To be removed once ui is reimplemented
-		OAuthController.requestAccessToken();
+		//OAuthController.requestAccessToken();
 	}
 
 	@Override
