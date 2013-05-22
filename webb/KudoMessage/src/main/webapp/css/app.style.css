@@ -74,6 +74,7 @@ html, body {
 .contact {
     height: 70px;
     width: 100%;
+    position: absolute;
     border: 0px;
     border-bottom: 1px solid #EAEAEA;
     background-color: #FBFBFB;
@@ -81,7 +82,36 @@ html, body {
     font-size: 15px;
 }
 
-.contact:hover {
+.contactFront {
+    height: 70px;
+    width: 100%;
+    position: absolute;
+    border: 0px;
+    border-bottom: 1px solid #EAEAEA;
+    background-color: transparent;
+    font-family: arial;
+    font-size: 15px;
+}
+
+.contactCross {
+    height: 70px;
+    width: 20%;
+    z-index: 100;
+    position: relative;
+    border: 0px;
+    border-bottom: 1px solid #EAEAEA;
+    background-color: transparent;
+    font-family: arial;
+    font-size: 15px;
+    margin-left: 80%;
+}
+
+.contactHover {
+    cursor: pointer;
+    background-color: green;
+}
+
+.contactFront:hover {
     cursor: pointer;
     background-color: #F3F3F3;
 }
