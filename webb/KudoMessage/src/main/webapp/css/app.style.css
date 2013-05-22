@@ -154,3 +154,12 @@ html, body {
     box-shadow: 2px -2px 2px 0 rgba( 178, 178, 178, .4 );
     right: -9px;    
 }
+
+div#newContactBox {
+    position: absolute;
+    z-index: 100;
+    display: none;
+    padding: 10px;
+    background-color: #FBFBFB;
+    box-shadow: 0 0 6px #B2B2B2;
+}

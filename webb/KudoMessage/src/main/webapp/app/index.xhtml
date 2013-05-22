@@ -8,7 +8,27 @@
     <h:head>
         <title>KudoMessage - Webbapplikation</title>
         <link rel="stylesheet" type="text/css" href="../css/app.style.css" />
-        <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script>
+            
+            function showNewContactBox(button) {
+                if( $('#newContactBox').is(':visible') ) {
+                    hideNewContactBox();
+                } else {             
+                    var position = $(button).position();
+                    var left = position.left + 20;
+                    var top = position.top + 34;
+
+                    $("#newContactBox").css({top: top + 'px', left: left + 'px'});
+                    $("#newContactBox").slideDown("slow");
+                }
+            }
+            
+            function hideNewContactBox() {
+                $("#newContactBox").hide();
+            }
+            
+        </script>
     </h:head>
     <h:body>
         <h:inputHidden value="#{backendBean.init()}"/>
@@ -39,17 +59,14 @@
                         <c:if test="#{!contactsController.hasContact(conversationsHolder.activeConversationName)}">
                             <c:if test="#{!conversationsHolder.newConversation}">
                                 #{contactsController.getNameOfContact(conversationsHolder.activeConversationName)}
-                                <h:commandButton id="butt" class="sendButton" style="width: 30px;" value="+" type="button" />
-                                <!-- ################# -->
-                                <!-- ################# -->
-                                <!-- ################# -->
-                                <!-- ################# --><!-- ################# -->
-                                <!-- ################# -->
-                                <!-- ################# -->
-                                <!-- ################# -->
-                                <!-- ################# --><!-- ################# -->
                                 
-                                
+                                <h:commandButton class="sendButton" style="width: 30px;" value="+" type="button" onclick="showNewContactBox(this)" />      
+                                <div id="newContactBox">
+                                    Ange ett namn:<br />
+                                    <h:inputText value="#{contactsController.tmpContactName}" style="width: 200px;" /><br />
+                                    <h:commandButton styleClass="sendButton" style="float: right; width: 130px; margin-top: 5px;" value="Lägg till kontakt" action="#{contactsController.createContactFromJSF(contactsController.tmpContactName, conversationsHolder.activeConversationNumner)}" />
+                                    <br style="clear: both;" />
+                                </div>
                                 
                             </c:if>
                         </c:if>
@@ -65,7 +82,7 @@
                 </div>
                 
                 <div style="display: block; height: 100%; margin-top: -50px; overflow-y: scroll;">
-                    <div style="padding-top: 93px;">
+                    <div style="padding: 100px 10px 10px 10px;">
                         <c:forEach items="#{conversationsHolder.currentConversation}" var="message">
                             <div>
                                 <c:if test="#{!conversationsHolder.isSelf(message.origin)}">
