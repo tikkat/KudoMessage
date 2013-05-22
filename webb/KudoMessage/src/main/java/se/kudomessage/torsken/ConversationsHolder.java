@@ -68,16 +68,23 @@ public class ConversationsHolder {
     }
     
     public void createNewConversationButton () {
-        addMessage(new KudoMessage(null, newConversationTag, newConversationTag));
+        allConversationsNames.addFirst(newConversationTag);
+        conversations.put(newConversationTag, new Conversation(newConversationTag));
         currentConversationName = newConversationTag;
+        updateCurrentConversation();
     }
     
-    public void completeNewConversation () {
+    public void finishNewConversation () {
+        allConversationsNames.remove(newConversationTag);
+        conversations.remove(newConversationTag);
+        
+        allConversationsNames.addFirst(currentConversationName);
+        conversations.put(currentConversationName, new Conversation(currentConversationName));
         updateCurrentConversation();
     }
     
     public boolean isNewConversation () {
-        if (!currentConversation.isEmpty() && currentConversation.get(0).origin.equals(newConversationTag)) {
+        if (allConversationsNames.contains(newConversationTag)) {
             return true;
         }
         return false;
