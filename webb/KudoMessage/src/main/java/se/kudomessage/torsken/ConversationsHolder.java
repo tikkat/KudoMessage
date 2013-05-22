@@ -18,7 +18,7 @@ public class ConversationsHolder {
             
     private static String currentConversationName = "";
     
-    private static final String newConversationTag = "   ";
+    private static final String newConversationTag = "Ny konversation";
     
     private static ConversationsHolder instance = null;
     
@@ -39,6 +39,10 @@ public class ConversationsHolder {
     
     public String getActiveConversationNumner () {
         return currentConversationName;
+    }
+    
+    public void setActiveConversationName ( String name ) {
+        currentConversationName = name;
     }
     
     public String getActiveConversationName() {
@@ -64,8 +68,11 @@ public class ConversationsHolder {
     }
     
     public void createNewConversationButton () {
-        addMessage(new KudoMessage("", newConversationTag, newConversationTag));
+        addMessage(new KudoMessage(null, newConversationTag, newConversationTag));
         currentConversationName = newConversationTag;
+    }
+    
+    public void completeNewConversation () {
         updateCurrentConversation();
     }
     
