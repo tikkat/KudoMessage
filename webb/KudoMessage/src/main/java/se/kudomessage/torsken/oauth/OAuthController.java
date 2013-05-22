@@ -25,7 +25,7 @@ public class OAuthController {
             String accessToken = getTokenFromCode(params.get("code"));
             Globals.accessToken = accessToken;
             
-            FacesContext.getCurrentInstance().getExternalContext().redirect("/KudoMessage/index.xhtml");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("/KudoMessage/app/");
         } catch (IOException ex) {}
     }
     

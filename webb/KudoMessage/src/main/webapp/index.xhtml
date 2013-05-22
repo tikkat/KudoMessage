@@ -1,91 +1,82 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:c="http://java.sun.com/jsp/jstl/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:h="http://java.sun.com/jsf/html">
     <h:head>
-        <title>KudoMessage - Webbapplikation</title>
-        <link rel="stylesheet" type="text/css" href="./css/style.css" />
+        <title>KudoMessage</title>
+        <meta charset="utf-8"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"></meta>
+
+        <link rel="stylesheet" href="./css/html5-doctor-reset-stylesheet.css"></link>
+        <link rel="stylesheet" href="./css/kudo.style.css"></link>
+
+        <link href='http://fonts.googleapis.com/css?family=Oleo+Script:700' rel='stylesheet' type='text/css'></link>
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'></link>
+
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('#feature-image').css("opacity", 0).load(function() {
+                    $("#feature-image").css("margin-top", "-25px");
+                    $("#feature-image").css("margin-bottom", "25px");
+
+                    $('#feature-image').animate({opacity: 1, 'marginTop': '0px', 'marginBottom': '0px'}, 1200);
+                });
+            });
+
+            $(function() {
+                var pull = $('#pull');
+                menu = $('nav ul');
+                menuHeight = menu.height();
+
+                $(pull).on('click', function(e) {
+                    e.preventDefault();
+                    menu.slideToggle();
+                });
+            });
+        </script>
     </h:head>
     <h:body>
-        <h:inputHidden value="#{backendBean.init()}"/>
-        
-        <h:form>
-            <!-- Konversationerna -->
-            <div class="contactsKeeper">
-                <div style="width: 100%; height: 35px; padding-top: 7px; border-bottom: 1px solid #E0E0E0;">
-                    <div class="inputBoxKeeper" style="width: 75%; float: left;">
-                        <h:inputText value="Sök..." />
+        <div id="wrapper">
+            <header>
+                <div class="_960" id="menu-wrapper">
+                    <em id="logo">KudoMessage</em>
+                    <nav class="clearfix">
+                        <ul class="clearfix"> 
+                            <li><a href="#" class="current">Hem</a></li><li><a href="https://github.com/tikkat/KudoMessage" target="_blank">Ladda ner</a></li><li><a href="#">Om KudoMessage</a></li><li><a href="#">Kontakt</a></li>
+                            <li>
+                                <h:form>
+                                    <h:commandLink action="#{oAuthController.redirectToGoogleOAuth()}" value="Logga in" />
+                                </h:form>
+                            </li>
+                        </ul>
+                        <a href="#" id="pull">Menu</a>
+                    </nav>
+                    <br style="clear: both;" />
+                    <div id="feature">
+                        <h1>Nu kommer SMS till alla dina enheter.</h1>
+                        <img id="feature-image" height="300" src="./images/desktop.png" />
                     </div>
-                    <h:commandButton class="sendButton" value="Ny" action="#{conversationsHolder.createNewConversationButton()}" />
                 </div>
-                
-                <c:forEach items="#{conversationsHolder.allConversationsNames}" var="number">
-                    <div>
-                        <h:commandButton class="contact" action="#{conversationsHolder.setActiveConversation(number)}" value="#{contactsController.getNameOfContact(number)}#{conversationsHolder.getNumUnreadMessages(number)}" />
-                    </div>
-                </c:forEach>
-            </div>
+            </header>
+            <section>
+                <div class="_960">
+                    <h1>KudoMessage</h1>
+                    <p>KudoMessage syftar till att hjälpa vanliga människor i deras vardag genom att ge dem möjlighet att skicka textmeddelanden från flera enheter, och på samma gång säkerhetskopia dem.</p>
+                    <p>Vår uppfattning är att man inte ska vara tvingad till att skicka textmeddelanden (SMS) från din mobiltelefon när du har en dator eller surfplatta nära till hands, på vilka vi tycker är enklare att skriva meddelande.</p>
 
-            <div class="messagesKeeper">
-                <div style="display: block; height: 42px; width: 100%; position: absolute; border-bottom: 1px solid #E0E0E0;">
-                    <p style="line-height: 42px; margin: 0px 0px 0px 20px; display: block;">
-                        <c:if test="#{contactsController.hasContact(conversationsHolder.activeConversationName)}">
-                            #{contactsController.getNameOfContact(conversationsHolder.activeConversationName)}
-                        </c:if>
-                        <c:if test="#{!contactsController.hasContact(conversationsHolder.activeConversationName)}">
-                            <c:if test="#{!conversationsHolder.newConversation}">
-                                #{contactsController.getNameOfContact(conversationsHolder.activeConversationName)}
-                                <h:commandButton id="butt" class="sendButton" style="width: 30px;" value="+" type="button" />
-                                  
-                                
-                                <p:overlayPanel id="overlayPanel" hideEvent="mousedown" for="butt" hideEffect="fade" style="width: 200px;">  
-                                    <h:inputText value="#{contactsController.tmpContactName}" />
-                                    <h:commandButton class="sendButton" style="width: 130px; margin-top: 6px; margin-left: 75px;" value="Lägg till kontakt" action="#{contactsController.createContactFromJSF(contactsController.tmpContactName, conversationsHolder.activeConversationNumner)}" />
-                                </p:overlayPanel>
-                            </c:if>
-                        </c:if>
-                        <c:if test="#{conversationsHolder.newConversation}" >
-                            <h:inputText value="#{contactsController.getNameOfContact(conversationsHolder.activeConversationName)}" />
-                            <h:selectOneMenu>
-                                <c:forEach items="#{contactsController.nameOfContacts}" var="contact">
-                                    <f:selectItem itemLabel="#{contact}" />
-                                </c:forEach>
-                            </h:selectOneMenu>
-                        </c:if>
-                    </p>
+                    <h1>En telefon - flera enheter</h1>
+                    <p>Skicka och ta emot sms på din laptop, vanliga dator eller surfplatta - precis som på din telefon.<br />Och det bästa? Du kan skicka sms till alla - även dem som inte har KudoMessage!</p>
                 </div>
-                
-                <div style="display: block; height: 100%; margin-top: -50px; overflow-y: scroll;">
-                    <div style="padding-top: 93px;">
-                        <c:forEach items="#{conversationsHolder.currentConversation}" var="message">
-                            <div>
-                                <c:if test="#{!conversationsHolder.isSelf(message.origin)}">
-                                    <div class="bubble me">
-                                        #{message.content}
-                                    </div>
-                                </c:if>
-                                <c:if test="#{conversationsHolder.isSelf(message.origin)}">
-                                    <div class="bubble you">
-                                        #{message.content}
-                                    </div>
-                                </c:if>
-                                <br style="clear: both;" />
-                            </div>
-                        </c:forEach>
-                    </div>
+            </section>
+            <footer>
+                <div class="_960">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
                 </div>
-                
-                <div style="display: block; height: 40px; padding-top: 9px; border-top: 1px solid #E0E0E0;">
-                    <div class="inputBoxKeeper" style="width: 80%; float: left;">
-                        <h:inputText value="#{messageModel.messageContent}" />
-                    </div>
-
-                    <h:commandButton class="sendButton" action="#{messageModel.sendMessage()}" value="Skicka" />
-                </div>
-            </div>
-        </h:form>
+            </footer>
+        </div>
     </h:body>
 </html>
