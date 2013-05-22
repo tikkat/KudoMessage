@@ -28,11 +28,28 @@
                 $("#newContactBox").hide();
             }
             
+            function conversationOnHover (button) {
+                $(button).parent().css('background', '#F3F3F3');
+            }
+            
+            function conversationOnNotHover (button) {
+                $(button).parent().css('background', 'transparent');
+            }
+            
+            function showCross (div) {
+                $(div).children().children().css('visibility', 'visible');
+            }
+            
+            function hideCross (div) {
+                $(div).children().children().css('visibility', 'hidden');
+            }
         </script>
     </h:head>
     <h:body>
         <h:inputHidden value="#{backendBean.init()}"/>
-        
+        <c:if test="#{backendBean.pageLoad()}">
+            <meta http-equiv="refresh" content="0" />
+        </c:if>
         <h:form>
             <!-- Konversationerna -->
             <div class="contactsKeeper">
@@ -44,8 +61,12 @@
                 </div>
                 
                 <c:forEach items="#{conversationsHolder.allConversationsNames}" var="number">
-                    <div>
-                        <h:commandButton class="contact" action="#{conversationsHolder.setActiveConversation(number)}" value="#{contactsController.getNameOfContact(number)}#{conversationsHolder.getNumUnreadMessages(number)}" />
+                    <div onmouseover="showCross(this)" onmouseout="hideCross(this)">
+                        <h:commandButton class="contactFront" action="#{conversationsHolder.setActiveConversation(number)}" value="#{contactsController.getNameOfContact(number)}#{conversationsHolder.getNumUnreadMessages(number)}">
+                            <div>
+                                <h:commandButton class="contactCross" style="visibility: hidden;" value="x" onmouseover="conversationOnHover(this)" onmouseout="conversationOnNotHover(this)" action="#{conversationsHolder.deleteCurrentConversation(number)}" />
+                            </div>
+                        </h:commandButton>   
                     </div>
                 </c:forEach>
             </div>
