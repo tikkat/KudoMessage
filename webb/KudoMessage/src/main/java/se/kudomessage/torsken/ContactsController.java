@@ -39,8 +39,10 @@ public class ContactsController {
     }
     
     public void createContactFromJSF ( String name, String number ) {
-        createContact(name, number);
-        tmpContactName = "";
+        if (!name.equals("")) {  
+            createContact(name, number);
+            tmpContactName = "";
+        }
     }
     
     public static void createContact(String name, String number) {
