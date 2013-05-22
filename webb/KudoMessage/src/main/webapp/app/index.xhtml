@@ -28,6 +28,10 @@
                 $("#newContactBox").hide();
             }
             
+            function setNewConversationTextBox(sender) {
+                $(".newConversationTextBox").val($(sender).val());
+            }
+            
         </script>
     </h:head>
     <h:body>
@@ -71,12 +75,20 @@
                             </c:if>
                         </c:if>
                         <c:if test="#{conversationsHolder.newConversation}" >
-                            <h:inputText value="#{conversationsHolder.activeConversationName}" />
-                            <h:selectOneMenu>
+                            
+                            <h:inputText class="newConversationTextBox" value="#{conversationsHolder.activeConversationName}" onclick="if(this.value=='Ny konversation'){this.value='';}" />&nbsp;
+                            
+                            <script>
+                                $(".newConversationTextBox").focus();
+                            </script>
+                            
+                            <h:selectOneMenu onchange="setNewConversationTextBox(this)" style="font-size: 16px;">
+                                <f:selectItem itemValue="" itemLabel="Välj en kontakt" />
                                 <c:forEach items="#{contactsController.nameOfContacts}" var="contact">
-                                    <f:selectItem itemLabel="#{contact}" />
+                                    <f:selectItem itemValue="#{contactsController.getNumberOfContact(contact)}" itemLabel="#{contact}" />
                                 </c:forEach>
                             </h:selectOneMenu>
+                            
                         </c:if>
                     </p>
                 </div>

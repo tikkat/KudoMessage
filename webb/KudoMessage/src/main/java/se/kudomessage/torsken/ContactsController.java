@@ -1,10 +1,12 @@
 package se.kudomessage.torsken;
 
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import javax.faces.bean.ManagedBean;
-import org.icefaces.application.PushRenderer;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,8 +28,21 @@ public class ContactsController {
         }
     }
     
-    public Collection<String> getNameOfContacts () {
-        return contacts.values();
+    public String getNumberOfContact(String name) {
+        for (Entry<String, String> entry : contacts.entrySet()) {
+            if (entry.getValue().equals(name))
+                return entry.getKey();
+        }
+        
+        return "";
+    }
+    
+    public List<String> getNameOfContacts() {
+        List<String> sortedContacts = new ArrayList<String>();
+        sortedContacts.addAll(contacts.values());
+        Collections.sort(sortedContacts);
+        
+        return sortedContacts;
     }
 
     public String getTmpContactName() {
