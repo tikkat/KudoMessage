@@ -65,4 +65,12 @@ public class Globals{
 	private static String prefKey(String pref){
 		return Globals.packageIdentifier+"."+pref;
 	}
+
+	public static boolean getRegStatus() {
+		return prefs.getBoolean(prefKey("regStatus"), false);
+	}
+
+	public static void setRegStatus(Boolean reg) {
+		prefs.edit().putBoolean(prefKey("regStatus"), reg).commit();
+	}
 }
