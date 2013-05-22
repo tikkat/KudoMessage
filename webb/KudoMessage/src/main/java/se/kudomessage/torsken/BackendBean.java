@@ -15,6 +15,7 @@ public class BackendBean {
     private BufferedReader in = null;
     private PrintWriter out = null;
     private boolean loaded = false;
+    private int j = 1;
 
     public String init() {
         if (!loaded) {
@@ -23,6 +24,14 @@ public class BackendBean {
         }
 
         return "";
+    }
+    
+    public boolean pageLoad () {
+        if (j == 1) {
+            j++;
+            return true;
+        }
+        return false;
     }
 
     private void doInit() {
