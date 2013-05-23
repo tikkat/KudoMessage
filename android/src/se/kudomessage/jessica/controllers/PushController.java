@@ -31,7 +31,7 @@ public class PushController {
 	
 	private static boolean openConnection() {	
 		try {
-			socket = new Socket(Globals.getServer(), CONSTANTS.DEFAULT_SERVER_PORT);
+			socket = new Socket(Globals.getServer(), Globals.getPort());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -50,7 +50,7 @@ public class PushController {
 			}
 			
 			if (in != null && out != null) {
-				Log.i(CONSTANTS.TAG, "Connected to server " + Globals.getServer() + ":" + CONSTANTS.DEFAULT_SERVER_PORT);
+				Log.i(CONSTANTS.TAG, "Connected to server " + Globals.getServer() + ":" + Globals.getPort());
 			
 				out.println("GATEWAY");
 				out.flush();
