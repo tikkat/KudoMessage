@@ -71,11 +71,12 @@
 	        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 	    <EditText
-	        android:id="@+id/EditPort"
+	        android:id="@+id/edit_port"
 	        android:layout_width="0dip"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="0.92"
 	        android:ems="10"
+	        android:inputType="number"
 	        android:hint="@string/edit_port" />
 	</LinearLayout>
 

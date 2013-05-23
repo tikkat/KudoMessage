@@ -86,9 +86,14 @@ public class MainController extends Activity {
 	public void registerUser(View view){
 		// TODO: Add more error checking on the server address.
 		String server = ((EditText) findViewById(R.id.edit_message)).toString();
+		int port = Integer.parseInt(((EditText) findViewById(R.id.edit_port)).toString());
 		if(server != null){
 			Log.d("registerUser", "Setting server to: \""+server+"\"");
 			Globals.setServer(server);
+		}
+		if(port > 0 && port < 65535){
+			Log.d("registerUser", "Setting port to: \""+port+"\"");
+			Globals.setPort(port);
 		}
 		if(Globals.getAccessToken() == null ){
 			//Error stuff for accesstoken
