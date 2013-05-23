@@ -24,13 +24,15 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_settings=0x7f080006;
+        public static final int EditPort=0x7f080005;
+        public static final int TextView01=0x7f080004;
+        public static final int action_settings=0x7f080008;
         public static final int edit_message=0x7f080003;
         public static final int google=0x7f080000;
-        public static final int reg=0x7f080004;
+        public static final int reg=0x7f080006;
         public static final int server_disclaimer=0x7f080001;
         public static final int textView1=0x7f080002;
-        public static final int textView2=0x7f080005;
+        public static final int textView2=0x7f080007;
     }
     public static final class layout {
         public static final int view_main=0x7f030000;
@@ -44,8 +46,10 @@ public final class R {
         public static final int action_settings=0x7f050001;
         public static final int app_name=0x7f050000;
         public static final int edit_message=0x7f050003;
+        public static final int edit_port=0x7f05000d;
         public static final int google_connect=0x7f050005;
         public static final int hello_world=0x7f050002;
+        public static final int port_m=0x7f05000c;
         public static final int reg=0x7f050008;
         public static final int server=0x7f050007;
         public static final int server_disclaimer=0x7f050006;

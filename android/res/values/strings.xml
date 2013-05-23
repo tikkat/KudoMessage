@@ -4,7 +4,7 @@
     <string name="app_name">KudoMessage</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-    <string name="edit_message">http://kudomessage.se</string>
+    <string name="edit_message">kudomessage.se</string>
     <string name="server_m">Server</string>
     <string name="google_connect">Sign in with Google</string>
     <string name="server_disclaimer">Advanced: If you want to use your own server you can specify the address here, don\'t change unless you know what you\'re doing</string>
@@ -13,5 +13,7 @@
     <string name="title_activity_registered_server">KudoMessage</string>
     <string name="success">Success!</string>
     <string name="success_long">You have successfully registered your phone to the KudoMessage service</string>
+    <string name="port_m">Port</string>
+    <string name="edit_port">5001</string>
 
 </resources>
