@@ -3,6 +3,8 @@ package se.kudomessage.jessica;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import se.kudomessage.jessica.models.MessageModel;
+
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;

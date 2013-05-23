@@ -41,7 +41,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="se.kudomessage.jessica.MainActivity"
+            android:name="se.kudomessage.jessica.controllers.MainController"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
@@ -76,9 +76,9 @@
         <service android:name="se.kudomessage.jessica.GCMIntentService" />
 
         <activity
-            android:name="se.kudomessage.jessica.RegisteredServerActivity"
+            android:name="se.kudomessage.jessica.controllers.RegisteredServerController"
             android:label="@string/title_activity_registered_server"
-            android:parentActivityName="se.kudomessage.jessica.MainActivity" >
+            android:parentActivityName="se.kudomessage.jessica.controllers.MainController" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="se.kudomessage.jessica.MainActivity" />

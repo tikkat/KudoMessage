@@ -1,5 +1,6 @@
 package se.kudomessage.jessica;
 
+import se.kudomessage.jessica.controllers.PushController;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;

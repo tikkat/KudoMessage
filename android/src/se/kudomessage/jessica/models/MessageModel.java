@@ -1,4 +1,6 @@
-package se.kudomessage.jessica;
+package se.kudomessage.jessica.models;
+
+import se.kudomessage.jessica.KudoMessage;
 
 public class MessageModel {
 	public static void sendMessage(KudoMessage m) {

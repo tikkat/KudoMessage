@@ -1,17 +1,20 @@
-package se.kudomessage.jessica;
+package se.kudomessage.jessica.controllers;
 
+import se.kudomessage.jessica.R;
+import se.kudomessage.jessica.R.layout;
+import se.kudomessage.jessica.R.menu;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
 
-public class RegisteredServerActivity extends Activity {
+public class RegisteredServerController extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_registered_server);
+		setContentView(R.layout.view_registered_server);
 		// Show the Up button in the action bar.
 		setupActionBar();
 	}

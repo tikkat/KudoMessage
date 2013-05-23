@@ -1,7 +1,11 @@
-package se.kudomessage.jessica;
+package se.kudomessage.jessica.controllers;
 
 import se.kudomessage.jessica.CONSTANTS;
 import se.kudomessage.jessica.Globals;
+import se.kudomessage.jessica.R;
+import se.kudomessage.jessica.SMSSentObserver;
+import se.kudomessage.jessica.R.id;
+import se.kudomessage.jessica.R.layout;
 
 import com.google.android.gcm.GCMRegistrar;
 
@@ -15,11 +19,11 @@ import android.widget.Toast;
 import android.app.Activity;
 import android.content.Intent;
 
-public class MainActivity extends Activity {
+public class MainController extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.view_main);
 		
 		Globals.setActivity(this);
 		
@@ -68,7 +72,7 @@ public class MainActivity extends Activity {
 	}
 	
 	public void registered(){
-	    Intent intent = new Intent(this, RegisteredServerActivity.class);
+	    Intent intent = new Intent(this, RegisteredServerController.class);
 	    //intent.putExtra(EXTRA_MESSAGE, message);
 	    startActivity(intent);
 		

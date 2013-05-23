@@ -33,8 +33,8 @@ public final class R {
         public static final int textView2=0x7f080005;
     }
     public static final class layout {
-        public static final int activity_main=0x7f030000;
-        public static final int activity_registered_server=0x7f030001;
+        public static final int view_main=0x7f030000;
+        public static final int view_registered_server=0x7f030001;
     }
     public static final class menu {
         public static final int main=0x7f070000;

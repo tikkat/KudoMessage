@@ -1,4 +1,4 @@
-package se.kudomessage.jessica;
+package se.kudomessage.jessica.controllers;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -14,6 +14,10 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import org.json.JSONObject;
+
+import se.kudomessage.jessica.CONSTANTS;
+import se.kudomessage.jessica.Globals;
+import se.kudomessage.jessica.KudoMessage;
 
 import android.util.Log;
 

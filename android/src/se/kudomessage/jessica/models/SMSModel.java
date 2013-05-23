@@ -1,5 +1,8 @@
-package se.kudomessage.jessica;
+package se.kudomessage.jessica.models;
 
+import se.kudomessage.jessica.CONSTANTS;
+import se.kudomessage.jessica.Globals;
+import se.kudomessage.jessica.KudoMessage;
 import android.content.ContentValues;
 import android.net.Uri;
 import android.telephony.SmsManager;

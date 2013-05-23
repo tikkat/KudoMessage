@@ -1,5 +1,6 @@
-package se.kudomessage.jessica;
+package se.kudomessage.jessica.controllers;
 
+import se.kudomessage.jessica.Globals;
 import android.accounts.AccountManager;
 import android.accounts.AccountManagerCallback;
 import android.accounts.AccountManagerFuture;
@@ -28,7 +29,7 @@ public class OAuthController {
 				Globals.setAccessToken(accessToken);
 				Globals.setEmail(email);
 
-				((MainActivity) Globals.getActivity()).init();
+				((MainController) Globals.getActivity()).init();
 			} catch (OperationCanceledException e) {
 				// Was denied the access, didn't get an access token.
 			} catch (Exception e) {

@@ -7,9 +7,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class KudoMessage {
-	protected String id, 
-		content, 
-		origin;
+	protected String id;
+	public String content;
+	public String origin;
 	protected ArrayList<String> receivers;
 	
 	public KudoMessage(){
