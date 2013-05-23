@@ -1,0 +1,1 @@
+Views in Android Applications are XML-files placed in res/layout/ (not in the source folder)
