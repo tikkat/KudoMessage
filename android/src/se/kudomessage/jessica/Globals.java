@@ -52,6 +52,15 @@ public class Globals{
 		String server = prefs.getString(prefKey("server"), null);
 		return ( server == null ) ? CONSTANTS.DEFAULT_SERVER_ADDRESS : server;
 	}
+	
+	public static void setPort(int port){
+		prefs.edit().putInt(prefKey("port"), port).commit();
+	}
+
+	public static int getPort(){
+		int port = prefs.getInt(prefKey("port"), 0);
+		return ( port == 0 ) ? CONSTANTS.DEFAULT_SERVER_PORT : port;
+	}
 
 	public static String getGCM() {
 		return prefs.getString(prefKey("GCM"), null);
