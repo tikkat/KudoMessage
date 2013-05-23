@@ -61,9 +61,11 @@
                     <div class="inputBoxKeeper" style="width: 75%; float: left;">
                         <h:inputText value="Sök..." />
                     </div>
+                    <!-- converationsController -->
                     <h:commandButton class="sendButton" value="Ny" action="#{conversationsHolder.createNewConversationButton()}" />
                 </div>
                 
+                <!-- conversationsBackendBean -->
                 <c:forEach items="#{conversationsHolder.allConversationsNames}" var="number">
                     <div onmouseover="showCross(this)" onmouseout="hideCross(this)">
                         <h:commandButton class="contactFront" action="#{conversationsHolder.setActiveConversation(number)}" value="#{contactsController.getNameOfContact(number)}#{conversationsHolder.getNumUnreadMessages(number)}">
