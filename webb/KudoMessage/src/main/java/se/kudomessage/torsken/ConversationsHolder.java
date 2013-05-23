@@ -98,6 +98,14 @@ public class ConversationsHolder {
         }
         return false;
     }
+    
+    public void setAllRead() {
+        for (Conversation c : conversations.values()) {
+            c.getMessages();
+        }
+        
+        setActiveConversation(allConversationsNames.getFirst());
+    }
 
     public void setCurrentConversation(List<KudoMessage> currentConversation) {
         ConversationsHolder.currentConversation = currentConversation;

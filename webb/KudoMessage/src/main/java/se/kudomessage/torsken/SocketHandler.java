@@ -73,6 +73,10 @@ public class SocketHandler extends Thread {
 
                 ConversationsHolder.getInstance().addMessage(message);
             }
+            
+            // Set all messages as read
+            ConversationsHolder.getInstance().setAllRead();
+            
         } catch (Exception ex) {
             System.err.println("Something wrong in action init: " + ex.toString());
         }
