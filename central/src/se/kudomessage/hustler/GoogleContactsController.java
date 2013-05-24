@@ -22,7 +22,7 @@ public class GoogleContactsController {
 			JSONObject b = a.getJSONObject("feed");
 			c = b.getJSONArray("entry");
 		} catch (Exception e) {
-			System.out.println("ERROR IN GET-CONTACTS: " + e);
+			System.err.println("Error in getContacts: " + e);
 			return contacts;
 		}
 		
@@ -72,7 +72,7 @@ public class GoogleContactsController {
 	        
 	        client.execute(post);
 		} catch (Exception ex) {
-			System.out.println("Something wrong in addContact: " + ex);
+			System.err.println("Error in addContact: " + ex);
 		}
 	}
 }

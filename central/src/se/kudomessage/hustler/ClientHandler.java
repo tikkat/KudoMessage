@@ -30,39 +30,23 @@ public class ClientHandler {
 		
 		while (!Thread.interrupted()) {
 			if (countErrors > 5) {
-				System.out.println("### countError > 5");
+				System.err.println("More errors then 5, closing socket.");
 				break;
 			}
 			
 			try {
 				inputString = in.readLine();
 			} catch (IOException e) {
-				System.out.println("### ERROR 1");
 				countErrors++;
 				continue;
 			}
 
 			if (inputString == null || inputString.isEmpty()) {
-				System.out.println("### ERROR 2");
 				countErrors++;
 				continue;
 			}
 			
 			countErrors = 0;
-
-			if (inputString.equals("CLOSE")) {
-				try {
-					in.close();
-					out.close();
-					socket.close();
-					
-					System.out.println("Did close the connection");
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-
-				break;
-			}
 
 			try {
 				input = new JSONObject(inputString);
@@ -89,19 +73,7 @@ public class ClientHandler {
 			email = Utils.getEmailByToken(token);
 			
 			if (email == null || email.equals("")) {
-				System.out.println("### init() ## Got no email, sending close()...");
-				
-				// TODO: May put the closing procedure in a function? 
-				out.println("CLOSE");
-				out.flush();
-				
-				try {
-					in.close();
-					out.close();
-					socket.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				System.out.println("### init() ## Got no email, closing...");
 				
 				Thread.currentThread().interrupt();
 				return;
@@ -114,10 +86,6 @@ public class ClientHandler {
 			
 			PushHandler.registerClient(email, this);
 		} catch (JSONException e) {
-			System.out.println("ERROR IN INIT: " + e);
-			
-			out.println("ERROR");
-			out.flush();
 		}
 	}
 	
@@ -140,7 +108,7 @@ public class ClientHandler {
 			
 			GoogleContactsController.createContact(email, token, name, number);
 		} catch (JSONException e) {
-			System.out.println("ERROR IN CREATE-CONTACT: " + e);
+			System.err.println("Error in createContact: " + e);
 		}
 	}
 	
@@ -157,7 +125,7 @@ public class ClientHandler {
 			out.println(output.toString());
 			out.flush();
 		} catch (Exception e) {
-			System.out.println("ERROR IN GET-MESSAGES: " + e);
+			System.err.println("Error in getMessages: " + e);
 		}
 	}
 	
@@ -166,7 +134,7 @@ public class ClientHandler {
 			JSONObject message = input.getJSONObject("message");
 			PushHandler.pushMessageToDevice(email, message);
 		} catch (Exception e) {
-			System.out.println("ERROR IN SEND-MESSAGE: " + e);
+			System.out.println("Error in sendMessage: " + e);
 		}
 	}
 	
@@ -179,7 +147,7 @@ public class ClientHandler {
 			out.println(output.toString());
 			out.flush();
 		} catch (Exception e) {
-			System.out.println("ERROR IN PUSH-MESSAGE: " + e);
+			System.out.println("Error in pushMessage: " + e);
 		}
 	}
 }

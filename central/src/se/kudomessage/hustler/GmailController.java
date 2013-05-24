@@ -43,7 +43,7 @@ public class GmailController {
             
             System.out.println("Created a new GmailController for " + email);
         } catch (MessagingException ex) {
-            System.out.println("Fel i GmailController: " + ex.toString());
+            System.out.println("Error im GmailController: " + ex.toString());
         } 
     }
 
@@ -141,7 +141,7 @@ public class GmailController {
 	            MimeMessage draftMessages[] = {emailMessage};
 	            folder.appendMessages(draftMessages);
             } catch (Exception e) {
-    			System.out.println("ERROR IN SAVE-MESSAGE: " + e);
+    			System.err.println("Error in saveMessage: " + e);
     		}
         } catch (MessagingException e) {}
     }

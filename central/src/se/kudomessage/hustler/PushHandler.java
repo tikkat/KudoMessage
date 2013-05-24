@@ -32,7 +32,7 @@ public class PushHandler {
 	}
 	
 	public static void pushMessageToDevice(String email, JSONObject message) {
-		System.out.println("### I am supposed to deliver a message to the gateway.");
+		System.out.println("Supposed to deliver a message to the gateway.");
 		
 		String GCMKey = registeredDevices.get(email);
 		Sender sender = new Sender(CONSTANTS.API_KEY);
@@ -46,12 +46,12 @@ public class PushHandler {
         	Result result = sender.send(messageObject, GCMKey, 5);
         	System.out.println("GCM messaging status: " + result.getErrorCodeName());
         } catch (Exception ex) {
-            System.out.println("Wasn't able to deliver the message via GCM: " + ex.toString());
+            System.out.println("Unable to deliver the message via GCM: " + ex.toString());
         }
 	}
 	
 	public static void pushMessageToClients(String email, JSONObject message) {
-		System.out.println("### I am supposed to deliver a message to the clients.");
+		System.out.println("Supposed to deliver a message to the clients.");
 		
 		if (email != null && !email.isEmpty() && registeredClients.containsKey(email)) {	
 			for (ClientHandler ch : registeredClients.get(email)) {

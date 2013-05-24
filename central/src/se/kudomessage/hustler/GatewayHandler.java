@@ -54,7 +54,7 @@ public class GatewayHandler {
 					break;
 				}
 			} catch (Exception e) {
-				System.out.println("### ERROR WITH GATEWAY ### " + e + " ### IN FROM GATEWAY: " + inputString);
+				System.err.println("Error with gateway: " + e + " Error message: " + inputString);
 			}
 		}
 	}
@@ -73,7 +73,7 @@ public class GatewayHandler {
 			
 			PushHandler.registerDevice(email, GCMKey);
 		} catch (Exception e) {
-			System.out.println("ERROR IN REGISTER-DEVICE: " + e);
+			System.err.println("Error in register device: " + e);
 		}
 	}
 	
@@ -90,7 +90,7 @@ public class GatewayHandler {
 			
 			PushHandler.pushMessageToClients(email, message);
 		} catch (Exception e) {
-			System.out.println("ERROR IN PUSH-MESSAGE: " + e);
+			System.err.println("Error in pushMessage: " + e);
 		}
 	}
 }
