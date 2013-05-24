@@ -1,12 +1,15 @@
 package se.kudomessage.torsken;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import javax.enterprise.context.SessionScoped;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class KudoMessage {
+@SessionScoped
+public class KudoMessage implements Serializable {
     protected String id, content, origin;
     protected ArrayList<String> receivers = new ArrayList<String>();
 

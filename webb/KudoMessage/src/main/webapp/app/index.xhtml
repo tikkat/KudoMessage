@@ -3,8 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:c="http://java.sun.com/jsp/jstl/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
     <h:head>
         <title>KudoMessage - Webbapplikation</title>
         <link rel="stylesheet" type="text/css" href="../css/app.style.css" />
@@ -28,19 +27,19 @@
                 $("#newContactBox").hide();
             }
             
-            function conversationOnHover (button) {
+            function conversationOnHover(button) {
                 $(button).parent().css('background', '#F3F3F3');
             }
             
-            function conversationOnNotHover (button) {
+            function conversationOnNotHover(button) {
                 $(button).parent().css('background', 'transparent');
             }
             
-            function showCross (div) {
+            function showCross(div) {
                 $(div).children().children().css('visibility', 'visible');
             }
             
-            function hideCross (div) {
+            function hideCross(div) {
                 $(div).children().children().css('visibility', 'hidden');
             }
 
@@ -50,10 +49,13 @@
         </script>
     </h:head>
     <h:body>
-        <h:inputHidden value="#{backendBean.init()}"/>
-        <c:if test="#{backendBean.pageLoad()}">
+        <h:inputHidden value="#{socketHandler.load()}" />
+        <h:inputHidden value="#{conversationsController.checkNewMessages()}" />
+        
+        <c:if test="#{backingBean.loadFirst()}">
             <meta http-equiv="refresh" content="0" />
         </c:if>
+        
         <h:form>
             <!-- Konversationerna -->
             <div class="contactsKeeper">
@@ -61,16 +63,14 @@
                     <div class="inputBoxKeeper" style="width: 75%; float: left;">
                         <h:inputText value="Sök..." />
                     </div>
-                    <!-- converationsController -->
-                    <h:commandButton class="sendButton" value="Ny" action="#{conversationsHolder.createNewConversationButton()}" />
+                    <h:commandButton class="sendButton" value="Ny" action="#{conversationsController.createNewConversation()}" />
                 </div>
                 
-                <!-- conversationsBackendBean -->
-                <c:forEach items="#{conversationsHolder.allConversationsNames}" var="number">
+                <c:forEach items="#{backingBean.conversationNames}" var="number">
                     <div onmouseover="showCross(this)" onmouseout="hideCross(this)">
-                        <h:commandButton class="contactFront" action="#{conversationsHolder.setActiveConversation(number)}" value="#{contactsController.getNameOfContact(number)}#{conversationsHolder.getNumUnreadMessages(number)}">
+                        <h:commandButton class="contactFront" action="#{conversationsController.setCurrentConversation(number)}" value="#{contactsController.getNameOfContact(number)}#{conversationsController.getNumUnreadMessages(number)}">
                             <div>
-                                <h:commandButton class="contactCross" style="visibility: hidden;" value="x" onmouseover="conversationOnHover(this)" onmouseout="conversationOnNotHover(this)" action="#{conversationsHolder.deleteCurrentConversation(number)}" />
+                                <h:commandButton class="contactCross" style="visibility: hidden;" value="x" onmouseover="conversationOnHover(this)" onmouseout="conversationOnNotHover(this)" action="#{conversationsController.deleteConversation(number)}" />
                             </div>
                         </h:commandButton>   
                     </div>
@@ -80,33 +80,33 @@
             <div class="messagesKeeper">
                 <div style="display: block; height: 42px; width: 100%; position: absolute; border-bottom: 1px solid #E0E0E0;">
                     <p style="line-height: 42px; margin: 0px 0px 0px 20px; display: block;">
-                        <c:if test="#{contactsController.hasContact(conversationsHolder.activeConversationName)}">
-                            #{contactsController.getNameOfContact(conversationsHolder.activeConversationName)}
+                        <c:if test="#{contactsController.hasContact(backingBean.currentConversationName)}">
+                            #{contactsController.getNameOfContact(backingBean.currentConversationName)}
                         </c:if>
-                        <c:if test="#{!contactsController.hasContact(conversationsHolder.activeConversationName)}">
-                            <c:if test="#{!conversationsHolder.newConversation}">
-                                #{contactsController.getNameOfContact(conversationsHolder.activeConversationName)}
+                        <c:if test="#{!contactsController.hasContact(backingBean.currentConversationName)}">
+                            <c:if test="#{!conversationsController.newConversation}">
+                                #{backingBean.currentConversationName}
                                 
                                 <h:commandButton class="sendButton" style="width: 30px;" value="+" type="button" onclick="showNewContactBox(this)" />      
                                 <div id="newContactBox">
                                     Ange ett namn:<br />
-                                    <h:inputText value="#{contactsController.tmpContactName}" style="width: 200px;" /><br />
-                                    <h:commandButton styleClass="sendButton" style="float: right; width: 130px; margin-top: 5px;" value="Lägg till kontakt" action="#{contactsController.createContactFromJSF(contactsController.tmpContactName, conversationsHolder.activeConversationNumner)}" />
+                                    <h:inputText style="width: 200px;" value="#{backingBean.tmpContactName}" /><br />
+                                    <h:commandButton styleClass="sendButton" style="float: right; width: 130px; margin-top: 5px;" value="Lägg till kontakt" action="#{contactsController.createContact(backingBean.tmpContactName, backingBean.currentConversationName)}" />
                                     <br style="clear: both;" />
                                 </div>
                                 
                             </c:if>
                         </c:if>
-                        <c:if test="#{conversationsHolder.newConversation}" >
-                            
-                            <h:inputText class="newConversationTextBox" value="#{conversationsHolder.activeConversationName}" onclick="if(this.value=='Ny konversation'){this.value='';}" />&nbsp;
+                        
+                        <c:if test="#{conversationsController.newConversation}" >
+                            <h:inputText class="newConversationTextBox" value="#{backingBean.currentConversationName}" onclick="if(this.value=='Ny konversation'){this.value='';}" />&nbsp;
                             
                             <script>
                                 $(".newConversationTextBox").focus();
                             </script>
                             
                             <h:selectOneMenu onchange="setNewConversationTextBox(this)" style="font-size: 16px;">
-                                <f:selectItem itemValue="" itemLabel="Välj en kontakt" />
+                                <f:selectItem itemLabel="Välj en kontakt" />
                                 <c:forEach items="#{contactsController.nameOfContacts}" var="contact">
                                     <f:selectItem itemValue="#{contactsController.getNumberOfContact(contact)}" itemLabel="#{contact}" />
                                 </c:forEach>
@@ -118,14 +118,14 @@
                 
                 <div style="display: block; height: 100%; margin-top: -50px; overflow-y: scroll;">
                     <div style="padding: 100px 10px 10px 10px;">
-                        <c:forEach items="#{conversationsHolder.currentConversation}" var="message">
+                        <c:forEach items="#{backingBean.currentConversation}" var="message">
                             <div>
-                                <c:if test="#{!conversationsHolder.isSelf(message.origin)}">
+                                <c:if test="#{!conversationsController.isSelf(message.origin)}">
                                     <div class="bubble me">
                                         #{message.content}
                                     </div>
                                 </c:if>
-                                <c:if test="#{conversationsHolder.isSelf(message.origin)}">
+                                <c:if test="#{conversationsController.isSelf(message.origin)}">
                                     <div class="bubble you">
                                         #{message.content}
                                     </div>
@@ -138,10 +138,10 @@
                 
                 <div style="display: block; height: 40px; padding-top: 9px; border-top: 1px solid #E0E0E0;">
                     <div class="inputBoxKeeper" style="width: 80%; float: left;">
-                        <h:inputText value="#{messageModel.messageContent}" />
+                        <h:inputText value="#{backingBean.messageContent}" />
                     </div>
 
-                    <h:commandButton class="sendButton" action="#{messageModel.sendMessage()}" value="Skicka" />
+                    <h:commandButton class="sendButton" action="#{conversationsController.sendMessage()}" value="Skicka" />
                 </div>
             </div>
         </h:form>

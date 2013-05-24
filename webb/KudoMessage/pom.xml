@@ -14,15 +14,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <netbeans.hint.deploy.server>gfv3ee6</netbeans.hint.deploy.server>
     </properties>
-    
-    <repositories>
-        <repository>  
-            <id>prime-repo</id>  
-            <name>PrimeFaces Maven Repository</name>  
-            <url>http://repository.primefaces.org</url>  
-            <layout>default</layout>  
-        </repository> 
-    </repositories>
 
     <dependencies>
         <dependency>
@@ -36,11 +27,6 @@
             <artifactId>icepush</artifactId>
             <version>3.0.1</version>
         </dependency>
-        <dependency>  
-            <groupId>org.primefaces</groupId>  
-            <artifactId>primefaces</artifactId>  
-            <version>3.5</version>  
-        </dependency>  
         <dependency>
             <groupId>com.google.api.client</groupId>
             <artifactId>google-api-client-googleapis</artifactId>

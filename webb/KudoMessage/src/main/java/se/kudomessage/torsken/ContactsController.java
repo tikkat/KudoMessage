@@ -2,34 +2,47 @@ package se.kudomessage.torsken;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
-import javax.faces.bean.ManagedBean;
-import org.json.JSONArray;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-@ManagedBean
+@RequestScoped
+@Named
 public class ContactsController {
-    public static Map<String, String> contacts = new HashMap<String, String>();
-    private String tmpContactName = "";
-
+    @Inject
+    ContactsModel model;
+    
+    @Inject
+    Globals globals;
+    
+    @Inject
+    BackingBean view;
+    
+    public ContactsController() {
+    }
+    
+    public void addContact(String name, String number) {
+        model.addContact(name, number);
+    }
+    
     public boolean hasContact(String number) {
-        return contacts.containsKey(number);
+        return model.getContacts().containsKey(number);
     }
 
     public String getNameOfContact(String number) {
         if (hasContact(number)) {
-            return contacts.get(number);
+            return model.getContacts().get(number);
         } else {
-            return "" + number;
+            return number;
         }
     }
     
     public String getNumberOfContact(String name) {
-        for (Entry<String, String> entry : contacts.entrySet()) {
+        for (Entry<String, String> entry : model.getContacts().entrySet()) {
             if (entry.getValue().equals(name))
                 return entry.getKey();
         }
@@ -39,60 +52,25 @@ public class ContactsController {
     
     public List<String> getNameOfContacts() {
         List<String> sortedContacts = new ArrayList<String>();
-        sortedContacts.addAll(contacts.values());
+        sortedContacts.addAll(model.getContacts().values());
         Collections.sort(sortedContacts);
         
         return sortedContacts;
     }
-
-    public String getTmpContactName() {
-        return tmpContactName;
-    }
-
-    public void setTmpContactName(String tmpContactName) {
-        this.tmpContactName = tmpContactName;
-    }
     
-    public void createContactFromJSF ( String name, String number ) {
-        if (!name.equals("")) {  
-            createContact(name, number);
-            tmpContactName = "";
-        }
-    }
-    
-    public static void createContact(String name, String number) {
+    public void createContact(String name, String number) {
         try {
             JSONObject output = new JSONObject();
             output.put("action", "create-contact");
             output.put("name", name);
             output.put("number", number);
             
-            SocketHandler.getOut().println(output.toString());
-            SocketHandler.getOut().flush();
+            globals.getOut().println(output.toString());
+            globals.getOut().flush();
             
-            contacts.put(number, name);            
-        } catch (JSONException ex) {}
-    }
-
-    public static void getContacts() {
-        try {
-            JSONObject output = new JSONObject();
-            output.put("action", "get-contacts");
-
-            SocketHandler.getOut().println(output.toString());
-            SocketHandler.getOut().flush();
-
-            JSONObject c = new JSONObject(SocketHandler.getIn().readLine());
-            JSONArray d = c.getJSONArray("contacts");
-
-            for (int i = 0; i < d.length(); i++) {
-                String name = d.getJSONObject(i).getString("name");
-                String number = d.getJSONObject(i).getString("number");
-
-                contacts.put(number, name);
-            }
-        } catch (Exception e) {
-            System.out.println("### ERROR IN GET-CONTACTS");
+            addContact(name, number);
+        } catch (JSONException ex) {
         }
+        view.setTmpContactName("");
     }
 }

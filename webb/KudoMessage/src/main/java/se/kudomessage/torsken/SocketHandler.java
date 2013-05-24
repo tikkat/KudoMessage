@@ -1,30 +1,79 @@
 package se.kudomessage.torsken;
 
 import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.net.Socket;
-import javax.faces.bean.ManagedBean;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 import org.icefaces.application.PushRenderer;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-@ManagedBean
-public class SocketHandler extends Thread {
+@Named
+@SessionScoped
+public class SocketHandler implements Serializable {
+    
+    @Inject
+    AsyncBean asyncBean;
+    
+    @Inject
+    TmpMessages tmpMessages;
 
-    private static Socket socket;
-    private static BufferedReader in;
-    private static PrintWriter out;
+    @Inject
+    private Globals globals;
+    @Inject
+    private ConversationsController conversationsController;
+    @Inject
+    private ContactsController contactsController;
+    private Socket socket;
+    private BufferedReader in;
+    private PrintWriter out;
 
-    public SocketHandler() {
-        // Must be here.
+    public String load() {
+        if (socket == null) {
+            start();
+        }
+
+        return "";
     }
 
-    public SocketHandler(Socket socket, BufferedReader in, PrintWriter out) {
-        SocketHandler.socket = socket;
-        SocketHandler.in = in;
-        SocketHandler.out = out;
-        
-        System.out.println("####### LOADED SOCKETHANDLER() ###");
+    public void start() {
+        try {
+            socket = new Socket(CONSTANTS.SERVER_ADDRESS, CONSTANTS.SERVER_PORT);
+        } catch (Exception e) {
+        }
+
+        if (socket != null) {
+            in = null;
+            out = null;
+
+            try {
+                in = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
+
+                OutputStreamWriter outstream = new OutputStreamWriter(socket.getOutputStream(), "UTF-8");
+                out = new PrintWriter(outstream, true);
+            } catch (Exception e) {
+            }
+
+            if (in != null && out != null) {
+                System.out.println("Connected to server " + CONSTANTS.SERVER_ADDRESS + ":" + CONSTANTS.SERVER_PORT);
+                
+                globals.setOut(out);
+                init();
+                
+                asyncBean.readMessages(in, globals.getEmail());
+            }
+        }
+    }
+
+    private void init() {
+        // PushRenderer
+        globals.setPr(PushRenderer.getPortableRenderer());
+        tmpMessages.setPr(PushRenderer.getPortableRenderer());
 
         out.println("CLIENT");
         out.flush();
@@ -32,24 +81,33 @@ public class SocketHandler extends Thread {
         try {
             JSONObject output = new JSONObject();
             output.put("action", "init");
-            output.put("token", Globals.accessToken);
+            output.put("token", globals.getAccessToken());
 
             out.println(output.toString());
             out.flush();
 
             // First answer from server is the email.
-            Globals.email = in.readLine();
+            globals.setEmail(in.readLine());
             
-            System.out.println("####### :: LOADED 1");
-
-            // Global PushRenderer
-            Globals.pr = PushRenderer.getPortableRenderer();
-            ConversationsHolder.getInstance().addViewToPush();
+            // Add to push
+            PushRenderer.addCurrentSession(globals.getEmail());
 
             // Get contacts
-            ContactsController.getContacts();
-            
-            System.out.println("####### :: LOADED 2");
+            output = new JSONObject();
+            output.put("action", "get-contacts");
+
+            out.println(output.toString());
+            out.flush();
+
+            JSONObject c = new JSONObject(in.readLine());
+            JSONArray d = c.getJSONArray("contacts");
+
+            for (int i = 0; i < d.length(); i++) {
+                String name = d.getJSONObject(i).getString("name");
+                String number = d.getJSONObject(i).getString("number");
+
+                contactsController.addContact(name, number);
+            }
 
             // Load the first emails
             output = new JSONObject();
@@ -62,89 +120,19 @@ public class SocketHandler extends Thread {
 
             JSONObject e = new JSONObject(in.readLine());
             JSONArray f = e.getJSONArray("messages");
-            
-            System.out.println("####### :: LOADED 3");
 
             for (int i = 0; i < f.length(); i++) {
                 KudoMessage message = new KudoMessage();
                 message.content = f.getJSONObject(i).getString("content");
                 message.origin = f.getJSONObject(i).getString("origin");
                 message.addReceiver(f.getJSONObject(i).getString("receiver"));
-
-                ConversationsHolder.getInstance().addMessage(message);
+                
+                conversationsController.addMessage(message);
             }
             
-            // Set all messages as read
-            ConversationsHolder.getInstance().setAllRead();
-            
+            conversationsController.loadFirst();
         } catch (Exception ex) {
-            System.err.println("Something wrong in action init: " + ex.toString());
-        }
-    }
-
-    public static PrintWriter getOut() {
-        return out;
-    }
-    
-    public static BufferedReader getIn() {
-        return in;
-    }
-
-    @Override
-    public void run() {
-        String inputString;
-        JSONObject input;
-
-        int countErrors = 0;
-                
-        while (true) {
-            if (countErrors > 5) {
-		System.out.println("################ countError > 5");
-		break;
-            }
-            
-            try {
-                inputString = in.readLine();
-            } catch (Exception e) {
-                System.out.println("################ ERROR 1"); 
-                countErrors++;
-                continue;
-            }
-
-            if (inputString == null || inputString.isEmpty()) {
-                System.out.println("################ ERROR 2");
-                countErrors++;
-                continue;
-            }
-            
-            countErrors = 0;
-            
-            if (inputString.equals("CLOSE")) {
-                System.out.println("### GOT CLOSE ###");
-                
-                try {
-                    in.close();
-                    out.close();
-                    socket.close();
-                } catch (Exception e) {}
-
-                break;
-            }
-
-            try {
-                input = new JSONObject(inputString);
-
-                if (input.getString("action").equals("new-message")) {
-                    JSONObject json = input.getJSONObject("message");
-                    
-                    KudoMessage message = new KudoMessage();
-                    message.content = json.getString("content");
-                    message.origin = json.getString("origin");
-                    message.addReceiver(json.getString("receiver"));
-                    
-                    ConversationsHolder.getInstance().addMessage(message);
-                }
-            } catch (Exception e) {}
+            System.err.println("Something wrong in init: " + ex.toString());
         }
     }
 }
