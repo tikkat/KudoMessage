@@ -8,7 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import se.kudomessage.hustler.Utils;
+import se.kudomessage.hustler.utils.Utils;
 
 public class GoogleContactsController {
 	public static JSONArray getContacts(String email, String token) {

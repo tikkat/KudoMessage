@@ -1,4 +1,4 @@
-package se.kudomessage.hustler;
+package se.kudomessage.hustler.utils;
 
 import java.io.IOException;
 import java.io.InputStream;

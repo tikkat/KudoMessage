@@ -7,8 +7,8 @@ import java.net.Socket;
 
 import org.json.JSONObject;
 
-import se.kudomessage.hustler.Utils;
 import se.kudomessage.hustler.controllers.GmailController;
+import se.kudomessage.hustler.utils.Utils;
 
 public class GatewayHandler {
 	private PrintWriter out;

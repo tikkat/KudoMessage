@@ -6,9 +6,9 @@ import java.net.Socket;
 
 import org.json.*;
 
-import se.kudomessage.hustler.Utils;
 import se.kudomessage.hustler.controllers.GmailController;
 import se.kudomessage.hustler.controllers.GoogleContactsController;
+import se.kudomessage.hustler.utils.Utils;
 
 public class ClientHandler {
 	private Socket socket;
