@@ -2,9 +2,8 @@ package se.kudomessage.hustler;
 
 import java.io.IOException;
 import java.net.ServerSocket;
-import java.util.List;
 
-import org.json.JSONObject;
+import se.kudomessage.hustler.handlers.ConnectionHandler;
 
 public class Main {
 	public static void main(String[] args) {

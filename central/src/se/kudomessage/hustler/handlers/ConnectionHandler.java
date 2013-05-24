@@ -1,4 +1,5 @@
-package se.kudomessage.hustler;
+package se.kudomessage.hustler.handlers;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;

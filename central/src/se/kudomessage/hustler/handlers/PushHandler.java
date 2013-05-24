@@ -1,4 +1,4 @@
-package se.kudomessage.hustler;
+package se.kudomessage.hustler.handlers;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.json.JSONObject;
+
+import se.kudomessage.hustler.CONSTANTS;
 
 import com.google.android.gcm.server.Message;
 import com.google.android.gcm.server.Message.Builder;

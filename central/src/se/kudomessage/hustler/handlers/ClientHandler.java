@@ -1,10 +1,14 @@
-package se.kudomessage.hustler;
+package se.kudomessage.hustler.handlers;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 
 import org.json.*;
+
+import se.kudomessage.hustler.Utils;
+import se.kudomessage.hustler.controllers.GmailController;
+import se.kudomessage.hustler.controllers.GoogleContactsController;
 
 public class ClientHandler {
 	private Socket socket;

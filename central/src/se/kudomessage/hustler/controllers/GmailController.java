@@ -1,4 +1,4 @@
-package se.kudomessage.hustler;
+package se.kudomessage.hustler.controllers;
 
 import com.sun.mail.imap.IMAPSSLStore;
 import java.security.Provider;
@@ -43,7 +43,7 @@ public class GmailController {
             
             System.out.println("Created a new GmailController for " + email);
         } catch (MessagingException ex) {
-            System.out.println("Error im GmailController: " + ex.toString());
+            System.out.println("Error in GmailController: " + ex.toString());
         } 
     }
 

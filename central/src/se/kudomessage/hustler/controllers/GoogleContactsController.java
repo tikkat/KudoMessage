@@ -1,4 +1,4 @@
-package se.kudomessage.hustler;
+package se.kudomessage.hustler.controllers;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -7,6 +7,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import se.kudomessage.hustler.Utils;
 
 public class GoogleContactsController {
 	public static JSONArray getContacts(String email, String token) {
