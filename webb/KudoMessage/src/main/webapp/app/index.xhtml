@@ -8,6 +8,7 @@
         <title>KudoMessage - Webbapplikation</title>
         <link rel="stylesheet" type="text/css" href="../css/app.style.css" />
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="../js/jquery.emoji.js"></script>
         <script>
             
             function showNewContactBox(button) {
@@ -119,6 +120,15 @@
                 <div style="display: block; height: 100%; margin-top: -50px; overflow-y: scroll;">
                     <div style="padding: 100px 10px 10px 10px;">
                         <c:forEach items="#{backingBean.currentConversation}" var="message">
+                            
+                            <!-- Find a better place to place this code -->
+                            <script>
+                                $('.bubble').each(function(i, d){
+                                    $(d).emoji();
+                                }); 
+                            </script>
+                            <!-- Find a better place to place this code -->
+                            
                             <div>
                                 <c:if test="#{!conversationsController.isSelf(message.origin)}">
                                     <div class="bubble me">
