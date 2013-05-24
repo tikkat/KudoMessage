@@ -65,7 +65,7 @@
 
         <!-- Intent for the SMS Listener -->
         <receiver
-            android:name="se.kudomessage.jessica.SMSReceiver"
+            android:name="se.kudomessage.jessica.models.SMSReceiver"
             android:enabled="true" >
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
@@ -73,7 +73,7 @@
         </receiver>
         <!-- Intent for the SMS Listener -->
 
-        <service android:name="se.kudomessage.jessica.GCMIntentService" />
+        <service android:name="se.kudomessage.jessica.models.GCMIntentService" />
 
         <activity
             android:name="se.kudomessage.jessica.controllers.RegisteredServerController"

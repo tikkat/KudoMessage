@@ -3,9 +3,10 @@ package se.kudomessage.jessica.controllers;
 import se.kudomessage.jessica.CONSTANTS;
 import se.kudomessage.jessica.Globals;
 import se.kudomessage.jessica.R;
-import se.kudomessage.jessica.SMSSentObserver;
 import se.kudomessage.jessica.R.id;
 import se.kudomessage.jessica.R.layout;
+import se.kudomessage.jessica.models.PushModel;
+import se.kudomessage.jessica.models.SMSSentObserver;
 
 import com.google.android.gcm.GCMRegistrar;
 
@@ -56,7 +57,7 @@ public class MainController extends Activity {
 		Log.i(CONSTANTS.TAG, "GCMKey: " + Globals.getGCM());
 		Log.i(CONSTANTS.TAG, "TOKEN: " + Globals.getAccessToken());
 	
-		PushController.registerDevice();
+		PushModel.registerDevice();
 		getContentResolver().registerContentObserver(Uri.parse("content://sms/"), true, new SMSSentObserver(new Handler(), this));
 	}
 	
@@ -101,7 +102,7 @@ public class MainController extends Activity {
 			Toast.makeText(this, 
 					"You haven't granted access to Google", 
 					Toast.LENGTH_SHORT).show();
-		}else if(PushController.testServer() == false){
+		}else if(PushModel.testServer() == false){
 			//If the server isn't a valid KudoMessage server.
 			Log.e("registerUser", "The message server wasn't valid");
 			Toast.makeText(this, 

@@ -1,9 +1,11 @@
-package se.kudomessage.jessica;
+package se.kudomessage.jessica.models;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import se.kudomessage.jessica.models.MessageModel;
+import se.kudomessage.jessica.CONSTANTS;
+import se.kudomessage.jessica.Globals;
+import se.kudomessage.jessica.KudoMessage;
 
 import android.content.Context;
 import android.content.Intent;

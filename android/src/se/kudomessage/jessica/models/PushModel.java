@@ -1,4 +1,4 @@
-package se.kudomessage.jessica.controllers;
+package se.kudomessage.jessica.models;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -21,7 +21,7 @@ import se.kudomessage.jessica.KudoMessage;
 
 import android.util.Log;
 
-public class PushController {
+public class PushModel {
 	private static Socket socket = null;
 	private static BufferedReader in = null;
 	private static PrintWriter out = null;

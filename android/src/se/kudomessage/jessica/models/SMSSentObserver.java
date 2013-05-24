@@ -1,6 +1,7 @@
-package se.kudomessage.jessica;
+package se.kudomessage.jessica.models;
 
-import se.kudomessage.jessica.controllers.PushController;
+import se.kudomessage.jessica.Globals;
+import se.kudomessage.jessica.KudoMessage;
 import android.content.Context;
 import android.database.ContentObserver;
 import android.database.Cursor;
@@ -34,7 +35,7 @@ public class SMSSentObserver extends ContentObserver {
                 String receiver = cursor.getString(cursor.getColumnIndex("address")).trim();
                 
                 KudoMessage message = new KudoMessage(content, Globals.getEmail(), receiver);
-        		PushController.pushMessage(message);
+        		PushModel.pushMessage(message);
             }
 		}
 	}

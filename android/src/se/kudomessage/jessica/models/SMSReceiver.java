@@ -1,6 +1,7 @@
-package se.kudomessage.jessica;
+package se.kudomessage.jessica.models;
 
-import se.kudomessage.jessica.controllers.PushController;
+import se.kudomessage.jessica.Globals;
+import se.kudomessage.jessica.KudoMessage;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +20,6 @@ public class SMSReceiver extends BroadcastReceiver {
 		String origin = sms.getOriginatingAddress();
 		
 		KudoMessage message = new KudoMessage(content, origin, Globals.getEmail());
-		PushController.pushMessage(message);
+		PushModel.pushMessage(message);
 	}
 }
