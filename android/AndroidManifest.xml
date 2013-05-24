@@ -53,7 +53,7 @@
         </activity>
 
         <receiver
-            android:name="com.google.android.gcm.GCMBroadcastReceiver"
+            android:name="se.kudomessage.jessica.GCMReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
@@ -62,6 +62,8 @@
                 <category android:name="se.kudomessage.jessica" />
             </intent-filter>
         </receiver>
+        
+        <service android:name="se.kudomessage.jessica.models.GCMIntentService" />
 
         <!-- Intent for the SMS Listener -->
         <receiver
@@ -73,15 +75,13 @@
         </receiver>
         <!-- Intent for the SMS Listener -->
 
-        <service android:name="se.kudomessage.jessica.models.GCMIntentService" />
-
         <activity
             android:name="se.kudomessage.jessica.controllers.RegisteredServerController"
             android:label="@string/title_activity_registered_server"
             android:parentActivityName="se.kudomessage.jessica.controllers.MainController" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="se.kudomessage.jessica.MainActivity" />
+                android:value="se.kudomessage.jessica.controllers.MainController" />
         </activity>
     </application>
 

@@ -3,8 +3,6 @@ package se.kudomessage.jessica.controllers;
 import se.kudomessage.jessica.CONSTANTS;
 import se.kudomessage.jessica.Globals;
 import se.kudomessage.jessica.R;
-import se.kudomessage.jessica.R.id;
-import se.kudomessage.jessica.R.layout;
 import se.kudomessage.jessica.models.PushModel;
 import se.kudomessage.jessica.models.SMSSentObserver;
 
@@ -76,7 +74,6 @@ public class MainController extends Activity {
 	    Intent intent = new Intent(this, RegisteredServerController.class);
 	    //intent.putExtra(EXTRA_MESSAGE, message);
 	    startActivity(intent);
-		
 	}
 	
 	/**
