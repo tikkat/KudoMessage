@@ -16,8 +16,14 @@ public class AsyncBean {
     @Inject
     private TmpMessages tmpMessages;
     
+    @Inject
+    private MessageUtilities msgUtil;
+    
     @Asynchronous
     public void sendMessage(PrintWriter out, KudoMessage message) {
+        if (message.content.equals("/random")) {
+            message.content = msgUtil.generateRandomMessage();
+        }
         try {
             JSONObject output = new JSONObject();
             output.put("action", "send-message");
