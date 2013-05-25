@@ -2,8 +2,6 @@ package se.kudomessage.torsken;
 
 import java.io.BufferedReader;
 import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.Asynchronous;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
