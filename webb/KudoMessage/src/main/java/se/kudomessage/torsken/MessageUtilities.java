@@ -81,7 +81,6 @@ public class MessageUtilities {
         verb.add("sparkade på");
         verb.add("åt");
         
-
         adjektiv.add("grön");
         adjektiv.add("genomskinlig");
         adjektiv.add("ålderdomlig");
