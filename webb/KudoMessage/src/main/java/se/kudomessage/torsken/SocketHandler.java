@@ -1,5 +1,7 @@
 package se.kudomessage.torsken;
 
+import se.kudomessage.torsken.controllers.ConversationsController;
+import se.kudomessage.torsken.controllers.ContactsController;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;

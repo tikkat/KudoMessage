@@ -1,4 +1,4 @@
-package se.kudomessage.torsken;
+package se.kudomessage.torsken.models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
+import se.kudomessage.torsken.Globals;
+import se.kudomessage.torsken.KudoMessage;
 
 @SessionScoped
 public class ConversationsModel implements Serializable {
@@ -27,10 +29,10 @@ public class ConversationsModel implements Serializable {
     public void addMessage(KudoMessage message) {
         String conversationName;
         
-        if (isSelf(message.origin))
+        if (isSelf(message.getOrigin()))
             conversationName = message.getFirstReceiver();
         else
-            conversationName = message.origin;
+            conversationName = message.getOrigin();
         
         if (conversationNames.contains(conversationName)) {
             conversationNames.remove(conversationName);

@@ -1,11 +1,14 @@
-package se.kudomessage.torsken;
+package se.kudomessage.torsken.views;
 
+import se.kudomessage.torsken.models.ConversationsModel;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import se.kudomessage.torsken.Globals;
+import se.kudomessage.torsken.KudoMessage;
 
 @SessionScoped
 @Named

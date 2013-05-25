@@ -1,4 +1,4 @@
-package se.kudomessage.torsken;
+package se.kudomessage.torsken.controllers;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,6 +9,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import org.json.JSONException;
 import org.json.JSONObject;
+import se.kudomessage.torsken.views.BackingBean;
+import se.kudomessage.torsken.models.ContactsModel;
+import se.kudomessage.torsken.Globals;
 
 @RequestScoped
 @Named

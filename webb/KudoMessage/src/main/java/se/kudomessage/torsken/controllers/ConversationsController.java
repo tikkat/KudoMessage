@@ -1,7 +1,13 @@
-package se.kudomessage.torsken;
+package se.kudomessage.torsken.controllers;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import se.kudomessage.torsken.AsyncBean;
+import se.kudomessage.torsken.views.BackingBean;
+import se.kudomessage.torsken.models.ConversationsModel;
+import se.kudomessage.torsken.Globals;
+import se.kudomessage.torsken.KudoMessage;
+import se.kudomessage.torsken.TmpMessages;
 
 @RequestScoped
 @Named

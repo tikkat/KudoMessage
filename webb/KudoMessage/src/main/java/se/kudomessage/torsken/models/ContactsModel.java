@@ -1,4 +1,4 @@
-package se.kudomessage.torsken;
+package se.kudomessage.torsken.models;
 
 import java.io.Serializable;
 import java.util.HashMap;
