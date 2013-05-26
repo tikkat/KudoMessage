@@ -1,4 +1,4 @@
-package se.kudomessage.torsken;
+package se.kudomessage.torsken.handlers;
 
 import se.kudomessage.torsken.controllers.ConversationsController;
 import se.kudomessage.torsken.controllers.ContactsController;
@@ -14,6 +14,11 @@ import javax.inject.Named;
 import org.icefaces.application.PushRenderer;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import se.kudomessage.torsken.AsyncBean;
+import se.kudomessage.torsken.CONSTANTS;
+import se.kudomessage.torsken.Globals;
+import se.kudomessage.torsken.KudoMessage;
+import se.kudomessage.torsken.TmpMessages;
 
 @Named
 @SessionScoped
@@ -127,8 +132,8 @@ public class SocketHandler implements Serializable {
 
             for (int i = 0; i < f.length(); i++) {
                 KudoMessage message = new KudoMessage();
-                message.content = f.getJSONObject(i).getString("content");
-                message.origin = f.getJSONObject(i).getString("origin");
+                message.setContent(f.getJSONObject(i).getString("content"));
+                message.setOrigin(f.getJSONObject(i).getString("origin"));
                 message.addReceiver(f.getJSONObject(i).getString("receiver"));
                 
                 conversationsController.addMessage(message);

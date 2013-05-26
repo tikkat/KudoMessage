@@ -47,6 +47,14 @@ public class KudoMessage implements Serializable {
     public String getContent() {
         return content;
     }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
+    }
     
     @Override
     public String toString() {
