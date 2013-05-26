@@ -3,23 +3,24 @@ package se.kudomessage.torsken;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.Dependent;
 
-@SessionScoped
+@Dependent
 public class MessageUtilities implements Serializable {
     
-    private ArrayList<String> completed = new ArrayList<String>();
-    private ArrayList<String> substantiv = new ArrayList<String>();
-    private ArrayList<String> oSubstantiv = new ArrayList<String>();
-    private ArrayList<String> adjektiv = new ArrayList<String>();
-    private ArrayList<String> verb = new ArrayList<String>();
-    private Random r = new Random();
+    private static ArrayList<String> substantiv = new ArrayList<String>();
+    private static ArrayList<String> oSubstantiv = new ArrayList<String>();
+    private static ArrayList<String> adjektiv = new ArrayList<String>();
+    private static ArrayList<String> verb = new ArrayList<String>();
     
-    public MessageUtilities () {
-        populateArrays();
-    }
+    private static Random r = new Random();
     
-    public String generateRandomMessage () {
+    private static boolean isPopulated = false;
+    
+    public static String generateRandomMessage() {
+        if (!isPopulated)
+            populateArrays();
+        
         String tmp = "";
         tmp = substantiv.get(r.nextInt(substantiv.size()));
         tmp = tmp + " " + verb.get(r.nextInt(verb.size()));
@@ -29,7 +30,9 @@ public class MessageUtilities implements Serializable {
         return tmp;
     }
     
-    public void populateArrays () {
+    private static void populateArrays() {
+        isPopulated = true;
+        
         substantiv.add("Djuret");
         substantiv.add("Pokerspelaren");
         substantiv.add("Ryggsäcken");

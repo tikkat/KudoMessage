@@ -7,6 +7,7 @@ import se.kudomessage.torsken.views.BackingBean;
 import se.kudomessage.torsken.models.ConversationsModel;
 import se.kudomessage.torsken.Globals;
 import se.kudomessage.torsken.KudoMessage;
+import se.kudomessage.torsken.MessageUtilities;
 import se.kudomessage.torsken.TmpMessages;
 
 @RequestScoped
@@ -79,7 +80,14 @@ public class ConversationsController {
     public void sendMessage() {
         finishNewConversation();
         
-        KudoMessage message = new KudoMessage(view.getMessageContent(), "", view.getCurrentConversationName());
+        String messageContent = view.getMessageContent();
+        String messageReceiver = view.getCurrentConversationName();
+        
+        if (messageContent.equals("/random")) {
+            messageContent = MessageUtilities.generateRandomMessage();
+        }
+        
+        KudoMessage message = new KudoMessage(messageContent, "", messageReceiver);
         asyncBean.sendMessage(globals.getOut(), message);
         view.setMessageContent("");
     }
