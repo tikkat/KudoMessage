@@ -83,8 +83,10 @@ public class MainController extends Activity {
 	 */
 	public void registerUser(View view){
 		// TODO: Add more error checking on the server address.
-		String server = ((EditText) findViewById(R.id.edit_message)).toString();
-		int port = Integer.parseInt(((EditText) findViewById(R.id.edit_port)).toString());
+		String server = ((EditText) findViewById(R.id.edit_message)).getText().toString();
+		Log.d("registerUser", "Setting server to: \""+server+"\"");
+		int port = Integer.parseInt(((EditText) findViewById(R.id.edit_port)).getText().toString());
+		Log.d("registerUser", "Port:"+port);
 		if(server != null){
 			Log.d("registerUser", "Setting server to: \""+server+"\"");
 			Globals.setServer(server);
