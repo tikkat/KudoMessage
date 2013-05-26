@@ -139,26 +139,10 @@ public class PushModel {
 	}
 
 	public static boolean testServer() {
-		//Not actually working yet
-		//TODO: Handle the response and timeouts
-		/*new Thread(new Runnable() {
-			public void run() {
-				if (openConnection()) {
-					try {
-						JSONObject output = new JSONObject();
-						output.put("action", "testServer");
-						
-						
-						out.println(output.toString());
-						out.flush();
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-				
-				closeConnection();
-			}
-		}).start();*/
+		/**
+		 * Uses a feature task thread to handle connection timeouts and 
+		 * the return value from the threads task
+		 */
 
 		ExecutorService service = Executors.newFixedThreadPool(10);
 

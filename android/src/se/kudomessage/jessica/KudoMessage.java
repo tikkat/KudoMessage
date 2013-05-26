@@ -42,7 +42,9 @@ public class KudoMessage {
 		this.receivers.add(receiver);
 	}
 	
-	
+	/**
+	 * Returns the object as a JSON string
+	 */
 	public String toString(){
 		return toJSON().toString();
 	}

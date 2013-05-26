@@ -30,7 +30,7 @@ public class MainController extends Activity {
 		GCMRegistrar.checkManifest(this);
 		
 		// TODO: Remove in final release.
-		GCMRegistrar.unregister(this);
+		// GCMRegistrar.unregister(this);
 		
 		String GCMKey = GCMRegistrar.getRegistrationId(this);	
 		

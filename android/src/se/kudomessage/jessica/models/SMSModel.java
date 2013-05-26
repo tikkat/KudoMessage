@@ -21,6 +21,11 @@ public class SMSModel {
 		saveSMSToSent(m);
 	}
 	
+	/**
+	 * Adds the message m sent via the KudoMessage web interface to the sms message application 
+	 * in the Android phone
+	 * @param m
+	 */
 	private static void saveSMSToSent(KudoMessage m) {
 		ContentValues values = new ContentValues();
 		values.put("address", m.getFirstReceiver());

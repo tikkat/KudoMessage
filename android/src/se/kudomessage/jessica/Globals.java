@@ -19,7 +19,6 @@ public class Globals{
 	}
 
 	public static void setAccessToken(String accessToken) {
-		//Globals.accessToken = accessToken;
 		prefs.edit().putString(prefKey("accessToken"), accessToken).commit();
 	}
 
@@ -28,7 +27,6 @@ public class Globals{
 	}
 
 	public static void setEmail(String email) {
-		//Globals.email = email;
 		prefs.edit().putString(prefKey("email"), email).commit();
 	}
 	
@@ -44,7 +42,6 @@ public class Globals{
 	}
 	
 	public static void setServer(String server){
-		//Globals.apiPath = apiPath;
 		prefs.edit().putString(prefKey("server"), server).commit();
 	}
 
@@ -67,7 +64,6 @@ public class Globals{
 	}
 
 	public static void setGCM(String GCM) {
-		//Globals.GCM = GCM;
 		prefs.edit().putString(prefKey("GCM"), GCM).commit();
 	}
 	
