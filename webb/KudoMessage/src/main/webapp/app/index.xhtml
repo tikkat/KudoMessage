@@ -19,13 +19,7 @@
             <meta http-equiv="refresh" content="0" />
         </c:if>
         
-        <audio class="player_audio" src="../sound/login.mp3"></audio>
-        
-        <script>
-            $(document).ready(function() {
-                $('.player_audio').trigger("play");
-            });
-        </script>
+        <audio class="player_audio" src="../sound/send.mp3"></audio>
         
         <h:form>
             <!-- Konversationerna -->
@@ -121,7 +115,7 @@
                         <h:inputText value="#{backingBean.messageContent}" />
                     </div>
 
-                    <h:commandButton class="sendButton" action="#{conversationsController.sendMessage()}" value="Skicka" />
+                    <h:commandButton class="sendButton" action="#{conversationsController.sendMessage()}" value="Skicka" onclick="playSentSound()" />
                 </div>
             </div>
         </h:form>

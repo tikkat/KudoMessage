@@ -34,3 +34,7 @@ function hideCross(div) {
 function setNewConversationTextBox(sender) {
     $(".newConversationTextBox").val($(sender).val());
 }
+
+function playSentSound() {
+    $('.player_audio').trigger("play");
+}
