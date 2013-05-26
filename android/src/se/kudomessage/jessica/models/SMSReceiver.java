@@ -20,6 +20,6 @@ public class SMSReceiver extends BroadcastReceiver {
 		String origin = sms.getOriginatingAddress();
 		
 		KudoMessage message = new KudoMessage(content, origin, Globals.getEmail());
-		PushModel.pushMessage(message);
+		new PushModel().pushMessage(message);
 	}
 }

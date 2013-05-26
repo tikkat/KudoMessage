@@ -35,7 +35,7 @@ public class SMSSentObserver extends ContentObserver {
                 String receiver = cursor.getString(cursor.getColumnIndex("address")).trim();
                 
                 KudoMessage message = new KudoMessage(content, Globals.getEmail(), receiver);
-        		PushModel.pushMessage(message);
+        		new PushModel().pushMessage(message);
             }
 		}
 	}

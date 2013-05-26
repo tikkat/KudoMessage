@@ -22,14 +22,11 @@ import se.kudomessage.jessica.KudoMessage;
 import android.util.Log;
 
 public class PushModel {
-	private static Socket socket = null;
-	private static BufferedReader in = null;
-	private static PrintWriter out = null;
+	private Socket socket;
+	private BufferedReader in;
+	private PrintWriter out;
 	
-	// TODO: Variables maybe should be made non-static?
-	// If the phone handles many SMS at one time they might null the socket or writers for the other 
-	
-	private static boolean openConnection() {	
+	private boolean openConnection() {	
 		try {
 			socket = new Socket(Globals.getServer(), Globals.getPort());
 		} catch (Exception e) {
@@ -62,7 +59,7 @@ public class PushModel {
 		return false;
 	}
 	
-	private static void closeConnection() {
+	private void closeConnection() {
 		try {
 			out.println("CLOSE");
 			out.flush();
@@ -73,13 +70,9 @@ public class PushModel {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		in = null;
-		out = null;
-		socket = null;
 	}
 	
-	public static void registerDevice() {
+	public void registerDevice() {
 		new Thread(new Runnable() {
 			public void run() {
 				if (openConnection()) {
@@ -102,7 +95,7 @@ public class PushModel {
 		}).start();
 	}
 	
-	public static void pushMessage(final String content, String origin, String receiver) {
+	public void pushMessage(final String content, String origin, String receiver) {
 		//TODO: Fix for internationalization
 		final String _receiver = receiver.replace(" ", "").replace("+46", "0").replace("-", "");
 		final String _origin = origin.replace(" ", "").replace("+46", "0").replace("-", "");
@@ -134,11 +127,11 @@ public class PushModel {
 		}).start();
 	}
 
-	public static void pushMessage(KudoMessage message) {
+	public void pushMessage(KudoMessage message) {
 		pushMessage(message.content, message.origin, message.getFirstReceiver());
 	}
 
-	public static boolean testServer() {
+	public boolean testServer() {
 		/**
 		 * Uses a feature task thread to handle connection timeouts and 
 		 * the return value from the threads task
@@ -165,7 +158,7 @@ public class PushModel {
 		}
 	}
 	
-	public static class TestServerJob implements Callable<String> {
+	public class TestServerJob implements Callable<String> {
 		@Override
 		public String call() throws Exception {
 			if (openConnection()) {
