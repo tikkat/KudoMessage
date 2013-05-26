@@ -1,9 +1,12 @@
 package se.kudomessage.torsken;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
+import javax.enterprise.context.SessionScoped;
 
-public class MessageUtilities {
+@SessionScoped
+public class MessageUtilities implements Serializable {
     
     private ArrayList<String> completed = new ArrayList<String>();
     private ArrayList<String> substantiv = new ArrayList<String>();
