@@ -102,7 +102,7 @@ public class ConversationsController {
             view.setCurrentConversationName(number);
             view.setCurrentConversation(model.getConversations().get(number).getMessages());
         } catch (Exception e) {
-            
+            e.printStackTrace();
         }
     }
     

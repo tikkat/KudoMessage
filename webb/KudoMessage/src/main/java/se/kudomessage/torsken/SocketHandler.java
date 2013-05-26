@@ -60,6 +60,7 @@ public class SocketHandler implements Serializable {
                 OutputStreamWriter outstream = new OutputStreamWriter(socket.getOutputStream(), "UTF-8");
                 out = new PrintWriter(outstream, true);
             } catch (Exception e) {
+                e.printStackTrace();
             }
 
             if (in != null && out != null) {

@@ -74,6 +74,7 @@ public class AsyncBean {
                     tmpMessages.addMessage(message, pushGroup);
                 }
             } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }

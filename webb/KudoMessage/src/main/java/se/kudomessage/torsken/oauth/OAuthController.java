@@ -36,8 +36,10 @@ public class OAuthController {
                 try {
                     FacesContext.getCurrentInstance().getExternalContext().redirect("/KudoMessage/app/");
                 } catch (Exception e) {
+                    e.printStackTrace();
                 }
             } catch (IOException ex) {
+                ex.printStackTrace();
             }
         }
     }
