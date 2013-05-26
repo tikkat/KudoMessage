@@ -13,10 +13,10 @@ import se.kudomessage.torsken.TmpMessages;
 @Named
 public class ConversationsController {
     @Inject
-    Globals globals;
+    private Globals globals;
     
     @Inject
-    ConversationsModel model;
+    private ConversationsModel model;
     
     @Inject
     private TmpMessages tmpMessages;
@@ -25,7 +25,7 @@ public class ConversationsController {
     private AsyncBean asyncBean;
     
     @Inject
-    BackingBean view;
+    private BackingBean view;
     
     public ConversationsController() {
     }

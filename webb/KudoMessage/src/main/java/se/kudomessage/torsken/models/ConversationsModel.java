@@ -14,7 +14,7 @@ import se.kudomessage.torsken.KudoMessage;
 @SessionScoped
 public class ConversationsModel implements Serializable {
     @Inject
-    Globals globals;
+    private Globals globals;
     
     private Map<String, Conversation> conversations = new HashMap<String, Conversation>();
     private LinkedList<String> conversationNames = new LinkedList<String>();

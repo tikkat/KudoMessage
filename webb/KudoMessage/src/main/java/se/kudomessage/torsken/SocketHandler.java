@@ -20,10 +20,10 @@ import org.json.JSONObject;
 public class SocketHandler implements Serializable {
     
     @Inject
-    AsyncBean asyncBean;
+    private AsyncBean asyncBean;
     
     @Inject
-    TmpMessages tmpMessages;
+    private TmpMessages tmpMessages;
 
     @Inject
     private Globals globals;
@@ -31,6 +31,7 @@ public class SocketHandler implements Serializable {
     private ConversationsController conversationsController;
     @Inject
     private ContactsController contactsController;
+    
     private Socket socket;
     private BufferedReader in;
     private PrintWriter out;

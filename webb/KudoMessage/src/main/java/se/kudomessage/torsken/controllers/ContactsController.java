@@ -17,13 +17,13 @@ import se.kudomessage.torsken.Globals;
 @Named
 public class ContactsController {
     @Inject
-    ContactsModel model;
+    private ContactsModel model;
     
     @Inject
-    Globals globals;
+    private Globals globals;
     
     @Inject
-    BackingBean view;
+    private BackingBean view;
     
     public ContactsController() {
     }

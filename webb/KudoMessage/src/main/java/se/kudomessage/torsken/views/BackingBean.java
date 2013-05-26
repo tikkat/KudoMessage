@@ -14,10 +14,10 @@ import se.kudomessage.torsken.KudoMessage;
 @Named
 public class BackingBean implements Serializable {
     @Inject
-    Globals globals;
+    private Globals globals;
     
     @Inject
-    ConversationsModel model;
+    private ConversationsModel model;
     
     private List<KudoMessage> currentConversation = new ArrayList<KudoMessage>();
     private String currentConversationName = "";

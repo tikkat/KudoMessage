@@ -21,7 +21,8 @@ import se.kudomessage.torsken.Globals;
 public class OAuthController {
 
     @Inject
-    Globals globals;
+    private Globals globals;
+    
     private final HttpTransport TRANSPORT = new NetHttpTransport();
     private final JsonFactory JSON_FACTORY = new JacksonFactory();
 
