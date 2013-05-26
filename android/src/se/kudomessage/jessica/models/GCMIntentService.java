@@ -42,11 +42,11 @@ public class GCMIntentService extends GCMBaseIntentService {
 
 	@Override
 	protected void onRegistered(Context arg0, String GCMKey) {
+		
 		Log.i(CONSTANTS.TAG, "GCM DID REG");
 		
+		//Saves the GCMKey for late usage
 		Globals.setGCM(GCMKey);
-		//To be removed once ui is reimplemented
-		//OAuthController.requestAccessToken();
 	}
 
 	@Override
