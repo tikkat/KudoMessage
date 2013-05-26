@@ -97,20 +97,6 @@ public class GmailController {
         
         standardFolder.open(Folder.READ_WRITE);
     }
-
-    private String getMessageId(Message m) {
-        if (m.isExpunged()) {
-            return "";
-        }
-
-        MimeMessage message = (MimeMessage) m;
-
-        try {
-            return message.getMessageID();
-        } catch (MessagingException e) {
-            return "";
-        }
-    }
     
     public void saveMessage(Label label, JSONObject message) {
         Folder folder;
@@ -145,51 +131,6 @@ public class GmailController {
     		}
         } catch (MessagingException e) {}
     }
-
-    /*public List<KudoMessage> findMessage(final String query) {
-        ArrayList<KudoMessage> result = new ArrayList<KudoMessage>();
-
-        SearchTerm term = new SearchTerm() {
-            public boolean match(Message message) {
-                if (message.isExpunged()) {
-                    return false;
-                }
-
-                try {
-                    if (message.getContent().toString().toLowerCase().contains(query.toLowerCase())) {
-                        return true;
-                    }
-                } catch (IOException e) {
-                } catch (MessagingException e) {
-                }
-
-                return false;
-            }
-        };
-
-        Message[] messages = null;
-
-        try {
-            messages = rootFolder.search(term);
-        } catch (MessagingException e) {
-        }
-
-        for (Message message : messages) {
-            try {
-                KudoMessage tmp = new KudoMessage(
-                        getMessageId(message),
-                        message.getContent().toString(),
-                        message.getFrom()[0].toString(),
-                        message.getAllRecipients()[0].toString());
-
-                result.add(tmp);
-            } catch (IOException e) {
-            } catch (MessagingException e) {
-            }
-        }
-
-        return result;
-    }*/
     
     public JSONArray getMessages(int lower, int count) {
     	JSONArray messages = new JSONArray();
