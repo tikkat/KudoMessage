@@ -59,7 +59,7 @@ public class ConversationsModel implements Serializable {
         return new Conversation();
     }
     
-    public class Conversation {
+    public static class Conversation {
         private List<KudoMessage> messages= new ArrayList<KudoMessage>(); 
         private int numUnreadMessages = 0;
         
