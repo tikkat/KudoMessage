@@ -17,3 +17,5 @@ webb/KudoMessage/target/maven-archiver/
 Icon?
 ehthumbs.db
 Thumbs.db
+
+*.pdf
